@@ -43,7 +43,14 @@ jobs:
 before_install:
   - eval "${COMPILER_DEFS}"
 
-script:
+install:
+  - git clone https://github.com/Microsoft/vcpkg.git
+  - cd vcpkg
+  - ./bootstrap-vcpkg.sh --disableMetrics
+  - ./vcpkg integrate install
+  - ./vcpkg install pcre pcre2 benchmark
+
+  script:
   - mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release ..
+  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cmake --build . -j 2
