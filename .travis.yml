@@ -1,5 +1,8 @@
 dist: bionic
 language: cpp
+os:
+  - osx
+  - linux
 compiler:
   - clang
   - gcc
