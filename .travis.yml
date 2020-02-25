@@ -1,11 +1,44 @@
-dist: bionic
 language: cpp
-os:
-  - osx
-  - linux
-compiler:
-  - clang
-  - gcc
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode11.3
+      compiler: clang
+      env:
+        - MATRIX_EVAL=""
+
+    - os: osx
+      osx_image: xcode11.3
+      env:
+        - MATRIX_EVAL="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+
+    - os: linux
+      dist: bionic
+      compiler: gcc
+      env:
+        - MATRIX_EVAL=""
+
+    - os: linux
+      dist: bionic
+      compiler: clang
+      env:
+        - MATRIX_EVAL=""
+
+    - os: linux
+      dist: bionic
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-9
+      env:
+         - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
 script:
   - mkdir build && cd build
   - cmake -DCMAKE_BUILD_TYPE=Release ..
