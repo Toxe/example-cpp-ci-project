@@ -7,13 +7,13 @@ jobs:
       compiler: clang
       name: "osx: clang"
       env:
-        - COMPILERS=""
+        - COMPILER_DEFS=""
 
     - os: osx
       osx_image: xcode11.3
       name: "osx: gcc-8"
       env:
-        - COMPILERS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
 
     - os: linux
       dist: bionic
@@ -26,7 +26,7 @@ jobs:
           packages:
             - clang-9
       env:
-         - COMPILERS="CC=clang-9 && CXX=clang++-9"
+         - COMPILER_DEFS="CC=clang-9 && CXX=clang++-9"
 
     - os: linux
       dist: bionic
@@ -36,12 +36,12 @@ jobs:
           sources:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
           packages:
-            - gcc-9
+            - g++-9
       env:
-         - COMPILERS="CC=gcc-9 && CXX=g++-9"
+         - COMPILER_DEFS="CC=gcc-9 && CXX=g++-9"
 
 before_install:
-  - eval "${COMPILERS}"
+  - eval "${COMPILER_DEFS}"
 
 script:
   - mkdir build && cd build
