@@ -1,32 +1,36 @@
 language: cpp
 
-matrix:
+jobs:
   include:
     - os: osx
       osx_image: xcode11.3
       compiler: clang
+      name: "osx: clang"
       env:
-        - MATRIX_EVAL=""
+        - COMPILERS=""
 
     - os: osx
       osx_image: xcode11.3
+      name: "osx: gcc-8"
       env:
-        - MATRIX_EVAL="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+        - COMPILERS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
 
     - os: linux
       dist: bionic
-      compiler: gcc
+      name: "linux: clang-9"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-bionic-9
+          packages:
+            - clang-9
       env:
-        - MATRIX_EVAL=""
+         - COMPILERS="CC=gcc-9 && CXX=g++-9"
 
     - os: linux
       dist: bionic
-      compiler: clang
-      env:
-        - MATRIX_EVAL=""
-
-    - os: linux
-      dist: bionic
+      name: "linux: gcc-9"
       addons:
         apt:
           sources:
@@ -34,10 +38,10 @@ matrix:
           packages:
             - gcc-9
       env:
-         - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+         - COMPILERS="CC=gcc-9 && CXX=g++-9"
 
 before_install:
-  - eval "${MATRIX_EVAL}"
+  - eval "${COMPILERS}"
 
 script:
   - mkdir build && cd build
