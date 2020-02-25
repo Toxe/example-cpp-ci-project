@@ -3,8 +3,17 @@ project("Example C++ CI Project" LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+find_package(benchmark CONFIG REQUIRED)
+
+find_library(PCRE_LIBRARY pcre)
+find_library(PCRE2_LIBRARY pcre2-8)
+
+find_path(PCRE_INCLUDE_DIRS pcre.h)
+find_path(PCRE2_INCLUDE_DIRS pcre2.h)
+
 set(ALL_TARGETS
     example_simple
+    example_benchmark
 )
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -24,3 +33,5 @@ foreach(target ${ALL_TARGETS})
         target_compile_options(${target} PRIVATE /W4)
     endif()
 endforeach()
+
+target_link_libraries(example_benchmark PRIVATE benchmark::benchmark "${PCRE_LIBRARY}" "${PCRE2_LIBRARY}")
