@@ -50,7 +50,7 @@ install:
   - ./vcpkg integrate install
   - ./vcpkg install pcre pcre2 benchmark
 
-  script:
+script:
   - mkdir build && cd build
   - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cmake --build . -j 2
