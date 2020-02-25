@@ -46,7 +46,7 @@ before_install:
 install:
   - git clone https://github.com/Microsoft/vcpkg.git
   - cd vcpkg
-  - ./bootstrap-vcpkg.sh --disableMetrics
+  - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
   - ./vcpkg integrate install
   - ./vcpkg install pcre pcre2 benchmark
 
