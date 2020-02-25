@@ -4,7 +4,7 @@ project("Example C++ CI Project" LANGUAGES CXX)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(ALL_TARGETS
-    example
+    example_simple
 )
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
