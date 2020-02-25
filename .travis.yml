@@ -4,5 +4,7 @@ compiler:
   - clang
   - gcc
 script:
-  - cmake -B build
-  - cmake --build build
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ..
+  - cmake --build .
