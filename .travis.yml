@@ -1,0 +1,5 @@
+dist: bionic
+language: cpp
+compiler:
+  - clang
+  - gcc
