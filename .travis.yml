@@ -44,11 +44,13 @@ before_install:
   - eval "${COMPILER_DEFS}"
 
 install:
+  - pushd $HOME
   - git clone https://github.com/Microsoft/vcpkg.git
   - cd vcpkg
   - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
   - ./vcpkg integrate install
   - ./vcpkg install pcre pcre2 benchmark
+  - popd
 
 script:
   - mkdir build && cd build
