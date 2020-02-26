@@ -27,8 +27,8 @@ jobs:
       env:
         - CC=gcc-9
         - CXX=g++-9
-        - VCPKG_CC=gcc-9
-        - VCPKG_CXX=g++-9
+        - VCPKG_CC=$CC
+        - VCPKG_CXX=$CXX
 
     - os: linux
       dist: bionic
@@ -43,8 +43,8 @@ jobs:
       env:
         - CC=clang-9
         - CXX=clang++-9
-        - VCPKG_CC=clang-9
-        - VCPKG_CXX=clang++-9
+        - VCPKG_CC=$CC
+        - VCPKG_CXX=$CXX
 
     - os: linux
       dist: bionic
@@ -58,8 +58,8 @@ jobs:
       env:
         - CC=gcc-9
         - CXX=g++-9
-        - VCPKG_CC=gcc-9
-        - VCPKG_CXX=g++-9
+        - VCPKG_CC=$CC
+        - VCPKG_CXX=$CXX
 
 install:
   - pushd $HOME
