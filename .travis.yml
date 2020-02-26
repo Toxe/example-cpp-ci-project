@@ -4,7 +4,6 @@ jobs:
   include:
     - os: osx
       osx_image: xcode10.3
-      compiler: clang
       name: "osx: clang-9"
       addons:
         homebrew:
