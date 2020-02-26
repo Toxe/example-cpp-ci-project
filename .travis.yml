@@ -5,10 +5,14 @@ jobs:
     - os: osx
       osx_image: xcode10.3
       compiler: clang
-      name: "osx: clang"
+      name: "osx: clang-9"
+      addons:
+        homebrew:
+          packages:
+            - llvm
       env:
-        - CC=clang
-        - CXX=clang++
+        - CC=clang-9
+        - CXX=clang++-9
         - VCPKG_CC=gcc-9
         - VCPKG_CXX=g++-9
 
