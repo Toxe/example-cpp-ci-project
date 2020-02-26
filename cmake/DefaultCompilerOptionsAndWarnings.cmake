@@ -9,6 +9,8 @@ set(COMMON_CLANG_AND_GCC_WARNINGS
     -Wsign-conversion
     -Wfloat-equal
     -Wold-style-cast
+    -Wshadow
+    -Wunused
 )
 
 # Clang specific options
