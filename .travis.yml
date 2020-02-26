@@ -2,6 +2,9 @@ language: cpp
 
 jobs:
   include:
+    # Use Clang 9 (installed via Homebrew) to run the tests and GCC 9 (default installed by Homebrew) to compile Vcpkg.
+    # GCC 9 needs xcode10.3 to be able to run.
+    # Clang 9 installation needs "update: true" to prevent "Error: Unknown command: bundle" Homebrew message.
     - os: osx
       osx_image: xcode10.3
       name: "osx: clang-9"
@@ -16,6 +19,8 @@ jobs:
         - VCPKG_CC=gcc-9
         - VCPKG_CXX=g++-9
 
+    # Use GCC 9 (default installed by Homebrew) to compile Vcpkg and run the tests.
+    # GCC 9 needs xcode10.3 to be able to run.
     - os: osx
       osx_image: xcode10.3
       name: "osx: gcc-9"
