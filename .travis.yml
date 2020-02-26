@@ -15,6 +15,31 @@ jobs:
       env:
         - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
 
+    - os: osx
+      osx_image: xcode11
+      env:
+        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+
+    - os: osx
+      osx_image: xcode10.3
+      env:
+        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+
+    - os: osx
+      osx_image: xcode10
+      env:
+        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+
+    - os: osx
+      osx_image: xcode9.4
+      env:
+        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+
+    - os: osx
+      osx_image: xcode6.4
+      env:
+        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+
     - os: linux
       dist: bionic
       name: "linux: clang-9"
