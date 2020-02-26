@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 project("Example C++ CI Project" LANGUAGES CXX)
 
+# define default compiler options and warnings
+include(cmake/DefaultCompilerOptionsAndWarnings.cmake)
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(benchmark CONFIG REQUIRED)
@@ -16,22 +19,11 @@ set(ALL_TARGETS
     example_benchmark
 )
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    string(REGEX REPLACE " /W[0-4]" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-endif()
-
 foreach(target ${ALL_TARGETS})
     add_executable(${target} ${target}.cpp)
     target_compile_features(${target} PUBLIC cxx_std_17)
+    target_compile_options(${target} PRIVATE ${DEFAULT_COMPILER_OPTIONS_AND_WARNINGS})
     set_target_properties(${target} PROPERTIES CXX_EXTENSIONS OFF)
-
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        target_compile_options(${target} PRIVATE -Wall -Wextra -pedantic -Wconversion -Wfloat-equal -Wold-style-cast -Wsign-conversion -fcolor-diagnostics -Wmost)
-    elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-        target_compile_options(${target} PRIVATE -Wall -Wextra -pedantic -Wconversion -Wfloat-equal -Wold-style-cast -Wsign-conversion -fdiagnostics-color)
-    elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-        target_compile_options(${target} PRIVATE /W4)
-    endif()
 endforeach()
 
 target_link_libraries(example_benchmark PRIVATE benchmark::benchmark "${PCRE_LIBRARY}" "${PCRE2_LIBRARY}")
