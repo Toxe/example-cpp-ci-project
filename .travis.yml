@@ -3,46 +3,23 @@ language: cpp
 jobs:
   include:
     - os: osx
-      osx_image: xcode11.3
+      osx_image: xcode10.3
       compiler: clang
       name: "osx: clang"
       env:
-        - COMPILER_DEFS=""
-
-    - os: osx
-      osx_image: xcode11.3
-      name: "osx: gcc-8"
-      env:
-        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
-
-    - os: osx
-      osx_image: xcode11.3
-      name: "osx: gcc-7"
-      env:
-        - COMPILER_DEFS="brew install gcc@7 && CC=gcc-7 && CXX=g++-7"
-
-    - os: osx
-      osx_image: xcode11.3
-      name: "osx: gcc-6"
-      env:
-        - COMPILER_DEFS="brew install gcc@6 && CC=gcc-6 && CXX=g++-6"
-
-    - os: osx
-      osx_image: xcode11.3
-      name: "osx: gcc-8"
-      env:
-        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
-
-    - os: osx
-      osx_image: xcode11.3
-      name: "osx: gcc-9"
-      env:
-        - COMPILER_DEFS="brew install gcc@9 && CC=gcc-9 && CXX=g++-9"
+        - CC=clang
+        - CXX=clang++
+        - VCPKG_CC=gcc-9
+        - VCPKG_CXX=g++-9
 
     - os: osx
       osx_image: xcode10.3
+      name: "osx: gcc-9"
       env:
-        - COMPILER_DEFS="brew install gcc@8 && CC=gcc-8 && CXX=g++-8"
+        - CC=gcc-9
+        - CXX=g++-9
+        - VCPKG_CC=gcc-9
+        - VCPKG_CXX=g++-9
 
     - os: linux
       dist: bionic
@@ -55,7 +32,10 @@ jobs:
           packages:
             - clang-9
       env:
-         - COMPILER_DEFS="CC=clang-9 && CXX=clang++-9"
+        - CC=clang-9
+        - CXX=clang++-9
+        - VCPKG_CC=clang-9
+        - VCPKG_CXX=clang++-9
 
     - os: linux
       dist: bionic
@@ -67,16 +47,16 @@ jobs:
           packages:
             - g++-9
       env:
-         - COMPILER_DEFS="CC=gcc-9 && CXX=g++-9"
-
-before_install:
-  - eval "${COMPILER_DEFS}"
+        - CC=gcc-9
+        - CXX=g++-9
+        - VCPKG_CC=gcc-9
+        - VCPKG_CXX=g++-9
 
 install:
   - pushd $HOME
   - git clone https://github.com/Microsoft/vcpkg.git
   - cd vcpkg
-  - ./bootstrap-vcpkg.sh --disableMetrics
+  - CC=$VCPKG_CC CXX=$VCPKG_CXX ./bootstrap-vcpkg.sh --disableMetrics
   - ./vcpkg integrate install
   - ./vcpkg install pcre pcre2 benchmark
   - popd
