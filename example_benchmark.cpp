@@ -157,7 +157,7 @@ static void BM_OneLine_PCRE(benchmark::State& state)
     pcre_free_study(sd);
     pcre_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 static void BM_AllLines_PCRE(benchmark::State& state)
@@ -173,7 +173,7 @@ static void BM_AllLines_PCRE(benchmark::State& state)
     pcre_free_study(sd);
     pcre_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 static void BM_OneLine_PCRE_JIT(benchmark::State& state)
@@ -189,7 +189,7 @@ static void BM_OneLine_PCRE_JIT(benchmark::State& state)
     pcre_free_study(sd);
     pcre_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 static void BM_AllLines_PCRE_JIT(benchmark::State& state)
@@ -206,7 +206,7 @@ static void BM_AllLines_PCRE_JIT(benchmark::State& state)
     pcre_free_study(sd);
     pcre_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 std::tuple<pcre2_code*, pcre2_match_data*> init_pcre2(const char* pattern)
@@ -272,7 +272,7 @@ static void BM_OneLine_PCRE2(benchmark::State& state)
     pcre2_match_data_free(match_data);
     pcre2_code_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 static void BM_AllLines_PCRE2(benchmark::State& state)
@@ -288,7 +288,7 @@ static void BM_AllLines_PCRE2(benchmark::State& state)
     pcre2_match_data_free(match_data);
     pcre2_code_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 static void BM_OneLine_PCRE2_JIT(benchmark::State& state)
@@ -305,7 +305,7 @@ static void BM_OneLine_PCRE2_JIT(benchmark::State& state)
     pcre2_match_context_free(mcontext);
     pcre2_code_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 static void BM_AllLines_PCRE2_JIT(benchmark::State& state)
@@ -323,7 +323,7 @@ static void BM_AllLines_PCRE2_JIT(benchmark::State& state)
     pcre2_match_context_free(mcontext);
     pcre2_code_free(re);
 
-    state.counters["length"] = length;
+    state.counters["length"] = double(length);
 }
 
 BENCHMARK(BM_OneLine_PCRE);
