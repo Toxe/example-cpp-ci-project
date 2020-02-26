@@ -11,8 +11,8 @@ jobs:
             - llvm
           update: true
       env:
-        - CC=clang-9
-        - CXX=clang++-9
+        - CC=/usr/local/opt/llvm/bin/clang
+        - CXX=/usr/local/opt/llvm/bin/clang++
         - VCPKG_CC=gcc-9
         - VCPKG_CXX=g++-9
 
