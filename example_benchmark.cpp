@@ -2,8 +2,13 @@
 #define PCRE2_CODE_UNIT_WIDTH 8
 
 #include <benchmark/benchmark.h>
+#include <iostream>
 #include <pcre.h>
 #include <pcre2.h>
+#include <stdexcept>
+#include <string>
+#include <tuple>
+#include <vector>
 
 const std::string one_line{"[00180D0F | 2009-09-15 09:34:48] (127.0.0.1:39170, 879) /cmd.php [co_search.browse] RQST END   [normal]   799 ms"};
 const std::vector<std::string> all_lines{
