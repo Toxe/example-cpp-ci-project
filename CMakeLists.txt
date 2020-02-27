@@ -26,4 +26,4 @@ foreach(target ${ALL_TARGETS})
     set_target_properties(${target} PROPERTIES CXX_EXTENSIONS OFF)
 endforeach()
 
-target_link_libraries(example_benchmark PRIVATE benchmark::benchmark "${PCRE_LIBRARY}" "${PCRE2_LIBRARY}")
+target_link_libraries(example_benchmark PRIVATE benchmark::benchmark benchmark::benchmark_main "${PCRE_LIBRARY}" "${PCRE2_LIBRARY}")
