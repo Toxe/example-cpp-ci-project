@@ -1,0 +1,26 @@
+image:
+  - macOS
+  - Ubuntu
+
+configuration:
+  - Release
+
+platform:
+  - x64
+
+install:
+  - pwd
+  - ls -l
+  - ls -l $HOME
+  - pushd $HOME
+  - git clone https://github.com/Microsoft/vcpkg.git
+  - cd vcpkg
+  - ./bootstrap-vcpkg.sh --disableMetrics
+  - ./vcpkg integrate install
+  - ./vcpkg install pcre pcre2 benchmark
+  - popd
+
+build_script:
+  - mkdir build && cd build
+  - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - cmake --build . -j 2
