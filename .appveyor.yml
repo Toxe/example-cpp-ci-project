@@ -70,7 +70,10 @@ for:
       - image: Visual Studio 2019
 
   install:
+    - ps: Get-ChildItem Env: | Sort Name
+    - ps: dir
     - ps: cd $HOME
+    - ps: dir
     - ps: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
     - ps: cd vcpkg-msvc
     - ps: ./bootstrap-vcpkg.bat --disableMetrics
@@ -79,5 +82,7 @@ for:
 
   build_script:
     - ps: mkdir build-msvc && cd build-msvc
-    - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-msvc/scripts/buildsystems/vcpkg.cmake ..
-    - ps: cmake --build .
+    - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-msvc/scripts/buildsystems/vcpkg.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+    - ps: dir
+    - ps: cat compile_commands.json
+    - ps: cmake --build . --config Release -j 2
