@@ -10,7 +10,8 @@ jobs:
       addons:
         homebrew:
           packages:
-            - ninja llvm
+            - ninja
+            - llvm
           update: true
       env:
         - CC=/usr/local/opt/llvm/bin/clang
@@ -27,6 +28,7 @@ jobs:
         homebrew:
           packages:
             - ninja
+          update: true
       env:
         - CC=gcc-9
         - CXX=g++-9
@@ -44,7 +46,8 @@ jobs:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
             - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
           packages:
-            - ninja clang-9
+            - ninja
+            - clang-9
       env:
         - CC=clang-9
         - CXX=clang++-9
@@ -61,7 +64,8 @@ jobs:
           sources:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
           packages:
-            - ninja g++-9
+            - ninja
+            - g++-9
       env:
         - CC=gcc-9
         - CXX=g++-9
