@@ -13,12 +13,12 @@ for:
 
   install:
     - brew install llvm gcc
-    - pushd -q $HOME
+    - pushd $HOME
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
     - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ ./bootstrap-vcpkg.sh --disableMetrics
     - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
-    - popd -q
+    - popd
 
   build_script:
     - mkdir build-clang && cd build-clang
@@ -35,13 +35,13 @@ for:
       - image: Ubuntu
 
   install:
-    - pushd -q $HOME
+    - pushd $HOME
     - rm -rf vcpkg
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
     - CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
     - CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
-    - popd -q
+    - popd
 
   build_script:
     - mkdir build-clang && cd build-clang
