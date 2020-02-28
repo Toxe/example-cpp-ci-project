@@ -1,6 +1,7 @@
 image:
   - macOS
   - Ubuntu
+  - Visual Studio 2019
 
 platform:
   - x64
@@ -62,3 +63,21 @@ for:
     - mkdir build-gcc && cd build-gcc
     - CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
     - cmake --build .
+
+-
+  matrix:
+    only:
+      - image: Visual Studio 2019
+
+  install:
+    - ps: cd $HOME
+    - ps: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
+    - ps: cd vcpkg-msvc
+    - ps: ./bootstrap-vcpkg.bat --disableMetrics
+    - ps: ./vcpkg install benchmark pcre pcre2
+    - ps: cd $APPVEYOR_BUILD_FOLDER
+
+  build_script:
+    - ps: mkdir build-msvc && cd build-msvc
+    - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-msvc/scripts/buildsystems/vcpkg.cmake ..
+    - ps: cmake --build .
