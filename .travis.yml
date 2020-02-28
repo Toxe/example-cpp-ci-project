@@ -2,9 +2,8 @@ language: cpp
 
 jobs:
   include:
-    # Use Clang 9 (installed via Homebrew) to run the tests and GCC 9 (default installed by Homebrew) to compile Vcpkg.
-    # GCC 9 needs xcode10.3 to be able to run.
-    # Clang 9 installation needs "update: true" to prevent "Error: Unknown command: bundle" Homebrew message.
+    # Build project with: Clang 9 (installed via Homebrew). Needs "update: true" to prevent "Error: Unknown command: bundle" Homebrew message.
+    # Build Vcpkg with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
     - os: osx
       osx_image: xcode10.3
       name: "osx: clang-9"
@@ -19,8 +18,8 @@ jobs:
         - VCPKG_CC=gcc-9
         - VCPKG_CXX=g++-9
 
-    # Use GCC 9 (default installed by Homebrew) to compile Vcpkg and run the tests.
-    # GCC 9 needs xcode10.3 to be able to run.
+    # Build project with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
+    # Build Vcpkg with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
     - os: osx
       osx_image: xcode10.3
       name: "osx: gcc-9"
@@ -30,6 +29,8 @@ jobs:
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
 
+    # Build project with: Clang 9.
+    # Build Vcpkg with: Clang 9.
     - os: linux
       dist: bionic
       name: "linux: clang-9"
@@ -46,6 +47,8 @@ jobs:
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
 
+    # Build project with: GCC 9.
+    # Build Vcpkg with: GCC 9.
     - os: linux
       dist: bionic
       name: "linux: gcc-9"
@@ -71,5 +74,5 @@ install:
 
 script:
   - mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX ..
+  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cmake --build . -j 2
