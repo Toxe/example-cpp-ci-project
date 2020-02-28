@@ -9,15 +9,16 @@ install:
   - ps: dir
   - ps: cd $HOME
   - ps: dir
+  - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
   - ps: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
   - ps: cd vcpkg-msvc
-  - ps: ./bootstrap-vcpkg.bat --disableMetrics
-  - ps: ./vcpkg install benchmark pcre pcre2
+  - ps: .\bootstrap-vcpkg.bat --disableMetrics
+  - ps: .\vcpkg install benchmark pcre pcre2
   - ps: cd $APPVEYOR_BUILD_FOLDER
 
 build_script:
   - ps: mkdir build-msvc && cd build-msvc
-  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-msvc/scripts/buildsystems/vcpkg.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
   - ps: dir
   - ps: cat compile_commands.json
   - ps: cmake --build . --config Release -j 2
