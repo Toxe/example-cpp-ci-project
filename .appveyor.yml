@@ -18,7 +18,8 @@ install:
   - ps: cd "$Env:APPVEYOR_BUILD_FOLDER"
 
 build_script:
-  - ps: mkdir build-msvc && cd build-msvc
+  - ps: mkdir build-msvc
+  - ps: cd build-msvc
   - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
   - ps: dir
   - ps: cat compile_commands.json
