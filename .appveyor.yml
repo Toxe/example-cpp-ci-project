@@ -14,7 +14,7 @@ install:
   - ps: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
   - ps: cd vcpkg-msvc
   - ps: .\bootstrap-vcpkg.bat -disableMetrics
-  - ps: .\vcpkg install benchmark pcre pcre2
+  - ps: .\vcpkg install --triplet x64-windows benchmark pcre pcre2
   - ps: cd "$Env:APPVEYOR_BUILD_FOLDER"
 
 build_script:
