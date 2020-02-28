@@ -2,25 +2,51 @@ image:
   - macOS
   - Ubuntu
 
-configuration:
-  - Release
-
 platform:
   - x64
 
-install:
-  - pwd
-  - ls -l
-  - ls -l $HOME
-  - pushd $HOME
-  - git clone https://github.com/Microsoft/vcpkg.git
-  - cd vcpkg
-  - ./bootstrap-vcpkg.sh --disableMetrics
-  - ./vcpkg integrate install
-  - ./vcpkg install pcre pcre2 benchmark
-  - popd
+for:
+  - matrix:
+    only:
+      - image macOS
 
-build_script:
-  - mkdir build && cd build
-  - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-  - cmake --build . -j 2
+    install:
+      - pwd
+      - ls -l
+      - ls -l $HOME
+      - uname -a
+      - pushd $HOME
+      - git clone https://github.com/Microsoft/vcpkg.git
+      - cd vcpkg
+      - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
+      - ./vcpkg integrate install
+      - ./vcpkg install $(< .vcpkg)
+      - popd
+
+    build_script:
+      - mkdir build && cd build
+      - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+      - cmake --build . -j 2
+
+for:
+  - matrix:
+    only:
+      - image Ubuntu
+
+    install:
+      - pwd
+      - ls -l
+      - ls -l $HOME
+      - uname -a
+      - pushd $HOME
+      - cd vcpkg
+      - git pull
+      - ./bootstrap-vcpkg.sh --disableMetrics
+      - ./vcpkg integrate install
+      - ./vcpkg install $(< .vcpkg)
+      - popd
+
+    build_script:
+      - mkdir build && cd build
+      - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+      - cmake --build . -j 2
