@@ -8,7 +8,7 @@ platform:
 for:
   - matrix:
     only:
-      - image macOS
+      - image: macOS
 
     install:
       - pwd
@@ -30,7 +30,7 @@ for:
 
   - matrix:
     only:
-      - image Ubuntu
+      - image: Ubuntu
 
     install:
       - pwd
