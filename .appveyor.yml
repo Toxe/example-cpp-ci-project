@@ -10,6 +10,7 @@ install:
   - ps: cd $HOME
   - ps: dir
   - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+  - ps: $env:GIT_REDIRECT_STDERR = '2>&1'
   - ps: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
   - ps: cd vcpkg-msvc
   - ps: .\bootstrap-vcpkg.bat --disableMetrics
