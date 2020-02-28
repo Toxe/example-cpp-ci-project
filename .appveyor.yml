@@ -70,7 +70,7 @@ for:
       - image: Visual Studio 2019
 
   install:
-    - ps: Get-ChildItem Env: | Sort Name
+    - ps: Get-ChildItem "Env:" | Sort Name
     - ps: dir
     - ps: cd $HOME
     - ps: dir
