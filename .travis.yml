@@ -62,6 +62,7 @@ jobs:
         - VCPKG_CXX=$CXX
 
 install:
+  - env|sort
   - PROJECT_DIR=`pwd`
   - pushd $HOME
   - git clone https://github.com/Microsoft/vcpkg.git
