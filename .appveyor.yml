@@ -42,7 +42,7 @@ for:
       - image: Ubuntu
 
   install:
-    - sudo apt install ninja
+    - sudo apt install ninja-build
     - pushd $HOME
     - rm -rf vcpkg
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
