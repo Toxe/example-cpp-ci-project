@@ -63,7 +63,7 @@ jobs:
 
 install:
   - pushd $HOME
-  - git clone https://github.com/Microsoft/vcpkg.git
+  - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
   - cd vcpkg
   - CC=$VCPKG_CC CXX=$VCPKG_CXX ./bootstrap-vcpkg.sh --disableMetrics
   - ./vcpkg install $(< $TRAVIS_BUILD_DIR/.vcpkg)
