@@ -67,7 +67,7 @@ install:
   - cd vcpkg
   - CC=$VCPKG_CC CXX=$VCPKG_CXX ./bootstrap-vcpkg.sh --disableMetrics
   - ./vcpkg integrate install
-  - ./vcpkg install pcre pcre2 benchmark
+  - ./vcpkg install $(< .vcpkg)
   - popd
 
 script:
