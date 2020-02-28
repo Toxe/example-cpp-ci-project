@@ -12,7 +12,7 @@ for:
       - image: macOS
 
   install:
-    - brew install llvm gcc
+    - brew install ninja llvm gcc
     - pushd $HOME
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
     - cd vcpkg-clang
@@ -42,6 +42,7 @@ for:
       - image: Ubuntu
 
   install:
+    - sudo apt install ninja
     - pushd $HOME
     - rm -rf vcpkg
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
