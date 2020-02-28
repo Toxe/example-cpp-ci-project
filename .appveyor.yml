@@ -12,8 +12,7 @@ for:
       - image: macOS
 
   install:
-    - brew install llvm gcc
-    - ls -l /usr/local/bin
+    - brew install llvm
     - pushd $HOME
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
@@ -23,7 +22,7 @@ for:
 
   build_script:
     - mkdir build-clang && cd build-clang
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=clang-9 -DCMAKE_CXX_COMPILER=clang++-9 ..
+    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ ..
     - cmake --build . -j 2
     - cd ..
     - mkdir build-gcc && cd build-gcc
