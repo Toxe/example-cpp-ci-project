@@ -21,8 +21,8 @@ for:
     - cd ..
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
     - cd vcpkg-gcc
-    - CC=gcc-9 CXX=g++-9 CXX=/usr/local/opt/llvm/bin/clang++ ./bootstrap-vcpkg.sh --disableMetrics
-    - CC=gcc-9 CXX=g++-9 CXX=/usr/local/opt/llvm/bin/clang++ ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
     - popd
 
   build_script:
