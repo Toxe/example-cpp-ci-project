@@ -6,46 +6,48 @@ platform:
   - x64
 
 for:
-  - matrix:
+-
+  matrix:
     only:
       - image: macOS
 
-    install:
-      - pwd
-      - ls -l
-      - ls -l $HOME
-      - uname -a
-      - pushd $HOME
-      - git clone https://github.com/Microsoft/vcpkg.git
-      - cd vcpkg
-      - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
-      - ./vcpkg integrate install
-      - ./vcpkg install $(< .vcpkg)
-      - popd
+  install:
+    - pwd
+    - ls -l
+    - ls -l $HOME
+    - uname -a
+    - pushd $HOME
+    - git clone https://github.com/Microsoft/vcpkg.git
+    - cd vcpkg
+    - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
+    - ./vcpkg integrate install
+    - ./vcpkg install $(< .vcpkg)
+    - popd
 
-    build_script:
-      - mkdir build && cd build
-      - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-      - cmake --build . -j 2
+  build_script:
+    - mkdir build && cd build
+    - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+    - cmake --build . -j 2
 
-  - matrix:
+-
+  matrix:
     only:
       - image: Ubuntu
 
-    install:
-      - pwd
-      - ls -l
-      - ls -l $HOME
-      - uname -a
-      - pushd $HOME
-      - cd vcpkg
-      - git pull
-      - ./bootstrap-vcpkg.sh --disableMetrics
-      - ./vcpkg integrate install
-      - ./vcpkg install $(< .vcpkg)
-      - popd
+  install:
+    - pwd
+    - ls -l
+    - ls -l $HOME
+    - uname -a
+    - pushd $HOME
+    - cd vcpkg
+    - git pull
+    - ./bootstrap-vcpkg.sh --disableMetrics
+    - ./vcpkg integrate install
+    - ./vcpkg install $(< .vcpkg)
+    - popd
 
-    build_script:
-      - mkdir build && cd build
-      - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-      - cmake --build . -j 2
+  build_script:
+    - mkdir build && cd build
+    - cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+    - cmake --build . -j 2
