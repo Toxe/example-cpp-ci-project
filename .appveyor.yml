@@ -27,12 +27,12 @@ for:
 
   build_script:
     - mkdir build-clang && cd build-clang
-    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
     - ls -l
     - cmake --build .
     - cd ..
     - mkdir build-gcc && cd build-gcc
-    - CC=gcc-9 CXX=g++-9 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
+    - CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
     - ls -l
     - cmake --build .
 
@@ -58,11 +58,11 @@ for:
 
   build_script:
     - mkdir build-clang && cd build-clang
-    - CC=clang-9 CXX=clang++-9 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
+    - CC=clang-9 CXX=clang++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
     - ls -l
     - cmake --build .
     - cd ..
     - mkdir build-gcc && cd build-gcc
-    - CC=gcc-9 CXX=g++-9 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
+    - CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
     - ls -l
     - cmake --build .
