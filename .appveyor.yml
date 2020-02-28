@@ -21,5 +21,4 @@ build_script:
   - ps: cd build-msvc
   - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
   - ps: dir
-  - ps: cat compile_commands.json
   - ps: cmake --build . --config Release -j 2
