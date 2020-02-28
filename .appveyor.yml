@@ -12,7 +12,7 @@ for:
       - image: macOS
 
   install:
-    - brew install llvm
+    - brew install llvm gcc
     - pushd -q $HOME
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
