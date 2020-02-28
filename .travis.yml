@@ -62,12 +62,12 @@ jobs:
         - VCPKG_CXX=$CXX
 
 install:
+  - PROJECT_DIR=`pwd`
   - pushd $HOME
   - git clone https://github.com/Microsoft/vcpkg.git
   - cd vcpkg
   - CC=$VCPKG_CC CXX=$VCPKG_CXX ./bootstrap-vcpkg.sh --disableMetrics
-  - ./vcpkg integrate install
-  - ./vcpkg install $(< .vcpkg)
+  - ./vcpkg install $(< $PROJECT_DIR/.vcpkg)
   - popd
 
 script:
