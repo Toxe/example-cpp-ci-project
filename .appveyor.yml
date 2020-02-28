@@ -12,16 +12,16 @@ for:
       - image: macOS
 
   install:
+    - env|sort
     - pwd
-    - ls -l
     - ls -l $HOME
+    - ls -l /usr/bin
     - uname -a
     - pushd $HOME
     - git clone https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
     - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
-    - ./vcpkg integrate install
-    - ./vcpkg install $(< .vcpkg)
+    - ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
     - popd
 
   build_script:
@@ -35,16 +35,16 @@ for:
       - image: Ubuntu
 
   install:
+    - env|sort
     - pwd
-    - ls -l
     - ls -l $HOME
+    - ls -l /usr/bin
     - uname -a
     - pushd $HOME
     - cd vcpkg
     - git pull
     - ./bootstrap-vcpkg.sh --disableMetrics
-    - ./vcpkg integrate install
-    - ./vcpkg install $(< .vcpkg)
+    - ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
     - popd
 
   build_script:
