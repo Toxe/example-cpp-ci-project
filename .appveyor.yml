@@ -16,17 +16,17 @@ for:
     - pushd $HOME
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
-    - ./bootstrap-vcpkg.sh --disableMetrics --allowAppleClang
-    - ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
     - popd
 
   build_script:
     - mkdir build-clang && cd build-clang
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ ..
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
     - cmake --build . -j 2
     - cd ..
     - mkdir build-gcc && cd build-gcc
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=gcc-9 -DCMAKE_CXX_COMPILER=g++-9 ..
+    - CC=gcc-9 CXX=g++-9 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
     - cmake --build . -j 2
 
 -
@@ -39,15 +39,15 @@ for:
     - rm -rf vcpkg
     - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
     - cd vcpkg
-    - ./bootstrap-vcpkg.sh --disableMetrics
-    - ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
     - popd
 
   build_script:
     - mkdir build-clang && cd build-clang
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=clang-9 -DCMAKE_CXX_COMPILER=clang++-9 ..
+    - CC=clang-9 CXX=clang++-9 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
     - cmake --build . -j 2
     - cd ..
     - mkdir build-gcc && cd build-gcc
-    - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_C_COMPILER=gcc-9 -DCMAKE_CXX_COMPILER=g++-9 ..
+    - CC=gcc-9 CXX=g++-9 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
     - cmake --build . -j 2
