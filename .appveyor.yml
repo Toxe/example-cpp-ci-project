@@ -5,7 +5,6 @@ platform:
   - x64
 
 install:
-  - ps: Get-ChildItem "Env:" | Sort Name
   - ps: cd $Env:HOMEPATH
   - ps: $Env:GIT_REDIRECT_STDERR = '2>&1'
   - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
@@ -20,6 +19,5 @@ build_script:
   - ps: dir $Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake
   - ps: mkdir build-msvc
   - ps: cd build-msvc
-  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-  - ps: dir
-  - ps: cmake --build . --config Release -j 2
+  - ps: cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
+  - ps: cmake --build .
