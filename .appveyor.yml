@@ -6,12 +6,13 @@ platform:
 
 install:
   - ps: Get-ChildItem "Env:" | Sort Name
+  - ps: Push-Location -Path "$Env:HOMEPATH"
   - ps: $Env:GIT_REDIRECT_STDERR = '2>&1'
-  - ps: & $Env:ProgramFiles\Git\bin\git.exe clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
+  - ps: \& $Env:ProgramFiles\Git\bin\git.exe clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
   - ps: cd vcpkg-msvc
   - ps: .\bootstrap-vcpkg.bat -disableMetrics
   - ps: .\vcpkg install --triplet x64-windows benchmark pcre pcre2
-  - ps: cd "$Env:APPVEYOR_BUILD_FOLDER"
+  - ps: Pop-Location
 
 build_script:
   - ps: dir $Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake
