@@ -75,4 +75,5 @@ install:
 script:
   - mkdir build && cd build
   - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-  - cmake --build . -j 2
+  - ls -l
+  - cmake --build .
