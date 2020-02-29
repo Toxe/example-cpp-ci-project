@@ -1,24 +1,88 @@
 image:
+  - macOS
+  - Ubuntu
   - Visual Studio 2019
 
 platform:
   - x64
 
-install:
-  # checkout and build Vcpkg in $HOME
-  - ps: cd $Env:HOMEPATH
-  - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-  - ps: git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
-  - ps: cd vcpkg-msvc
-  - ps: .\bootstrap-vcpkg.bat -disableMetrics
-  # install packages listed in .vcpkg
-  - ps: $packages = Get-Content "$Env:APPVEYOR_BUILD_FOLDER\.vcpkg"
-  - ps: .\vcpkg install --triplet x64-windows $packages
-  - ps: cd $Env:APPVEYOR_BUILD_FOLDER
+for:
+-
+  matrix:
+    only:
+      - image: macOS
 
-build_script:
-  - ps: dir $Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake
-  - ps: mkdir build-msvc
-  - ps: cd build-msvc
-  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-  - ps: cmake --build .
+  install:
+    - brew install ninja llvm gcc
+    - pushd $HOME
+    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
+    - cd vcpkg-clang
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - cd ..
+    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
+    - cd vcpkg-gcc
+    - CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - popd
+
+  build_script:
+    - mkdir build-clang && cd build-clang
+    - CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
+    - cmake --build .
+    - cd ..
+    - mkdir build-gcc && cd build-gcc
+    - CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
+    - cmake --build .
+
+-
+  matrix:
+    only:
+      - image: Ubuntu
+
+  install:
+    - sudo apt-get install ninja-build
+    - pushd $HOME
+    - rm -rf vcpkg
+    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
+    - cd vcpkg-clang
+    - CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - cd ..
+    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
+    - cd vcpkg-gcc
+    - CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
+    - CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+    - popd
+
+  build_script:
+    - mkdir build-clang && cd build-clang
+    - CC=clang-9 CXX=clang++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
+    - cmake --build .
+    - cd ..
+    - mkdir build-gcc && cd build-gcc
+    - CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
+    - cmake --build .
+
+-
+  matrix:
+    only:
+      - image: Visual Studio 2019
+
+    install:
+      # checkout and build Vcpkg in $HOME
+      - ps: cd $Env:HOMEPATH
+      - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+      - ps: git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
+      - ps: cd vcpkg-msvc
+      - ps: .\bootstrap-vcpkg.bat -disableMetrics
+      # install packages listed in .vcpkg
+      - ps: $packages = Get-Content "$Env:APPVEYOR_BUILD_FOLDER\.vcpkg"
+      - ps: .\vcpkg install --triplet x64-windows $packages
+      - ps: cd $Env:APPVEYOR_BUILD_FOLDER
+
+    build_script:
+      - ps: mkdir build-msvc
+      - ps: cd build-msvc
+      - ps: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
+      - ps: cmake --build .
