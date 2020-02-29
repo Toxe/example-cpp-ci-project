@@ -9,72 +9,63 @@ platform:
 environment:
   APPVEYOR_YML_DISABLE_PS_LINUX: true
 
+
 for:
 -
   matrix:
     only:
       - image: macOS
-
   install:
+    - brew install ninja llvm gcc
+
     - CC_CLANG=/usr/local/opt/llvm/bin/clang
     - CXX_CLANG=/usr/local/opt/llvm/bin/clang++
     - CC_GCC=gcc-9
     - CXX_GCC=g++-9
 
-    - brew install ninja llvm gcc
-    - pushd $HOME
-    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
-    - cd vcpkg-clang
-    - CC=$CC_CLANG CXX=$CXX_CLANG ./bootstrap-vcpkg.sh --disableMetrics
-    - CC=$CC_CLANG CXX=$CXX_CLANG ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
-    - cd ..
-    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
-    - cd vcpkg-gcc
-    - CC=$CC_GCC CXX=$CXX_GCC ./bootstrap-vcpkg.sh --disableMetrics
-    - CC=$CC_GCC CXX=$CXX_GCC ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
-    - popd
-
 -
   matrix:
     only:
       - image: Ubuntu
-
   install:
+    - sudo apt-get install ninja-build
+
     - CC_CLANG=clang-9
     - CXX_CLANG=clang++-9
     - CC_GCC=gcc-9
     - CXX_GCC=g++-9
 
-    - sudo apt-get install ninja-build
-    - pushd $HOME
-    - rm -rf vcpkg
-    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
-    - cd vcpkg-clang
-    - CC=$CC_CLANG CXX=$CXX_CLANG ./bootstrap-vcpkg.sh --disableMetrics
-    - CC=$CC_CLANG CXX=$CXX_CLANG ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
-    - cd ..
-    - git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
-    - cd vcpkg-gcc
-    - CC=$CC_GCC CXX=$CXX_GCC ./bootstrap-vcpkg.sh --disableMetrics
-    - CC=$CC_GCC CXX=$CXX_GCC ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
-    - popd
-
 -
   matrix:
     only:
       - image: Visual Studio 2019
-
   install:
-    # checkout and build Vcpkg in $HOME
-    - ps: cd $Env:HOMEPATH
     - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-    - ps: git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
-    - ps: cd vcpkg-msvc
-    - ps: .\bootstrap-vcpkg.bat -disableMetrics
-    # install packages listed in .vcpkg
-    - ps: $packages = Get-Content "$Env:APPVEYOR_BUILD_FOLDER\.vcpkg"
-    - ps: .\vcpkg install --triplet x64-windows $packages
-    - ps: cd $Env:APPVEYOR_BUILD_FOLDER
+
+
+before_build:
+  - sh: pushd $HOME
+  - sh: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-clang
+  - sh: cd vcpkg-clang
+  - sh: CC=$CC_CLANG CXX=$CXX_CLANG ./bootstrap-vcpkg.sh --disableMetrics
+  - sh: CC=$CC_CLANG CXX=$CXX_CLANG ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+  - sh: cd ..
+  - sh: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
+  - sh: cd vcpkg-gcc
+  - sh: CC=$CC_GCC CXX=$CXX_GCC ./bootstrap-vcpkg.sh --disableMetrics
+  - sh: CC=$CC_GCC CXX=$CXX_GCC ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+  - sh: popd
+
+  # checkout and build Vcpkg in $HOME
+  - ps: cd $Env:HOMEPATH
+  - ps: git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
+  - ps: cd vcpkg-msvc
+  - ps: .\bootstrap-vcpkg.bat -disableMetrics
+  # install packages listed in .vcpkg
+  - ps: $packages = Get-Content "$Env:APPVEYOR_BUILD_FOLDER\.vcpkg"
+  - ps: .\vcpkg install --triplet x64-windows $packages
+  - ps: cd $Env:APPVEYOR_BUILD_FOLDER
+
 
 build_script:
   - sh: mkdir build-clang && cd build-clang
