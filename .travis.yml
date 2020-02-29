@@ -4,6 +4,7 @@ jobs:
   include:
     # Build project with: Clang 9 (installed via Homebrew). Needs "update: true" to prevent "Error: Unknown command: bundle" Homebrew message.
     # Build Vcpkg with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
+    # Need to build Vcpkg with GCC on macOS 10.14 or older because the filesystem library is only available since macOS 10.15.
     - os: osx
       osx_image: xcode10.3
       name: "osx: clang-9"
