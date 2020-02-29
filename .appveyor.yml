@@ -7,9 +7,8 @@ platform:
 install:
   # checkout and build Vcpkg in $HOME
   - ps: cd $Env:HOMEPATH
-  - ps: $Env:GIT_REDIRECT_STDERR = '2>&1'  # redirect Git stderr to stdout to prevent problems with PowerShell
   - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-  - ps: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
+  - ps: git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
   - ps: cd vcpkg-msvc
   - ps: .\bootstrap-vcpkg.bat -disableMetrics
   # install packages listed in .vcpkg
