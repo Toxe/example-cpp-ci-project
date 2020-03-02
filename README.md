@@ -5,3 +5,16 @@
 An example project to test CI services.
 
 `example_simple` is a simple program that just outputs a string and has no further dependencies and `example_benchmark` is a program that needs Vcpkg and uses PCRE, PCRE2 and Google Benchmark to perform a small regular expression benchmark.
+
+## Dependencies
+
+- CMake
+- [Google Benchmark](https://github.com/google/benchmark)
+- PCRE
+- PCRE2
+
+### Vcpkg
+
+Install Vcpkg dependencies with:
+
+    $ vcpkg install $(< .vcpkg)
