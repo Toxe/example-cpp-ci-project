@@ -15,25 +15,25 @@ for:
   matrix:
     only:
       - image: macOS
+  environment:
+    CC_CLANG: /usr/local/opt/llvm/bin/clang
+    CXX_CLANG: /usr/local/opt/llvm/bin/clang++
+    CC_GCC: gcc-9
+    CXX_GCC: g++-9
   install:
     - brew install ninja llvm gcc
-
-    - CC_CLANG=/usr/local/opt/llvm/bin/clang
-    - CXX_CLANG=/usr/local/opt/llvm/bin/clang++
-    - CC_GCC=gcc-9
-    - CXX_GCC=g++-9
 
 -
   matrix:
     only:
       - image: Ubuntu
+  environment:
+    CC_CLANG: clang-9
+    CXX_CLANG: clang++-9
+    CC_GCC: gcc-9
+    CXX_GCC: g++-9
   install:
     - sudo apt-get install ninja-build
-
-    - CC_CLANG=clang-9
-    - CXX_CLANG=clang++-9
-    - CC_GCC=gcc-9
-    - CXX_GCC=g++-9
 
 -
   matrix:
