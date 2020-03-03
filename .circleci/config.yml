@@ -27,7 +27,7 @@ jobs:
       - run: ls -l /usr/local/bin
 
   build-windows:
-    executor: win/vs2019
+    executor: win/default
     steps:
       - checkout
       - run: Get-ChildItem "Env:" | Sort Name
