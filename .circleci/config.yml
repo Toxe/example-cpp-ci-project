@@ -10,12 +10,20 @@ jobs:
     steps:
       - checkout
       - run: env|sort
-      - run: ls -l
-      - run: ls -l $HOME
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
       - run: gcc --version
-      - run: git --version
+      - run:
+          command: |
+            pushd $HOME
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+            cd vcpkg
+            ./bootstrap-vcpkg.sh --disableMetrics
+            ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
+            popd
+            mkdir build && cd build
+            cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake --build .
 
   linux-ubuntu:
     docker:
