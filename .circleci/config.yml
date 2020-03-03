@@ -4,29 +4,38 @@ orbs:
   windows: circleci/windows@2.4.0
 
 jobs:
-  build-macos:
-    macos:
-      xcode: 11.3.1
-    steps:
-      - checkout
-      - run: env|sort
-      - run: ls -l
-      - run: ls -l $HOME
-      - run: ls -l /usr/bin
-      - run: ls -l /usr/local/bin
+  # build-macos:
+  #   macos:
+  #     xcode: 11.3.1
+  #   steps:
+  #     - checkout
+  #     - run: env|sort
+  #     - run: ls -l
+  #     - run: ls -l $HOME
+  #     - run: ls -l /usr/bin
+  #     - run: ls -l /usr/local/bin
 
-  build-linux:
-    docker:
-      - image: circleci/node:4.8.2
-    steps:
-      - checkout
-      - run: env|sort
-      - run: ls -l
-      - run: ls -l $HOME
-      - run: ls -l /usr/bin
-      - run: ls -l /usr/local/bin
+  # build-linux:
+  #   docker:
+  #     - image: circleci/node:4.8.2
+  #   steps:
+  #     - checkout
+  #     - run: env|sort
+  #     - run: ls -l
+  #     - run: ls -l $HOME
+  #     - run: ls -l /usr/bin
+  #     - run: ls -l /usr/local/bin
 
-  build-windows:
+  # build-windows:
+  #   executor: win/default
+  #   steps:
+  #     - checkout
+  #     - run: Get-ChildItem "Env:" | Sort Name
+  #     - run: dir
+  #     - run: dir $Env:HOMEPATH
+  #     - run: dir $Env:ProgramFiles\Git\bin\git.exe
+
+  build:
     executor: win/default
     steps:
       - checkout
@@ -36,10 +45,10 @@ jobs:
       - run: dir $Env:ProgramFiles\Git\bin\git.exe
 
 
-workflows:
-  version: 2
-  run-all:
-    jobs:
-      - build-macos
-      - build-linux
-      - build-windows
+# workflows:
+#   version: 2
+#   run-all:
+#     jobs:
+#       - build-macos
+#       - build-linux
+#       - build-windows
