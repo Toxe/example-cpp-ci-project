@@ -37,11 +37,13 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: apt-get update
-      - run: apt-get install -y software-properties-common
-      - run: apt-add-repository ppa:ubuntu-toolchain-r/test
-      - run: apt-get update
-      - run: apt-get install -y ninja-build cmake git curl unzip tar g++-9
+      - run: pwd
+      - run: ls -al $HOME
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y software-properties-common
+      - run: sudo apt-add-repository ppa:ubuntu-toolchain-r/test
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y ninja-build cmake git curl unzip tar g++-9
       - run: env|sort
       - run: ls -l /usr/bin
       - run: gcc-9 --version
