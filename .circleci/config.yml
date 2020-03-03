@@ -9,6 +9,7 @@ jobs:
       - image: gcc:9
     steps:
       - checkout
+      - run: apt-get install ninja-build cmake
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
