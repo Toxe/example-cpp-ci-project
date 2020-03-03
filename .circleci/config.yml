@@ -13,7 +13,7 @@ jobs:
       - run: apt-get install -y software-properties-common
       - run: apt-add-repository ppa:ubuntu-toolchain-r/test
       - run: apt-get update
-      - run: apt-get install -y ninja-build cmake git gcc-9 curl unzip tar
+      - run: apt-get install -y ninja-build cmake git g++-9 curl unzip tar
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
