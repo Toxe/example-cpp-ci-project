@@ -42,6 +42,7 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install -y software-properties-common
       - run: sudo apt-add-repository ppa:ubuntu-toolchain-r/test
+      - run: sudo apt-add-repository ppa:george-edison55/cmake-3.x
       - run: sudo apt-get update
       - run: sudo apt-get install -y ninja-build cmake git curl unzip tar g++-9
       - run: env|sort
@@ -103,6 +104,7 @@ jobs:
       - run: sudo apt-get install -y wget gnupg software-properties-common
       - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
       - run: sudo apt-add-repository -u 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
+      - run: sudo apt-add-repository ppa:george-edison55/cmake-3.x
       - run: sudo apt-get update
       - run: sudo apt-get install -y ninja-build cmake git curl unzip tar
       - run: sudo apt-get install -y -t llvm-toolchain-eoan-9 clang-9
