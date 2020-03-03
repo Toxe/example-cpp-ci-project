@@ -94,6 +94,38 @@ jobs:
             CC=clang-9 CXX=clang++-9 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
+  linux-clang-machine:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y wget gnupg software-properties-common
+      - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      - run: sudo apt-add-repository -u 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y ninja-build cmake git curl unzip tar
+      - run: sudo apt-get install -y -t llvm-toolchain-eoan-9 clang-9
+      - run: sudo apt search stdc++
+      - run: sudo apt search libc++
+      - run: sudo apt-get install -y libc++-9-dev libstdc++-9-dev
+      - run: env|sort
+      - run: ls -l /usr/bin
+      - run: clang++-9 --version
+      - run: ls -l $HOME
+      - run: ls -l $HOME/project
+      - run:
+          command: |
+            pushd $HOME
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+            cd vcpkg
+            CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
+            CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
+            popd
+            mkdir build && cd build
+            CC=clang-9 CXX=clang++-9 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake --build .
+
   windows-msvc:
     executor: win/default
     steps:
@@ -131,4 +163,5 @@ workflows:
       - linux-gcc
       - linux-gcc-machine
       - linux-clang
+      - linux-clang-machine
       - windows-msvc
