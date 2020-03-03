@@ -4,9 +4,9 @@ orbs:
   win: circleci/windows@2.4.0
 
 jobs:
-  build-linux:
+  linux-gcc:
     docker:
-      - image: circleci/node:4.8.2
+      - image: gcc:9
     steps:
       - checkout
       - run: env|sort
@@ -14,8 +14,23 @@ jobs:
       - run: ls -l $HOME
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
+      - run: gcc --version
+      - run: git --version
 
-  build-windows:
+  linux-ubuntu:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - checkout
+      - run: env|sort
+      - run: ls -l
+      - run: ls -l $HOME
+      - run: ls -l /usr/bin
+      - run: ls -l /usr/local/bin
+      - run: gcc --version
+      - run: git --version
+
+  windows-msvc:
     executor: win/default
     steps:
       - checkout
@@ -29,5 +44,6 @@ workflows:
   version: 2
   run-all:
     jobs:
-      - build-linux
-      - build-windows
+      - linux-gcc
+      - linux-ubuntu
+      - windows-msvc
