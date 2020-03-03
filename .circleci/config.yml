@@ -10,9 +10,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt search ninja
-      - run: apt search cmake
-      - run: apt-get install ninja-build cmake
+      - run: apt-get install -y ninja-build cmake
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
@@ -35,10 +33,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt search ninja
-      - run: apt search cmake
-      - run: apt search clang
-      - run: apt-get install ninja-build cmake clang
+      - run: apt-get install -y ninja-build cmake clang-9
       - run: env|sort
       - run: ls -l
       - run: ls -l $HOME
