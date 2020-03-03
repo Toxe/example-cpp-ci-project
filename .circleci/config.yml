@@ -65,13 +65,11 @@ jobs:
             $ProgressPreference = "SilentlyContinue"
             Expand-Archive cmake-3.16.4-win64-x64.zip
       - run: .\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe --version
-      - run: $Env:CMake = "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe"
-      - run: $Env:CMake
-      - run: \& $Env:CMake --version
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
           command: |
             New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+            New-Alias -Name cmake -Value "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe"
             cd $Env:HOMEPATH
             git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
             cd vcpkg-msvc
@@ -81,8 +79,8 @@ jobs:
             cd $Env:CIRCLE_WORKING_DIRECTORY
             mkdir build-msvc
             cd build-msvc
-            \& $Env:CMake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-            \& $Env:CMake --build .
+            cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
+            cmake --build .
 
 
 workflows:
