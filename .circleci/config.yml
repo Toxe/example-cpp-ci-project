@@ -74,6 +74,8 @@ jobs:
       - run: apt-get update
       - run: apt-get install -y ninja-build cmake git curl unzip tar
       - run: apt-get install -y -t llvm-toolchain-eoan-9 clang-9
+      - run: apt search stdc++
+      - run: apt search libc++
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
