@@ -39,17 +39,17 @@ jobs:
       - run: ls -l $HOME
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
-      - run: clang++ --version
+      - run: clang++-9 --version
       - run:
           command: |
             pushd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
             cd vcpkg
-            CC=clang CXX=clang++ ./bootstrap-vcpkg.sh --disableMetrics
-            CC=clang CXX=clang++ ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
+            CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
+            CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
             popd
             mkdir build && cd build
-            CC=clang CXX=clang++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=clang-9 CXX=clang++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   windows-msvc:
