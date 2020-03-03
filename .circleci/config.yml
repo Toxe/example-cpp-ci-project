@@ -48,6 +48,10 @@ jobs:
     executor: win/default
     steps:
       - checkout
+      - run: Invoke-RestMethod -Uri https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-win64-x64.zip -OutFile cmake-3.16.4-win64-x64.zip
+      - run: Expand-Archive cmake-3.16.4-win64-x64.zip
+      - run: .\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe --version
+      - run: CMAKE_EXE="$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe"
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
           command: |
@@ -61,8 +65,8 @@ jobs:
             cd $Env:CIRCLE_WORKING_DIRECTORY
             mkdir build-msvc
             cd build-msvc
-            cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-            cmake --build .
+            "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
+            "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe" --build .
 
 
 workflows:
