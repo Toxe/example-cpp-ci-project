@@ -20,17 +20,18 @@ jobs:
       - run: ls -l /usr/bin
       - run: gcc-9 --version
       - run: g++-9 --version
-      - run: ls -l $CIRCLE_WORKING_DIRECTORY
       - run: ls -l $HOME
       - run:
           command: |
+            pwd
             pushd $HOME
+            pwd
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
             cd vcpkg
-            ls -l $CIRCLE_WORKING_DIRECTORY
             CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
             CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
             popd
+            pwd
             mkdir build && cd build
             CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
@@ -47,21 +48,22 @@ jobs:
       - run: apt-get update
       - run: cat /etc/apt/sources.list
       - run: apt-get install -y ninja-build cmake git curl unzip tar
-      - run: apt-get install -y clang-9
+      - run: apt-get install -y -t llvm-toolchain-bionic-9 clang-9
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
-      - run: ls -l $CIRCLE_WORKING_DIRECTORY
       - run: ls -l $HOME
       - run:
           command: |
+            pwd
             pushd $HOME
+            pwd
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
             cd vcpkg
-            ls -l $CIRCLE_WORKING_DIRECTORY
             CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
             CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
             popd
+            pwd
             mkdir build && cd build
             CC=clang-9 CXX=clang++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
