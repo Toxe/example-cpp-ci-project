@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y ninja-build cmake clang-9
+      - run: apt-get install -y ninja-build cmake git clang-9
       - run: env|sort
       - run: ls -l
       - run: ls -l $HOME
