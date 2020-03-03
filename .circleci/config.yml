@@ -6,7 +6,7 @@ orbs:
 jobs:
   linux-gcc:
     docker:
-      - image: ubuntu:18.04
+      - image: ubuntu:19.10
     steps:
       - checkout
       - run: apt-get update
@@ -35,7 +35,7 @@ jobs:
 
   linux-clang:
     docker:
-      - image: ubuntu:18.04
+      - image: ubuntu:19.10
     steps:
       - checkout
       - run: apt-get update
