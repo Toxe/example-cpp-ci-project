@@ -13,7 +13,6 @@ jobs:
       - run: apt-get install -y software-properties-common
       - run: apt-add-repository ppa:ubuntu-toolchain-r/test
       - run: apt-get update
-      - run: cat /etc/apt/sources.list
       - run: apt-get install -y ninja-build cmake git curl unzip tar g++-9
       - run: env|sort
       - run: ls -l /usr/bin
@@ -41,11 +40,10 @@ jobs:
       - run: apt-get update
       - run: apt-get install -y wget gnupg software-properties-common
       - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-      - run: apt-add-repository -u 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+      - run: apt-add-repository -u 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
       - run: apt-get update
-      - run: cat /etc/apt/sources.list
       - run: apt-get install -y ninja-build cmake git curl unzip tar
-      - run: apt-get install -y -t llvm-toolchain-bionic-9 clang-9
+      - run: apt-get install -y -t llvm-toolchain-eoan-9 clang-9
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
