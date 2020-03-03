@@ -34,3 +34,12 @@ jobs:
       - run: dir
       - run: dir $Env:HOMEPATH
       - run: dir $Env:ProgramFiles\Git\bin\git.exe
+
+
+workflows:
+  version: 2
+  run-all:
+    jobs:
+      - build-macos
+      - build-linux
+      - build-windows
