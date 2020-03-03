@@ -9,6 +9,7 @@ jobs:
       - image: gcc:9
     steps:
       - checkout
+      - run: apt-get update
       - run: apt search ninja
       - run: apt search cmake
       - run: apt-get install ninja-build cmake
@@ -33,6 +34,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
+      - run: apt-get update
       - run: apt search ninja
       - run: apt search cmake
       - run: apt search clang
