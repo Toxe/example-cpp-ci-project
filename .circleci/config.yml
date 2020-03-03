@@ -76,6 +76,7 @@ jobs:
       - run: apt-get install -y -t llvm-toolchain-eoan-9 clang-9
       - run: apt search stdc++
       - run: apt search libc++
+      - run: apt-get install -y libc++-9-dev libstdc++-9-dev
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
