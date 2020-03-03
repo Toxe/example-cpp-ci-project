@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y ninja-build cmake git gcc-9
+      - run: apt-get install -y ninja-build cmake git gcc-9 curl unzip tar
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
@@ -34,7 +34,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y ninja-build cmake git clang-9
+      - run: apt-get install -y ninja-build cmake git clang-9 curl unzip tar
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
