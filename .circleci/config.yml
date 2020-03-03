@@ -63,7 +63,6 @@ jobs:
           command: |
             $ProgressPreference = "SilentlyContinue"
             Expand-Archive $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip -DestinationPath $Env:HOMEPATH
-      - run: $Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe --version
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
           command: |
