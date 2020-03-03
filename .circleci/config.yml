@@ -36,7 +36,7 @@ jobs:
       - checkout
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
-        - command: |
+        command: |
           New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
           cd $Env:HOMEPATH
           git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
