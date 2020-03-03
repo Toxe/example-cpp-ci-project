@@ -36,19 +36,19 @@ jobs:
       - checkout
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
-        command: |
-          New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-          cd $Env:HOMEPATH
-          git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
-          cd vcpkg-msvc
-          .\bootstrap-vcpkg.bat -disableMetrics
-          $packages = Get-Content "$Env:CIRCLE_WORKING_DIRECTORY\.vcpkg"
-          .\vcpkg install --triplet x64-windows $packages
-          cd $Env:CIRCLE_WORKING_DIRECTORY
-          mkdir build-msvc
-          cd build-msvc
-          cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-          cmake --build .
+          command: |
+            New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+            cd $Env:HOMEPATH
+            git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
+            cd vcpkg-msvc
+            .\bootstrap-vcpkg.bat -disableMetrics
+            $packages = Get-Content "$Env:CIRCLE_WORKING_DIRECTORY\.vcpkg"
+            .\vcpkg install --triplet x64-windows $packages
+            cd $Env:CIRCLE_WORKING_DIRECTORY
+            mkdir build-msvc
+            cd build-msvc
+            cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
+            cmake --build .
 
 
 workflows:
