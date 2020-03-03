@@ -15,16 +15,19 @@ jobs:
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
       - run: gcc --version
+      - run: /usr/local/bin/gcc --version
+      - run: g++ --version
+      - run: /usr/local/bin/g++ --version
       - run:
           command: |
             pushd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
             cd vcpkg
-            ./bootstrap-vcpkg.sh --disableMetrics
-            ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
+            CC=/usr/local/bin/gcc CXX=/usr/local/bin/g++ ./bootstrap-vcpkg.sh --disableMetrics
+            CC=/usr/local/bin/gcc CXX=/usr/local/bin/g++ ./vcpkg install $(< $CIRCLE_WORKING_DIRECTORY/.vcpkg)
             popd
             mkdir build && cd build
-            cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=/usr/local/bin/gcc CXX=/usr/local/bin/g++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   linux-clang:
