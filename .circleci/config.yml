@@ -70,7 +70,7 @@ jobs:
       - run:
           command: |
             New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-            New-Alias -Name cmake -Value "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe"
+            New-Alias -Name cmake -Value "$Env:HOMEPATH\cmake-3.16.4-win64-x64\bin\cmake.exe"
             cd $Env:HOMEPATH
             git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-msvc
             cd vcpkg-msvc
