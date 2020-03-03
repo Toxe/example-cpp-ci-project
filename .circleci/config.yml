@@ -9,6 +9,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
+      - run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test
       - run: apt-get update
       - run: apt-get install -y ninja-build cmake git gcc-9 curl unzip tar
       - run: env|sort
