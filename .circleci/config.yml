@@ -1,0 +1,36 @@
+version: 2.1
+
+orbs:
+  windows: circleci/windows@2.4.0
+
+jobs:
+  build-macos:
+    macos:
+      xcode: 11.3.1
+    steps:
+      - checkout
+      - run: env|sort
+      - run: ls -l
+      - run: ls -l $HOME
+      - run: ls -l /usr/bin
+      - run: ls -l /usr/local/bin
+
+  build-linux:
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - checkout
+      - run: env|sort
+      - run: ls -l
+      - run: ls -l $HOME
+      - run: ls -l /usr/bin
+      - run: ls -l /usr/local/bin
+
+  build-windows:
+    executor: win/vs2019
+    steps:
+      - checkout
+      - run: Get-ChildItem "Env:" | Sort Name
+      - run: dir
+      - run: dir $Env:HOMEPATH
+      - run: dir $Env:ProgramFiles\Git\bin\git.exe
