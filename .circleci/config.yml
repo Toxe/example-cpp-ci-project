@@ -26,19 +26,18 @@ jobs:
             cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
-
-  # linux-ubuntu:
-  #   docker:
-  #     - image: ubuntu:bionic
-  #   steps:
-  #     - checkout
-  #     - run: env|sort
-  #     - run: ls -l
-  #     - run: ls -l $HOME
-  #     - run: ls -l /usr/bin
-  #     - run: ls -l /usr/local/bin
-  #     - run: gcc --version
-  #     - run: git --version
+  linux-clang:
+    docker:
+      - image: ubuntu:18.04
+    steps:
+      - checkout
+      - run: apt-get install ninja-build cmake clang git
+      - run: env|sort
+      - run: ls -l
+      - run: ls -l $HOME
+      - run: ls -l /usr/bin
+      - run: ls -l /usr/local/bin
+      - run: clang++ --version
 
   windows-msvc:
     executor: win/default
@@ -66,5 +65,5 @@ workflows:
   run-all:
     jobs:
       - linux-gcc
-      # - linux-ubuntu
+      - linux-clang
       - windows-msvc
