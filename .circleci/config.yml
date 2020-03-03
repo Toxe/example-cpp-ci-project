@@ -54,7 +54,9 @@ jobs:
             $ProgressPreference = "SilentlyContinue"
             Expand-Archive cmake-3.16.4-win64-x64.zip
       - run: .\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe --version
-      - run: CMAKE_EXE="$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe"
+      - run: $Env:CMake = "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe"
+      - run: $Env:CMake
+      - run: \& $Env:CMake --version
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
           command: |
@@ -68,8 +70,8 @@ jobs:
             cd $Env:CIRCLE_WORKING_DIRECTORY
             mkdir build-msvc
             cd build-msvc
-            "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-            "$Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe" --build .
+            \& $Env:CMake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
+            \& $Env:CMake --build .
 
 
 workflows:
