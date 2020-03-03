@@ -9,6 +9,8 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - checkout
+      - run: apt-get update
+      - run: apt-get install -y software-properties-common
       - run: add-apt-repository ppa:ubuntu-toolchain-r/test
       - run: apt-get update
       - run: apt-get install -y ninja-build cmake git gcc-9 curl unzip tar
@@ -35,7 +37,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y wget gnupg
+      - run: apt-get install -y wget gnupg software-properties-common
       - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
       - run: add-apt-repository -u 'http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
       - run: apt-get update
