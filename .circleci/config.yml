@@ -58,12 +58,12 @@ jobs:
       - run:
           command: |
             $ProgressPreference = "SilentlyContinue"
-            Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-win64-x64.zip -OutFile cmake-3.16.4-win64-x64.zip
+            Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-win64-x64.zip -OutFile $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip
       - run:
           command: |
             $ProgressPreference = "SilentlyContinue"
-            Expand-Archive cmake-3.16.4-win64-x64.zip
-      - run: .\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe --version
+            Expand-Archive $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip -DestinationPath $Env:HOMEPATH
+      - run: $Env:HOMEPATH\cmake-3.16.4-win64-x64\cmake-3.16.4-win64-x64\bin\cmake.exe --version
       - run: Get-ChildItem "Env:" | Sort Name
       - run:
           command: |
