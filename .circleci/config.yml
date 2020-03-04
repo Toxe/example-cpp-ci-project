@@ -4,76 +4,7 @@ orbs:
   win: circleci/windows@2.4.0
 
 jobs:
-  linux-gcc:
-    docker:
-      - image: ubuntu:19.10
-    steps:
-      - checkout
-      - run: apt-get update
-      - run: apt-get install -y gnupg software-properties-common
-      - run: apt-add-repository -y ppa:ubuntu-toolchain-r/test
-      - run: apt-get update
-      - run: apt-get install -y ninja-build git curl unzip tar cmake g++-9 libstdc++-9-dev
-      - run:
-          command: |
-            pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-            cd vcpkg
-            CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
-            CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
-            popd
-            mkdir build && cd build
-            CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-            cmake --build .
-
-  linux-gcc-machine:
-    machine:
-      image: ubuntu-1604:201903-01
-    steps:
-      - checkout
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y software-properties-common apt-transport-https curl
-      - run: curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-      - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
-      - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
-      - run:
-          command: |
-            pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-            cd vcpkg
-            CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
-            CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
-            popd
-            mkdir build && cd build
-            CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-            cmake --build .
-
   linux-clang:
-    docker:
-      - image: ubuntu:19.10
-    steps:
-      - checkout
-      - run: apt-get update
-      - run: apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-      - run: wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-      - run: apt-add-repository -y 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
-      - run: apt-get update
-      - run: apt-get install -y ninja-build git curl unzip tar cmake clang-9 libc++-9-dev libc++abi-9-dev
-      - run:
-          command: |
-            pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-            cd vcpkg
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./bootstrap-vcpkg.sh --disableMetrics
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
-            popd
-            mkdir build && cd build
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-            cmake --build .
-
-  linux-clang-machine:
     machine:
       image: ubuntu-1604:201903-01
     steps:
@@ -96,6 +27,30 @@ jobs:
             popd
             mkdir build && cd build
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake --build .
+
+  linux-gcc:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y software-properties-common apt-transport-https curl
+      - run: curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+      - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
+      - run:
+          command: |
+            pushd $HOME
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
+            cd vcpkg
+            CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
+            CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
+            popd
+            mkdir build && cd build
+            CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   windows-msvc:
@@ -132,8 +87,6 @@ workflows:
   version: 2
   run-all:
     jobs:
-      - linux-gcc
-      - linux-gcc-machine
       - linux-clang
-      - linux-clang-machine
+      - linux-gcc
       - windows-msvc
