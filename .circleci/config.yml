@@ -10,10 +10,10 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y software-properties-common
-      - run: apt-add-repository ppa:ubuntu-toolchain-r/test
+      - run: apt-get install -y gnupg software-properties-common
+      - run: apt-add-repository -y ppa:ubuntu-toolchain-r/test
       - run: apt-get update
-      - run: apt-get install -y ninja-build cmake git curl unzip tar g++-9
+      - run: apt-get install -y ninja-build git curl unzip tar cmake g++-9 libstdc++-9-dev
       - run:
           command: |
             pushd $HOME
@@ -56,23 +56,21 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y wget gnupg software-properties-common
+      - run: apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
       - run: wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-      - run: apt-add-repository -u 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
+      - run: apt-add-repository -y 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
       - run: apt-get update
-      - run: apt-get install -y ninja-build cmake git curl unzip tar
-      - run: apt-get install -y -t llvm-toolchain-eoan-9 clang-9
-      - run: apt-get install -y libc++-9-dev libstdc++-9-dev
+      - run: apt-get install -y ninja-build git curl unzip tar cmake clang-9 libc++-9-dev libc++abi-9-dev
       - run:
           command: |
             pushd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
-            CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
-            CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./bootstrap-vcpkg.sh --disableMetrics
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
             popd
             mkdir build && cd build
-            CC=clang-9 CXX=clang++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   linux-clang-machine:
