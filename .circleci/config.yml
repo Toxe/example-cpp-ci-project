@@ -29,7 +29,7 @@ jobs:
             CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
             popd
             mkdir build && cd build
-            CC=gcc-9 CXX=g++-9 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   linux-gcc-machine:
@@ -59,7 +59,7 @@ jobs:
             CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
             popd
             mkdir build && cd build
-            CC=gcc-9 CXX=g++-9 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   linux-clang:
@@ -91,7 +91,7 @@ jobs:
             CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
             popd
             mkdir build && cd build
-            CC=clang-9 CXX=clang++-9 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=clang-9 CXX=clang++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   linux-clang-machine:
@@ -122,7 +122,7 @@ jobs:
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
             popd
             mkdir build && cd build
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   windows-msvc:
