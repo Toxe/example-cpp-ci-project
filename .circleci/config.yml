@@ -32,12 +32,12 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - run: sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-      - run: wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: sudo apt-get install -y software-properties-common apt-transport-https curl
+      - run: curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
       - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
       - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build git curl unzip tar cmake g++-9 libstdc++-9-dev
+      - run: sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
       - run:
           command: |
             pushd $HOME
@@ -79,13 +79,13 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - run: sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-      - run: wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-      - run: wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: sudo apt-get install -y software-properties-common apt-transport-https curl
+      - run: curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      - run: curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
       - run: sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
       - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build git curl unzip tar cmake clang-9 libc++-9-dev libc++abi-9-dev
+      - run: sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
       - run:
           command: |
             pushd $HOME
