@@ -14,12 +14,6 @@ jobs:
       - run: apt-add-repository ppa:ubuntu-toolchain-r/test
       - run: apt-get update
       - run: apt-get install -y ninja-build cmake git curl unzip tar g++-9
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: gcc-9 --version
-      - run: g++-9 --version
-      - run: ls -l $HOME
-      - run: ls -l $HOME/project
       - run:
           command: |
             pushd $HOME
@@ -44,12 +38,6 @@ jobs:
       - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
       - run: sudo apt-get update
       - run: sudo apt-get install -y ninja-build git curl unzip tar cmake g++-9 libstdc++-9-dev
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: gcc-9 --version
-      - run: g++-9 --version
-      - run: ls -l $HOME
-      - run: ls -l $HOME/project
       - run:
           command: |
             pushd $HOME
@@ -74,14 +62,7 @@ jobs:
       - run: apt-get update
       - run: apt-get install -y ninja-build cmake git curl unzip tar
       - run: apt-get install -y -t llvm-toolchain-eoan-9 clang-9
-      - run: apt search stdc++
-      - run: apt search libc++
       - run: apt-get install -y libc++-9-dev libstdc++-9-dev
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: clang++-9 --version
-      - run: ls -l $HOME
-      - run: ls -l $HOME/project
       - run:
           command: |
             pushd $HOME
@@ -107,12 +88,6 @@ jobs:
       - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-get update
       - run: sudo apt-get install -y ninja-build git curl unzip tar cmake clang-9 libc++-9-dev libc++abi-9-dev
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: clang++-9 --version
-      - run: cmake --version
-      - run: ls -l $HOME
-      - run: ls -l $HOME/project
       - run:
           command: |
             pushd $HOME
