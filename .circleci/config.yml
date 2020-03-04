@@ -9,22 +9,28 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y software-properties-common apt-transport-https curl
-      - run: curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-      - run: curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-      - run: sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
-      - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
       - run:
+          name: Install Software
           command: |
-            pushd $HOME
+            sudo apt-get update
+            sudo apt-get install -y software-properties-common apt-transport-https curl
+            curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+            curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+            sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
+            sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+            sudo apt-get update
+            sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
+      - run:
+          name: Install Vcpkg
+          command: |
+            cd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./bootstrap-vcpkg.sh --disableMetrics
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
-            popd
+      - run:
+          name: Build Project
+          command: |
             mkdir build && cd build
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
@@ -34,21 +40,27 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y software-properties-common apt-transport-https curl
-      - run: curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-      - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
-      - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
       - run:
+          name: Install Software
           command: |
-            pushd $HOME
+            sudo apt-get update
+            sudo apt-get install -y software-properties-common apt-transport-https curl
+            curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+            sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+            sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+            sudo apt-get update
+            sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
+      - run:
+          name: Install Vcpkg
+          command: |
+            cd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
             CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
             CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
-            popd
+      - run:
+          name: Build Project
+          command: |
             mkdir build && cd build
             CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
