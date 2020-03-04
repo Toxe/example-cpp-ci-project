@@ -17,7 +17,7 @@ jobs:
       - run:
           command: |
             pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
             CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
             CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
@@ -41,7 +41,7 @@ jobs:
       - run:
           command: |
             pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
             CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
             CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
@@ -66,7 +66,7 @@ jobs:
       - run:
           command: |
             pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
             CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
             CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
@@ -91,7 +91,7 @@ jobs:
       - run:
           command: |
             pushd $HOME
-            git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+            git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./bootstrap-vcpkg.sh --disableMetrics
             CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
