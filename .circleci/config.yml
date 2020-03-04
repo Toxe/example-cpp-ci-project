@@ -33,7 +33,7 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-      - run: wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
       - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
       - run: sudo apt-get update
@@ -57,7 +57,7 @@ jobs:
       - checkout
       - run: apt-get update
       - run: apt-get install -y wget gnupg software-properties-common
-      - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+      - run: wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
       - run: apt-add-repository -u 'deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-9 main'
       - run: apt-get update
       - run: apt-get install -y ninja-build cmake git curl unzip tar
@@ -82,8 +82,8 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-      - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-      - run: wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      - run: wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
       - run: sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
       - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-get update
