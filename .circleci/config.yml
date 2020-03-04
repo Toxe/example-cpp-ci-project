@@ -37,14 +37,13 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: pwd
-      - run: ls -al $HOME
       - run: sudo apt-get update
-      - run: sudo apt-get install -y software-properties-common
-      - run: sudo apt-add-repository ppa:ubuntu-toolchain-r/test
-      - run: sudo apt-add-repository ppa:george-edison55/cmake-3.x
+      - run: sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
+      - run: wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+      - run: sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
       - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build cmake git curl unzip tar g++-9
+      - run: sudo apt-get install -y ninja-build git curl unzip tar cmake g++-9 libstdc++-9-dev
       - run: env|sort
       - run: ls -l /usr/bin
       - run: gcc-9 --version
@@ -101,16 +100,17 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - run: sudo apt-get install -y wget gnupg software-properties-common
+      - run: sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
       - run: wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-      - run: sudo apt-add-repository -u 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
-      - run: sudo apt-add-repository ppa:george-edison55/cmake-3.x
+      - run: wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+      - run: sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
+      - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build cmake git curl unzip tar
-      - run: sudo apt-get install -y -t llvm-toolchain-xenial-9 clang-9 libc++-9-dev
+      - run: sudo apt-get install -y ninja-build git curl unzip tar cmake clang-9
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
+      - run: cmake --version
       - run: ls -l $HOME
       - run: ls -l $HOME/project
       - run:
