@@ -106,7 +106,7 @@ jobs:
       - run: sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
       - run: sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
       - run: sudo apt-get update
-      - run: sudo apt-get install -y ninja-build git curl unzip tar cmake clang-9
+      - run: sudo apt-get install -y ninja-build git curl unzip tar cmake clang-9 libc++-9-dev libc++abi-9-dev
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
@@ -118,11 +118,11 @@ jobs:
             pushd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
             cd vcpkg
-            CC=clang-9 CXX=clang++-9 ./bootstrap-vcpkg.sh --disableMetrics
-            CC=clang-9 CXX=clang++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./bootstrap-vcpkg.sh --disableMetrics
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
             popd
             mkdir build && cd build
-            CC=clang-9 CXX=clang++-9 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   windows-msvc:
