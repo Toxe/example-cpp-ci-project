@@ -107,10 +107,7 @@ jobs:
       - run: sudo apt-add-repository ppa:george-edison55/cmake-3.x
       - run: sudo apt-get update
       - run: sudo apt-get install -y ninja-build cmake git curl unzip tar
-      - run: sudo apt-get install -y -t llvm-toolchain-xenial-9 clang-9
-      - run: sudo apt search stdc++
-      - run: sudo apt search libc++
-      - run: sudo apt-get install -y libc++-9-dev libstdc++-9-dev
+      - run: sudo apt-get install -y -t llvm-toolchain-xenial-9 clang-9 libc++-9-dev
       - run: env|sort
       - run: ls -l /usr/bin
       - run: clang++-9 --version
