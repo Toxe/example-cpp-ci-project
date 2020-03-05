@@ -11,18 +11,18 @@ environment:
 
 
 for:
--
-  matrix:
-    only:
-      - image: macOS
-  environment:
-    CC_CLANG: /usr/local/opt/llvm/bin/clang
-    CXX_CLANG: /usr/local/opt/llvm/bin/clang++
-    CXXFLAGS_CLANG: -stdlib=libc++
-    CC_GCC: gcc-9
-    CXX_GCC: g++-9
-  install:
-    - brew install ninja llvm gcc
+# -
+#   matrix:
+#     only:
+#       - image: macOS
+#   environment:
+#     CC_CLANG: /usr/local/opt/llvm/bin/clang
+#     CXX_CLANG: /usr/local/opt/llvm/bin/clang++
+#     CXXFLAGS_CLANG: -stdlib=libc++
+#     CC_GCC: gcc-9
+#     CXX_GCC: g++-9
+#   install:
+#     - brew install ninja llvm gcc
 
 -
   matrix:
@@ -42,12 +42,12 @@ for:
     - sudo apt-get remove mssql-server
     - sudo apt-get install clang-9 libc++-9-dev libc++abi-9-dev
 
--
-  matrix:
-    only:
-      - image: Visual Studio 2019
-  install:
-    - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+# -
+#   matrix:
+#     only:
+#       - image: Visual Studio 2019
+#   install:
+#     - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
 
 
 before_build:
