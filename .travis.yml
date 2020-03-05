@@ -17,8 +17,10 @@ jobs:
       env:
         - CC=/usr/local/opt/llvm/bin/clang
         - CXX=/usr/local/opt/llvm/bin/clang++
+        - CXXFLAGS=-stdlib=libc++
         - VCPKG_CC=gcc-9
         - VCPKG_CXX=g++-9
+        - VCPKG_CXXFLAGS=-stdlib=libstdc++
 
     # Build project with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
     # Build Vcpkg with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
@@ -33,8 +35,10 @@ jobs:
       env:
         - CC=gcc-9
         - CXX=g++-9
+        - CXXFLAGS=-stdlib=libstdc++
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
+        - VCPKG_CXXFLAGS=$CXXFLAGS
 
     # Build project with: Clang 9.
     # Build Vcpkg with: Clang 9.
@@ -52,8 +56,10 @@ jobs:
       env:
         - CC=clang-9
         - CXX=clang++-9
+        - CXXFLAGS=-stdlib=libc++
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
+        - VCPKG_CXXFLAGS=$CXXFLAGS
 
     # Build project with: GCC 9.
     # Build Vcpkg with: GCC 9.
@@ -70,15 +76,17 @@ jobs:
       env:
         - CC=gcc-9
         - CXX=g++-9
+        - CXXFLAGS=-stdlib=libstdc++
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
+        - VCPKG_CXXFLAGS=$CXXFLAGS
 
 install:
   - pushd $HOME
   - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
   - cd vcpkg
   # build Vcpkg itself with $VCPKG_CC and $VCPKG_CXX
-  - CC=$VCPKG_CC CXX=$VCPKG_CXX ./bootstrap-vcpkg.sh --disableMetrics
+  - CC=$VCPKG_CC CXX=$VCPKG_CXX CXXFLAGS=$VCPKG_CXXFLAGS ./bootstrap-vcpkg.sh --disableMetrics
   # build Vcpkg packages with $CC/$CXX
   - ./vcpkg install $(< $TRAVIS_BUILD_DIR/.vcpkg)
   - popd

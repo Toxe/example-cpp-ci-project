@@ -46,6 +46,7 @@ jobs:
     environment:
       CC: gcc-9
       CXX: g++-9
+      CXXFLAGS: -stdlib=libstdc++
     steps:
       - checkout
       - run:
