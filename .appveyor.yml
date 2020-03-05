@@ -1,5 +1,5 @@
 image:
-  # - macOS
+  - macOS
   - Ubuntu
   - Visual Studio 2019
 
@@ -10,18 +10,18 @@ environment:
   APPVEYOR_YML_DISABLE_PS_LINUX: true
 
 for:
-# -
-#   matrix:
-#     only:
-#       - image: macOS
-#   environment:
-#     CC_CLANG: /usr/local/opt/llvm/bin/clang
-#     CXX_CLANG: /usr/local/opt/llvm/bin/clang++
-#     CXXFLAGS_CLANG: -stdlib=libc++
-#     CC_GCC: gcc-9
-#     CXX_GCC: g++-9
-#   install:
-#     - brew install ninja llvm gcc
+-
+  matrix:
+    only:
+      - image: macOS
+  environment:
+    CC_CLANG: /usr/local/opt/llvm/bin/clang
+    CXX_CLANG: /usr/local/opt/llvm/bin/clang++
+    CXXFLAGS_CLANG: -stdlib=libc++
+    CC_GCC: gcc-9
+    CXX_GCC: g++-9
+  install:
+    - brew install ninja llvm gcc
 
 -
   matrix:
