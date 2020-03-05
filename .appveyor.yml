@@ -81,6 +81,7 @@ build_script:
   - sh: mkdir build-gcc && cd build-gcc
   - sh: CC=$CC_GCC CXX=$CXX_GCC cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
   - sh: cmake --build .
+  - sh: ./example_simple
 
   # ---- Windows ----
   # build project with MSVC
@@ -88,3 +89,4 @@ build_script:
   - ps: cd build-msvc
   - ps: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
   - ps: cmake --build .
+  - ps: .\Release\example_simple.exe

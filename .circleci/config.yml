@@ -38,6 +38,7 @@ jobs:
             mkdir build && cd build
             cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
+            ./example_simple
 
   linux-gcc:
     machine:
@@ -71,6 +72,7 @@ jobs:
             mkdir build && cd build
             cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
+            ./example_simple
 
   windows-msvc:
     executor: win/default
@@ -100,6 +102,7 @@ jobs:
             cd build-msvc
             cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
             cmake --build .
+            .\Release\example_simple.exe
 
 
 workflows:

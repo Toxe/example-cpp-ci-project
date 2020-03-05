@@ -88,3 +88,4 @@ script:
   - mkdir build && cd build
   - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cmake --build .
+  - ./example_simple
