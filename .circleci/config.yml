@@ -7,6 +7,10 @@ jobs:
   linux-clang:
     machine:
       image: ubuntu-1604:201903-01
+    environment:
+      CC: clang-9
+      CXX: clang++-9
+      CXXFLAGS: -stdlib=libc++
     steps:
       - checkout
       - run:
@@ -26,18 +30,21 @@ jobs:
             cd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./bootstrap-vcpkg.sh --disableMetrics
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ ./vcpkg install $(< $HOME/project/.vcpkg)
+            ./bootstrap-vcpkg.sh --disableMetrics
+            ./vcpkg install $(< $HOME/project/.vcpkg)
       - run:
           name: Build Project
           command: |
             mkdir build && cd build
-            CC=clang-9 CXX=clang++-9 CXXFLAGS=-stdlib=libc++ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   linux-gcc:
     machine:
       image: ubuntu-1604:201903-01
+    environment:
+      CC: gcc-9
+      CXX: g++-9
     steps:
       - checkout
       - run:
@@ -56,13 +63,13 @@ jobs:
             cd $HOME
             git clone --depth 1 https://github.com/Microsoft/vcpkg.git
             cd vcpkg
-            CC=gcc-9 CXX=g++-9 ./bootstrap-vcpkg.sh --disableMetrics
-            CC=gcc-9 CXX=g++-9 ./vcpkg install $(< $HOME/project/.vcpkg)
+            ./bootstrap-vcpkg.sh --disableMetrics
+            ./vcpkg install $(< $HOME/project/.vcpkg)
       - run:
           name: Build Project
           command: |
             mkdir build && cd build
-            CC=gcc-9 CXX=g++-9 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+            cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
             cmake --build .
 
   windows-msvc:
