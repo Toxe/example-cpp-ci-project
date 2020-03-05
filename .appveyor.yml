@@ -76,6 +76,7 @@ build_script:
   - sh: mkdir build-clang && cd build-clang
   - sh: CC=$CC_CLANG CXX=$CXX_CLANG cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-clang/scripts/buildsystems/vcpkg.cmake ..
   - sh: cmake --build .
+  - sh: ./example_simple
   - sh: cd ..
   # build project with GCC
   - sh: mkdir build-gcc && cd build-gcc
