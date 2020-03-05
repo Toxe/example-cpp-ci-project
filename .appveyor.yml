@@ -1,7 +1,7 @@
 image:
-  - macOS
+  # - macOS
   - Ubuntu
-  - Visual Studio 2019
+  # - Visual Studio 2019
 
 platform:
   - x64
