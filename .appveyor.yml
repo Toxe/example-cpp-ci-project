@@ -1,7 +1,7 @@
 image:
   # - macOS
   - Ubuntu
-  # - Visual Studio 2019
+  - Visual Studio 2019
 
 platform:
   - x64
@@ -9,6 +9,8 @@ platform:
 environment:
   APPVEYOR_YML_DISABLE_PS_LINUX: true
 
+init:
+  - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
 
 for:
 # -
@@ -35,19 +37,18 @@ for:
     CC_GCC: gcc-9
     CXX_GCC: g++-9
   install:
-    - curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
     - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-add-repository -y 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
     - sudo apt-get update
     - sudo apt-get remove mssql-server
     - sudo apt-get install clang-9 libc++-9-dev libc++abi-9-dev
 
-# -
-#   matrix:
-#     only:
-#       - image: Visual Studio 2019
-#   install:
-#     - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+-
+  matrix:
+    only:
+      - image: Visual Studio 2019
+  install:
+    - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
 
 
 before_build:
