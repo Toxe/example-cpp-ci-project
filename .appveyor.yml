@@ -21,7 +21,6 @@ for:
     CXXFLAGS_CLANG: -stdlib=libc++
     CC_GCC: gcc-9
     CXX_GCC: g++-9
-    CXXFLAGS_GCC: -stdlib=libstdc++
   install:
     - brew install ninja llvm gcc
 
@@ -35,7 +34,6 @@ for:
     CXXFLAGS_CLANG: -stdlib=libc++
     CC_GCC: gcc-9
     CXX_GCC: g++-9
-    CXXFLAGS_GCC: -stdlib=libstdc++
   install:
     - sudo apt-get install ninja-build
 
@@ -59,8 +57,8 @@ before_build:
   # build Vcpkg and install packages (from .vcpkg) with GCC
   - sh: git clone --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg-gcc
   - sh: cd vcpkg-gcc
-  - sh: CC=$CC_GCC CXX=$CXX_GCC CXXFLAGS=$CXXFLAGS_GCC ./bootstrap-vcpkg.sh --disableMetrics
-  - sh: CC=$CC_GCC CXX=$CXX_GCC CXXFLAGS=$CXXFLAGS_GCC ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
+  - sh: CC=$CC_GCC CXX=$CXX_GCC ./bootstrap-vcpkg.sh --disableMetrics
+  - sh: CC=$CC_GCC CXX=$CXX_GCC ./vcpkg install $(< $APPVEYOR_BUILD_FOLDER/.vcpkg)
   - sh: popd
 
   # ---- Windows ----
@@ -84,7 +82,7 @@ build_script:
   - sh: cd ..
   # build project with GCC
   - sh: mkdir build-gcc && cd build-gcc
-  - sh: CC=$CC_GCC CXX=$CXX_GCC CXXFLAGS=$CXXFLAGS_GCC cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
+  - sh: CC=$CC_GCC CXX=$CXX_GCC cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg-gcc/scripts/buildsystems/vcpkg.cmake ..
   - sh: cmake --build .
   - sh: ./example_simple
 

@@ -20,7 +20,7 @@ jobs:
         - CXXFLAGS=-stdlib=libc++
         - VCPKG_CC=gcc-9
         - VCPKG_CXX=g++-9
-        - VCPKG_CXXFLAGS=-stdlib=libstdc++
+        - VCPKG_CXXFLAGS=
 
     # Build project with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
     # Build Vcpkg with: GCC 9 (default installed by Homebrew). Needs xcode10.3 to be able to run.
@@ -35,7 +35,7 @@ jobs:
       env:
         - CC=gcc-9
         - CXX=g++-9
-        - CXXFLAGS=-stdlib=libstdc++
+        - CXXFLAGS=
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
         - VCPKG_CXXFLAGS=$CXXFLAGS
@@ -76,7 +76,7 @@ jobs:
       env:
         - CC=gcc-9
         - CXX=g++-9
-        - CXXFLAGS=-stdlib=libstdc++
+        - CXXFLAGS=
         - VCPKG_CC=$CC
         - VCPKG_CXX=$CXX
         - VCPKG_CXXFLAGS=$CXXFLAGS
