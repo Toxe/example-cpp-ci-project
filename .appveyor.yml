@@ -35,12 +35,11 @@ for:
     CC_GCC: gcc-9
     CXX_GCC: g++-9
   install:
-    - sudo apt-get update
-    - sudo apt-get install -y software-properties-common apt-transport-https curl
     - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-add-repository -y 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
     - sudo apt-get update
-    - sudo apt-get install ninja-build clang-9 libc++-9-dev libc++abi-9-dev
+    - sudo apt-get remove mssql-server
+    - sudo apt-get install clang-9 libc++-9-dev libc++abi-9-dev
 
 -
   matrix:
