@@ -34,13 +34,12 @@ for:
     CC_GCC: gcc-9
     CXX_GCC: g++-9
   install:
-    - env|sort
-    - curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
     - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-add-repository -y 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
     - sudo apt-get update
-    - sudo apt-get remove mssql-server
-    - sudo apt-get install clang-9 libc++-9-dev libc++abi-9-dev
+    - sudo apt-get -y remove clang-9 mssql-server
+    - sudo apt-get -y autoremove
+    - sudo apt-get -y install clang-9 libc++-9-dev libc++abi-9-dev
 
 -
   matrix:
