@@ -35,7 +35,7 @@ for:
     CC_GCC: gcc-9
     CXX_GCC: g++-9
   install:
-    - sudo apt-get install ninja-build
+    - sudo apt-get install ninja-build libc++-9-dev libc++abi-9-dev
 
 -
   matrix:
