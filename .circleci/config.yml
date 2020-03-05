@@ -101,7 +101,7 @@ jobs:
             mkdir build-msvc
             cd build-msvc
             cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-            cmake --build .
+            cmake --build . --config Release
             .\Release\example_simple.exe
 
 

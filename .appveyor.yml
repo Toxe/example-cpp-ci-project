@@ -88,5 +88,5 @@ build_script:
   - ps: mkdir build-msvc
   - ps: cd build-msvc
   - ps: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-  - ps: cmake --build .
+  - ps: cmake --build . --config Release
   - ps: .\Release\example_simple.exe
