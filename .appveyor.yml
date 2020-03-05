@@ -37,7 +37,6 @@ for:
     - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
     - sudo apt-add-repository -y 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
     - sudo apt-get update
-    - dpkg --get-selections | grep hold
     - sudo apt-get -y --allow-change-held-packages remove clang-9 mssql-server
     - sudo apt-get -y autoremove
     - sudo apt-get -y install clang-9 libc++-9-dev libc++abi-9-dev
