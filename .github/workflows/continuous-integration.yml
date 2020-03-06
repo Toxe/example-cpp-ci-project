@@ -9,17 +9,20 @@ jobs:
     name: macOS Clang
     runs-on: macos-latest
     env:
-      CC: clang-9
-      CXX: clang++-9
+      CC: /usr/local/opt/llvm/bin/clang
+      CXX: /usr/local/opt/llvm/bin/clang++
     steps:
       - uses: actions/checkout@v2
-      - run: brew install ninja llvm
+      - run: brew install ninja
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
+      - run: ls -l /usr/local
+      - run: ls -l /usr/local/opt
+      - run: ls -l /usr/local/Cellar
+      - run: $CXX --version
       - name: Install Vcpkg
         run: |
-          pwd
           cd $HOME
           git clone --depth 1 https://github.com/Microsoft/vcpkg.git
           cd vcpkg
@@ -27,7 +30,6 @@ jobs:
           ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
       - name: Build Project
         run: |
-          pwd
           mkdir build && cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
           cmake --build .
