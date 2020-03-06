@@ -72,10 +72,9 @@ jobs:
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
-      - run: apt-get install ninja-build
+      - run: sudo apt-get install ninja-build
       - name: Install Vcpkg
         run: |
-          pwd
           cd $HOME
           git clone --depth 1 https://github.com/Microsoft/vcpkg.git
           cd vcpkg
@@ -83,7 +82,6 @@ jobs:
           ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
       - name: Build Project
         run: |
-          pwd
           mkdir build && cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
           cmake --build .
@@ -97,13 +95,12 @@ jobs:
       CXX: g++-9
     steps:
       - uses: actions/checkout@v2
-      - run: apt-get install ninja-build
+      - run: sudo apt-get install ninja-build
       - run: env|sort
       - run: ls -l /usr/bin
       - run: ls -l /usr/local/bin
       - name: Install Vcpkg
         run: |
-          pwd
           cd $HOME
           git clone --depth 1 https://github.com/Microsoft/vcpkg.git
           cd vcpkg
@@ -111,7 +108,6 @@ jobs:
           ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
       - name: Build Project
         run: |
-          pwd
           mkdir build && cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
           cmake --build .
