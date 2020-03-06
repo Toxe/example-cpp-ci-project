@@ -1,0 +1,53 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  linux-gcc:
+    name: Linux GCC
+    runs-on: ubuntu-latest
+    env:
+      CC: gcc-9
+      CXX: g++-9
+    steps:
+      - name: Setup
+        uses: actions/checkout@v2
+      - name: Info
+        run: |
+          env|sort
+          ls -l $HOME
+          ls -l $GITHUB_WORKSPACE
+          ls -l /usr/bin
+          ls -l /usr/local/bin
+
+  osx-clang:
+    name: macOS Clang
+    runs-on: macos-latest
+    env:
+      CC: clang-9
+      CXX: clang++-9
+    steps:
+      - name: Setup
+        uses: actions/checkout@v2
+      - name: Info
+        run: |
+          env|sort
+          ls -l $HOME
+          ls -l $GITHUB_WORKSPACE
+          ls -l /usr/bin
+          ls -l /usr/local/bin
+
+  windows-msvc:
+    name: Windows MSVC
+    runs-on: windows-latest
+    steps:
+      - name: Setup
+        uses: actions/checkout@v2
+      - name: Info
+        run: |
+          Get-ChildItem "Env:" | Sort Name
+          dir $Env:HOMEPATH
+          dir $Env:ProgramFiles
+          dir $GITHUB_WORKSPACE
