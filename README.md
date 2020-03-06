@@ -1,11 +1,11 @@
 # Example C++ CI Project
 
-| Service | Status |
-| --- | --- |
-| Travis | [![Build Status](https://travis-ci.com/Toxe/example-cpp-ci-project.svg?branch=master)](https://travis-ci.com/Toxe/example-cpp-ci-project) |
-| AppVeyor | [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) |
-| CircleCI | [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project) |
-| GitHub Actions | ![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg) |
+| Service | Status | OS and Compiler |
+| --- | --- | --- |
+| Travis | [![Build Status](https://travis-ci.com/Toxe/example-cpp-ci-project.svg?branch=master)](https://travis-ci.com/Toxe/example-cpp-ci-project) | macOS and Linux (Clang 9, GCC 9) |
+| AppVeyor | [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) | macOS and Linux (Clang 9, GCC 9), Windows (MSVC 2019) |
+| CircleCI | [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project) | Linux (Clang 9, GCC 9), Windows (MSVC 2019) |
+| GitHub Actions | ![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg) | macOS and Linux (Clang 9, GCC 9), Windows (MSVC 2019) |
 
 An example project to test different CI (Continuous Integration) services.
 
