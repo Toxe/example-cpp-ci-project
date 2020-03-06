@@ -78,6 +78,7 @@ jobs:
     executor: win/default
     steps:
       - checkout
+      - run: dir "$Env:ProgramFiles"
       - run:
           name: Download CMake
           command: |
