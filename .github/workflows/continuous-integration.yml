@@ -11,16 +11,10 @@ jobs:
     env:
       CC: /usr/local/opt/llvm/bin/clang
       CXX: /usr/local/opt/llvm/bin/clang++
+      CXXFLAGS: -stdlib=libc++
     steps:
       - uses: actions/checkout@v2
       - run: brew install ninja
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: ls -l /usr/local/bin
-      - run: ls -l /usr/local
-      - run: ls -l /usr/local/opt
-      - run: ls -l /usr/local/Cellar
-      - run: $CXX --version
       - name: Install Vcpkg
         run: |
           cd $HOME
@@ -44,9 +38,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: brew install ninja
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: ls -l /usr/local/bin
       - name: Install Vcpkg
         run: |
           cd $HOME
@@ -67,11 +58,9 @@ jobs:
     env:
       CC: clang-9
       CXX: clang++-9
+      CXXFLAGS: -stdlib=libc++
     steps:
       - uses: actions/checkout@v2
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: ls -l /usr/local/bin
       - run: sudo apt-get install ninja-build
       - name: Install Vcpkg
         run: |
@@ -96,9 +85,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get install ninja-build
-      - run: env|sort
-      - run: ls -l /usr/bin
-      - run: ls -l /usr/local/bin
       - name: Install Vcpkg
         run: |
           cd $HOME
@@ -118,10 +104,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: Get-ChildItem "Env:" | Sort Name
-      - run: dir
-      - run: dir "$GITHUB_WORKSPACE"
-      - run: dir "$Env:ProgramFiles"
       - name: Install Vcpkg
         run: |
           cd $HOME
