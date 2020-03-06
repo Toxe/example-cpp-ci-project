@@ -125,5 +125,21 @@ jobs:
       - run: Get-ChildItem "Env:" | Sort Name
       - run: dir
       - run: dir "$GITHUB_WORKSPACE"
-      - run: dir "$Env:HOMEPATH"
       - run: dir "$Env:ProgramFiles"
+      - name: Install Vcpkg
+        run: |
+          cd $HOME
+          New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
+          git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
+          cd vcpkg
+          .\bootstrap-vcpkg.bat -disableMetrics
+          $packages = Get-Content "$Env:GITHUB_WORKSPACE\.vcpkg"
+          .\vcpkg install --triplet x64-windows $packages
+      - name: Build Project
+        run: |
+          New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$HOME\vcpkg\scripts\buildsystems\vcpkg.cmake" ..
+          cmake --build . --config Release
+          .\Release\example_simple.exe
