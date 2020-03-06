@@ -47,14 +47,8 @@ jobs:
     steps:
       - name: Setup
         uses: actions/checkout@v2
-      - name: Info
-        run: |
-          New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-          Get-ChildItem "Env:" | Sort Name
-          git --version
-          dir
-          cd $HOME
-          dir
-          dir "$GITHUB_WORKSPACE"
-          dir "$Env:HOMEPATH"
-          dir "$Env:ProgramFiles"
+      - run: Get-ChildItem "Env:" | Sort Name
+      - run: dir
+      - run: dir "$GITHUB_WORKSPACE"
+      - run: dir "$Env:HOMEPATH"
+      - run: dir "$Env:ProgramFiles"
