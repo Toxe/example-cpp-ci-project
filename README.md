@@ -1,6 +1,6 @@
 # Example C++ CI Project
 
-[![Build Status](https://travis-ci.com/Toxe/example-cpp-ci-project.svg?branch=master)](https://travis-ci.com/Toxe/example-cpp-ci-project) [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project)
+[![Build Status](https://travis-ci.com/Toxe/example-cpp-ci-project.svg?branch=master)](https://travis-ci.com/Toxe/example-cpp-ci-project) [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project) ![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)
 
 
 An example project to test CI services.
