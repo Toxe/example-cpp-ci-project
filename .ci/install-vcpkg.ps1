@@ -12,7 +12,7 @@ if ($args.Count -lt 1) { Exit 1 }
 $PROJECT_DIR=$args[0]
 $VCPKG_DIR=$args[1]
 
-if ($VCPKG_DIR -eq $null) { $VCPKG_DIR="vcpkg" }
+if ($null -eq $VCPKG_DIR) { $VCPKG_DIR="vcpkg" }
 
 Write-Host "---- install-vcpkg.ps1"
 Write-Host "PROJECT_DIR:" $PROJECT_DIR
