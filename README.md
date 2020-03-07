@@ -1,4 +1,4 @@
-# Example C++ CI Project
+# Example C++ CI Project and CI Services Comparison
 
 | Service | Status | OS and Compiler |
 | --- | --- | --- |
@@ -11,6 +11,17 @@ An example project to test different CI (Continuous Integration) services.
 
 - `example_simple.cpp` is a simple program that has no further dependencies and just outputs a couple of strings describing the compiler and C++ standard library that it was built with.
 - `example_benchmark.cpp` needs Vcpkg and uses PCRE, PCRE2 and Google Benchmark to perform a small regular expression benchmark.
+
+## TODO
+
+- Combine duplicate code in re-usable shell scripts
+- Move scripts to a new directory ("`.ci`" ?)
+- Move `example_simple` execution into its own separate test step
+- Add a new example program that uses a real test framework
+- Use Clang and GCC on Windows
+- ~~Look at Jenkins~~
+- Look at Azure DevOps
+- Look at Semaphore
 
 ## Dependencies
 
