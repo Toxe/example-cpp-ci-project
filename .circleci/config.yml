@@ -24,8 +24,8 @@ jobs:
             sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
             sudo apt-get update
             sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
-      - run: sh .ci/install-vcpkg.sh $HOME/project
-      - run: sh .ci/build-project.sh
+      - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
+      - run: /bin/bash .ci/build-project.sh
       - run: ./build/example_simple
 
   linux-gcc:
@@ -46,8 +46,8 @@ jobs:
             sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
             sudo apt-get update
             sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
-      - run: sh .ci/install-vcpkg.sh $HOME/project
-      - run: sh .ci/build-project.sh
+      - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
+      - run: /bin/bash .ci/build-project.sh
       - run: ./build/example_simple
 
 

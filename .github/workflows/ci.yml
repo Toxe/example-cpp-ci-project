@@ -15,8 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: brew install ninja
-      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - run: sh .ci/build-project.sh
+      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+      - run: /bin/bash .ci/build-project.sh
       - run: ./build/example_simple
 
   osx-gcc:
@@ -28,8 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: brew install ninja
-      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - run: sh .ci/build-project.sh
+      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+      - run: /bin/bash .ci/build-project.sh
       - run: ./build/example_simple
 
   linux-clang:
@@ -42,8 +42,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
-      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - run: sh .ci/build-project.sh
+      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+      - run: /bin/bash .ci/build-project.sh
       - run: ./build/example_simple
 
   linux-gcc:
@@ -55,8 +55,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y ninja-build
-      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - run: sh .ci/build-project.sh
+      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+      - run: /bin/bash .ci/build-project.sh
       - run: ./build/example_simple
 
   windows-msvc:

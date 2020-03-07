@@ -85,9 +85,9 @@ jobs:
 
 install:
   # build Vcpkg itself with $VCPKG_{CC,CXX,CXXFLAGS} and the Vcpkg packages with $CC/$CXX/$CXXFLAGS
-  - sh .ci/install-vcpkg.sh $TRAVIS_BUILD_DIR
+  - /bin/bash .ci/install-vcpkg.sh "$TRAVIS_BUILD_DIR"
 
 script:
   # build project with $CC/$CXX
-  - sh .ci/build-project.sh
+  - /bin/bash .ci/build-project.sh
   - ./build/example_simple
