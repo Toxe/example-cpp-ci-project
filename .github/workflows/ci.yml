@@ -65,11 +65,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: .ci\install-vcpkg.ps1 "$Env:GITHUB_WORKSPACE"
-      - name: Build Project
-        run: |
-          New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
-          mkdir build
-          cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$HOME\vcpkg\scripts\buildsystems\vcpkg.cmake" ..
-          cmake --build . --config Release
-          .\Release\example_simple.exe
+      - run: .ci\build-project.ps1
+      - run: .\build\Release\example_simple.exe

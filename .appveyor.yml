@@ -58,7 +58,7 @@ before_build:
 
   # ---- Windows ----
   # build Vcpkg and install packages (from .vcpkg) with MSVC
-  - ps: .ci\install-vcpkg.ps1 "$Env:APPVEYOR_BUILD_FOLDER"
+  - ps: .ci\install-vcpkg.ps1 "$Env:APPVEYOR_BUILD_FOLDER" vcpkg-msvc
 
 
 build_script:
@@ -72,8 +72,6 @@ build_script:
 
   # ---- Windows ----
   # build project with MSVC
-  - ps: mkdir build-msvc
-  - ps: cd build-msvc
-  - ps: cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$Env:HOMEPATH\vcpkg-msvc\scripts\buildsystems\vcpkg.cmake" ..
-  - ps: cmake --build . --config Release
-  - ps: .\Release\example_simple.exe
+  - ps: .ci\build-project.ps1 $HOME/vcpkg-gcc build-gcc
+  - ps: .\build\Release\example_simple.exe "$Env:HOMEPATH\vcpkg-msvc" build-msvc
+  - ps: .\build-msvc\Release\example_simple.exe
