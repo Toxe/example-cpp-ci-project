@@ -25,13 +25,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
       - run: sh .ci/install-vcpkg.sh $HOME/project
-      - run:
-          name: Build Project
-          command: |
-            mkdir build && cd build
-            cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-            cmake --build .
-            ./example_simple
+      - run: sh .ci/build-project.sh
+      - run: ./build/example_simple
 
   linux-gcc:
     machine:
@@ -52,13 +47,9 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
       - run: sh .ci/install-vcpkg.sh $HOME/project
-      - run:
-          name: Build Project
-          command: |
-            mkdir build && cd build
-            cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-            cmake --build .
-            ./example_simple
+      - run: sh .ci/build-project.sh
+      - run: ./build/example_simple
+
 
   windows-msvc:
     executor: win/default

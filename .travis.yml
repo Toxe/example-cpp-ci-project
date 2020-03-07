@@ -89,7 +89,5 @@ install:
 
 script:
   # build project with $CC/$CXX
-  - mkdir build && cd build
-  - cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-  - cmake --build .
-  - ./example_simple
+  - sh .ci/build-project.sh
+  - ./build/example_simple

@@ -16,12 +16,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: brew install ninja
       - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - name: Build Project
-        run: |
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-          cmake --build .
-          ./example_simple
+      - run: sh .ci/build-project.sh
+      - run: ./build/example_simple
 
   osx-gcc:
     name: macOS GCC
@@ -33,12 +29,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: brew install ninja
       - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - name: Build Project
-        run: |
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-          cmake --build .
-          ./example_simple
+      - run: sh .ci/build-project.sh
+      - run: ./build/example_simple
 
   linux-clang:
     name: Linux Clang
@@ -51,12 +43,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
       - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - name: Build Project
-        run: |
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-          cmake --build .
-          ./example_simple
+      - run: sh .ci/build-project.sh
+      - run: ./build/example_simple
 
   linux-gcc:
     name: Linux GCC
@@ -68,12 +56,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y ninja-build
       - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
-      - name: Build Project
-        run: |
-          mkdir build && cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-          cmake --build .
-          ./example_simple
+      - run: sh .ci/build-project.sh
+      - run: ./build/example_simple
 
   windows-msvc:
     name: Windows MSVC
