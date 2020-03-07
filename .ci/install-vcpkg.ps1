@@ -19,7 +19,7 @@ Write-Host "PROJECT_DIR:" $PROJECT_DIR
 Write-Host "VCPKG_DIR:" $VCPKG_DIR
 Write-Host "----------------------"
 
-Set-Location "$Env:HOMEPATH"
+Set-Location "$HOME"
 New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
 git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git $VCPKG_DIR
 Set-Location $VCPKG_DIR
