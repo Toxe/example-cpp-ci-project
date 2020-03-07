@@ -15,13 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: brew install ninja
-      - name: Install Vcpkg
-        run: |
-          cd $HOME
-          git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-          cd vcpkg
-          ./bootstrap-vcpkg.sh --disableMetrics
-          ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
+      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
       - name: Build Project
         run: |
           mkdir build && cd build
@@ -38,13 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: brew install ninja
-      - name: Install Vcpkg
-        run: |
-          cd $HOME
-          git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-          cd vcpkg
-          ./bootstrap-vcpkg.sh --disableMetrics
-          ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
+      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
       - name: Build Project
         run: |
           mkdir build && cd build
@@ -62,13 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
-      - name: Install Vcpkg
-        run: |
-          cd $HOME
-          git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-          cd vcpkg
-          ./bootstrap-vcpkg.sh --disableMetrics
-          ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
+      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
       - name: Build Project
         run: |
           mkdir build && cd build
@@ -85,13 +67,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y ninja-build
-      - name: Install Vcpkg
-        run: |
-          cd $HOME
-          git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-          cd vcpkg
-          ./bootstrap-vcpkg.sh --disableMetrics
-          ./vcpkg install $(< $GITHUB_WORKSPACE/.vcpkg)
+      - run: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
       - name: Build Project
         run: |
           mkdir build && cd build

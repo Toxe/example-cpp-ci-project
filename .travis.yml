@@ -84,14 +84,8 @@ jobs:
         - VCPKG_CXXFLAGS=$CXXFLAGS
 
 install:
-  - pushd $HOME
-  - git clone --depth 1 https://github.com/Microsoft/vcpkg.git
-  - cd vcpkg
-  # build Vcpkg itself with $VCPKG_CC and $VCPKG_CXX
-  - CC=$VCPKG_CC CXX=$VCPKG_CXX CXXFLAGS=$VCPKG_CXXFLAGS ./bootstrap-vcpkg.sh --disableMetrics
-  # build Vcpkg packages with $CC/$CXX
-  - ./vcpkg install $(< $TRAVIS_BUILD_DIR/.vcpkg)
-  - popd
+  # build Vcpkg itself with $VCPKG_{CC,CXX,CXXFLAGS} and the Vcpkg packages with $CC/$CXX/$CXXFLAGS
+  - sh .ci/install-vcpkg.sh $TRAVIS_BUILD_DIR
 
 script:
   # build project with $CC/$CXX
