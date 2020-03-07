@@ -45,8 +45,6 @@ for:
   matrix:
     only:
       - image: Visual Studio 2019
-  install:
-    - ps: New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
 
 
 before_build:
