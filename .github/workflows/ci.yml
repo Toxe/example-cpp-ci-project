@@ -64,15 +64,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Vcpkg
-        run: |
-          cd $HOME
-          New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-          git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git vcpkg
-          cd vcpkg
-          .\bootstrap-vcpkg.bat -disableMetrics
-          $packages = Get-Content "$Env:GITHUB_WORKSPACE\.vcpkg"
-          .\vcpkg install --triplet x64-windows $packages
+      - run: .ci\install-vcpkg.ps1 "$Env:GITHUB_WORKSPACE"
       - name: Build Project
         run: |
           New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
