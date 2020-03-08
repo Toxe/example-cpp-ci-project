@@ -17,7 +17,6 @@ if ($null -eq $VCPKG_DIR) { $VCPKG_DIR="vcpkg" }
 Write-Host "---- install-vcpkg.ps1 ----"
 Write-Host "PROJECT_DIR: $PROJECT_DIR"
 Write-Host "VCPKG_DIR: $VCPKG_DIR"
-Write-Host ".vcpkg file: $PROJECT_DIR\.vcpkg"
 Write-Host "---------------------------"
 
 Push-Location "$HOME"

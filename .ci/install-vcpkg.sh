@@ -33,7 +33,6 @@ echo "CXXFLAGS: $CXXFLAGS"
 echo "VCPKG_CC: $VCPKG_CC"
 echo "VCPKG_CXX: $VCPKG_CXX"
 echo "VCPKG_CXXFLAGS: $VCPKG_CXXFLAGS"
-echo ".vcpkg file: $PROJECT_DIR/.vcpkg"
 echo "--------------------------"
 
 pushd $HOME
