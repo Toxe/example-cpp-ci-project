@@ -12,6 +12,14 @@ An example project to test different CI (Continuous Integration) services.
 - `example_simple.cpp` is a simple program that has no further dependencies and just outputs a couple of strings describing the compiler and C++ standard library that it was built with.
 - `example_benchmark.cpp` needs Vcpkg and uses PCRE, PCRE2 and Google Benchmark to perform a small regular expression benchmark.
 
+## Build and Installation Scripts
+
+The `.ci` directory contains a couple of scripts for installing Vcpkg and building the project.
+All CI services use these scripts to simplify their configurations.
+
+- `install-vcpkg.sh` / `install-vcpkg.ps1`: Download and build Vcpkg and install the dependency packages specified in the `.vcpkg` file.
+- `build-project.sh` / `build-project.ps1`: Build the project itself.
+
 ## TODO
 
 - ~~Combine duplicate code in re-usable shell scripts~~
