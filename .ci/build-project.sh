@@ -24,6 +24,7 @@ echo "CXX: $CXX"
 echo "CXXFLAGS: $CXXFLAGS"
 echo "--------------------------"
 
-mkdir "$BUILD_DIR" && cd "$BUILD_DIR"
+mkdir "$BUILD_DIR" && pushd "$BUILD_DIR"
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake" ..
 cmake --build .
+popd

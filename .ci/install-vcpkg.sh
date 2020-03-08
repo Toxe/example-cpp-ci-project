@@ -36,8 +36,9 @@ echo "VCPKG_CXXFLAGS: $VCPKG_CXXFLAGS"
 echo ".vcpkg file: $PROJECT_DIR/.vcpkg"
 echo "--------------------------"
 
-cd $HOME
+pushd $HOME
 git clone --depth 1 https://github.com/Microsoft/vcpkg.git "$VCPKG_DIR"
 cd "$VCPKG_DIR"
 CC=$VCPKG_CC CXX=$VCPKG_CXX CXXFLAGS=$VCPKG_CXXFLAGS ./bootstrap-vcpkg.sh --disableMetrics
 ./vcpkg install $(< "$PROJECT_DIR/.vcpkg")
+popd

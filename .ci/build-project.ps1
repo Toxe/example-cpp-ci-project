@@ -24,6 +24,7 @@ Write-Host "---------------------------"
 
 New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
 New-Item -Name $BUILD_DIR -ItemType Directory
-Set-Location $BUILD_DIR
+Push-Location $BUILD_DIR
 cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$VCPKG_DIR\scripts\buildsystems\vcpkg.cmake" ..
 cmake --build . --config Release
+Pop-Location

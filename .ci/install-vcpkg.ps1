@@ -20,10 +20,11 @@ Write-Host "VCPKG_DIR: $VCPKG_DIR"
 Write-Host ".vcpkg file: $PROJECT_DIR\.vcpkg"
 Write-Host "---------------------------"
 
-Set-Location "$HOME"
+Push-Location "$HOME"
 New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
 git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git $VCPKG_DIR
 Set-Location $VCPKG_DIR
 .\bootstrap-vcpkg.bat -disableMetrics
 $packages = Get-Content "$PROJECT_DIR\.vcpkg"
 .\vcpkg.exe install --triplet x64-windows $packages
+Pop-Location
