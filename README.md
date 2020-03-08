@@ -14,8 +14,8 @@ An example project to test different CI (Continuous Integration) services.
 
 ## TODO
 
-- Combine duplicate code in re-usable shell scripts
-- Move scripts to a new directory ("`.ci`" ?)
+- ~~Combine duplicate code in re-usable shell scripts~~
+- ~~Move scripts to a new directory ("`.ci`" ?)~~
 - Move `example_simple` execution into its own separate test step
 - Add a new example program that uses a real test framework
 - Use Clang and GCC on Windows
