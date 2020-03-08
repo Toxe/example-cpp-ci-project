@@ -24,9 +24,7 @@ VCPKG_CC=${VCPKG_CC-$CC}
 VCPKG_CXX=${VCPKG_CXX-$CXX}
 VCPKG_CXXFLAGS=${VCPKG_CXXFLAGS-$CXXFLAGS}
 
-ls -al $PROJECT_DIR
-
-echo "---- install-vcpkg.sh"
+echo "---- install-vcpkg.sh ----"
 echo "PROJECT_DIR: $PROJECT_DIR"
 echo "VCPKG_DIR: $VCPKG_DIR"
 echo "CC: $CC"
@@ -35,9 +33,8 @@ echo "CXXFLAGS: $CXXFLAGS"
 echo "VCPKG_CC: $VCPKG_CC"
 echo "VCPKG_CXX: $VCPKG_CXX"
 echo "VCPKG_CXXFLAGS: $VCPKG_CXXFLAGS"
-echo ".vcpkg file:" "$PROJECT_DIR/.vcpkg"
-echo $(< "$PROJECT_DIR/.vcpkg")
-echo "---------------------"
+echo ".vcpkg file: $PROJECT_DIR/.vcpkg"
+echo "--------------------------"
 
 cd $HOME
 git clone --depth 1 https://github.com/Microsoft/vcpkg.git "$VCPKG_DIR"

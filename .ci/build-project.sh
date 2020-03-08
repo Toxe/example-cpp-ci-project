@@ -16,13 +16,13 @@
 VCPKG_DIR=${1:-$HOME/vcpkg}
 BUILD_DIR=${2:-build}
 
-echo "---- build-project.sh"
+echo "---- build-project.sh ----"
 echo "VCPKG_DIR: $VCPKG_DIR"
 echo "BUILD_DIR: $BUILD_DIR"
 echo "CC: $CC"
 echo "CXX: $CXX"
 echo "CXXFLAGS: $CXXFLAGS"
-echo "---------------------"
+echo "--------------------------"
 
 mkdir "$BUILD_DIR" && cd "$BUILD_DIR"
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake" ..

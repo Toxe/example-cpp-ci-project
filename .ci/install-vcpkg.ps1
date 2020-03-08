@@ -14,10 +14,11 @@ $VCPKG_DIR=$args[1]
 
 if ($null -eq $VCPKG_DIR) { $VCPKG_DIR="vcpkg" }
 
-Write-Host "---- install-vcpkg.ps1"
-Write-Host "PROJECT_DIR:" $PROJECT_DIR
-Write-Host "VCPKG_DIR:" $VCPKG_DIR
-Write-Host "----------------------"
+Write-Host "---- install-vcpkg.ps1 ----"
+Write-Host "PROJECT_DIR: $PROJECT_DIR"
+Write-Host "VCPKG_DIR: $VCPKG_DIR"
+Write-Host ".vcpkg file: $PROJECT_DIR\.vcpkg"
+Write-Host "---------------------------"
 
 Set-Location "$HOME"
 New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"

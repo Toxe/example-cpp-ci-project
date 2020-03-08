@@ -17,10 +17,10 @@ $BUILD_DIR=$args[1]
 if ($null -eq $VCPKG_DIR) { $VCPKG_DIR="$HOME\vcpkg" }
 if ($null -eq $BUILD_DIR) { $BUILD_DIR="build" }
 
-Write-Host "---- build-project.ps1"
-Write-Host "VCPKG_DIR:" $VCPKG_DIR
-Write-Host "BUILD_DIR:" $BUILD_DIR
-Write-Host "----------------------"
+Write-Host "---- build-project.ps1 ----"
+Write-Host "VCPKG_DIR: $VCPKG_DIR"
+Write-Host "BUILD_DIR: $BUILD_DIR"
+Write-Host "---------------------------"
 
 New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
 New-Item -Name $BUILD_DIR -ItemType Directory
