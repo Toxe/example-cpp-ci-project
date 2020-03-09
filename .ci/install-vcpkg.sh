@@ -15,6 +15,8 @@
 # Example 1: sh .ci/install-vcpkg.sh $GITHUB_WORKSPACE
 # Example 2: sh .ci/install-vcpkg.sh $APPVEYOR_BUILD_FOLDER vcpkg-clang
 
+set -e
+
 if [ $# -lt 1 ]; then exit 1; fi
 
 PROJECT_DIR=$1

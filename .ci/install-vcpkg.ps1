@@ -7,6 +7,8 @@
 # Example 1: .ci\install-vcpkg.ps1 $Env:GITHUB_WORKSPACE
 # Example 2: .ci\install-vcpkg.ps1 $Env:APPVEYOR_BUILD_FOLDER vcpkg-msvc
 
+$ErrorActionPreference="Stop"
+
 if ($args.Count -lt 1) { Exit 1 }
 
 $PROJECT_DIR=$args[0]

@@ -13,6 +13,8 @@
 # Example 2: sh .ci/build-project.sh $HOME/vcpkg-clang
 # Example 3: sh .ci/build-project.sh $HOME/vcpkg-clang build-clang
 
+set -e
+
 VCPKG_DIR=${1:-$HOME/vcpkg}
 BUILD_DIR=${2:-build}
 

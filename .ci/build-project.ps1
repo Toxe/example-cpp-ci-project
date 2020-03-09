@@ -11,6 +11,8 @@
 # Example 2: .ci\build-project.ps1 $HOME\vcpkg-clang
 # Example 3: .ci\build-project.ps1 $HOME\vcpkg-clang build-clang
 
+$ErrorActionPreference="Stop"
+
 $VCPKG_DIR=$args[0]
 $BUILD_DIR=$args[1]
 
