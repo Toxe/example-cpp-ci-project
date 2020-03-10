@@ -31,6 +31,7 @@ All CI services use these scripts to simplify their configurations.
 - Look at Azure DevOps
 - Look at Semaphore
 - ~~Don't install Vcpkg if `.vcpkg` file doesn't exist.~~
+- ~~Only pass toolchain file to CMake if Vcpkg is installed.~~
 
 ## Dependencies
 

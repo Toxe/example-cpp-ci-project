@@ -19,9 +19,17 @@ $BUILD_DIR=$args[1]
 if ($null -eq $VCPKG_DIR) { $VCPKG_DIR="$HOME\vcpkg" }
 if ($null -eq $BUILD_DIR) { $BUILD_DIR="build" }
 
+# only pass toolchain file to CMake if Vcpkg is installed
+if (Test-Path "$VCPKG_DIR" -PathType Container) {
+    $TOOLCHAIN="$VCPKG_DIR\scripts\buildsystems\vcpkg.cmake"
+} else {
+    $TOOLCHAIN="False"
+}
+
 Write-Host "---- build-project.ps1 ----"
 Write-Host "VCPKG_DIR: $VCPKG_DIR"
 Write-Host "BUILD_DIR: $BUILD_DIR"
+Write-Host "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 Write-Host "---------------------------"
 
 if (-not (Get-Command cmake -ErrorAction SilentlyContinue)) {
@@ -30,6 +38,6 @@ if (-not (Get-Command cmake -ErrorAction SilentlyContinue)) {
 
 New-Item -Name $BUILD_DIR -ItemType Directory
 Push-Location $BUILD_DIR
-cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$VCPKG_DIR\scripts\buildsystems\vcpkg.cmake" ..
+cmake -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" ..
 cmake --build . --config Release
 Pop-Location
