@@ -16,6 +16,9 @@ $VCPKG_DIR=$args[1]
 
 if ($null -eq $VCPKG_DIR) { $VCPKG_DIR="vcpkg" }
 
+# do nothing if .vcpkg file doesn't exist
+if (-not (Test-Path "$PROJECT_DIR\.vcpkg" -PathType Leaf)) { Write-Host ".vcpkg file does not exist, skipping Vcpkg installation."; Exit 0 }
+
 Write-Host "---- install-vcpkg.ps1 ----"
 Write-Host "PROJECT_DIR: $PROJECT_DIR"
 Write-Host "VCPKG_DIR: $VCPKG_DIR"

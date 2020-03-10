@@ -22,6 +22,9 @@ if [ $# -lt 1 ]; then exit 1; fi
 PROJECT_DIR=$1
 VCPKG_DIR=${2:-vcpkg}
 
+# do nothing if .vcpkg file doesn't exist
+if [ ! -f "$PROJECT_DIR/.vcpkg" ]; then echo ".vcpkg file does not exist, skipping Vcpkg installation."; exit 0; fi
+
 VCPKG_CC=${VCPKG_CC-$CC}
 VCPKG_CXX=${VCPKG_CXX-$CXX}
 VCPKG_CXXFLAGS=${VCPKG_CXXFLAGS-$CXXFLAGS}
