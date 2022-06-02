@@ -1,3 +1,3 @@
 #pragma once
 
-int add(const int a, const int b);
+int add(int a, int b);

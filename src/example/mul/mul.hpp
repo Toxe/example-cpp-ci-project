@@ -1,3 +1,3 @@
 #pragma once
 
-int mul(const int a, const int b);
+int mul(int a, int b);
