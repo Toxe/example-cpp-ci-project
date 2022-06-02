@@ -1,0 +1,19 @@
+{
+    "name": "example-cpp-ci-project",
+    "version": "0.0.1",
+    "builtin-baseline": "314018fef43c7e3a52a3e46599313b70ace3977a",
+    "dependencies": [
+        {
+            "name": "catch2",
+            "version>=": "3.0.1#1"
+        },
+        {
+            "name": "fakeit",
+            "version>=": "2.1.1"
+        },
+        {
+            "name": "fmt",
+            "version>=": "8.1.1#1"
+        }
+    ]
+}
