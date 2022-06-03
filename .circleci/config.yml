@@ -1,76 +1,74 @@
 version: 2.1
 
 orbs:
-  win: circleci/windows@2.4.0
+    win: circleci/windows@2.4.0
 
 jobs:
-  linux-clang:
-    machine:
-      image: ubuntu-1604:201903-01
-    environment:
-      CC: clang-9
-      CXX: clang++-9
-      CXXFLAGS: -stdlib=libc++
-    steps:
-      - checkout
-      - run:
-          name: Install Software
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y software-properties-common apt-transport-https curl
-            curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-            curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-            sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
-            sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
-            sudo apt-get update
-            sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
-      - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
-      - run: /bin/bash .ci/build-project.sh
-      - run: ./build/example_simple
+    linux-clang:
+        machine:
+            image: ubuntu-1604:201903-01
+        environment:
+            CC: clang-9
+            CXX: clang++-9
+            CXXFLAGS: -stdlib=libc++
+        steps:
+            - checkout
+            - run:
+                  name: Install Software
+                  command: |
+                      sudo apt-get update
+                      sudo apt-get install -y software-properties-common apt-transport-https curl
+                      curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+                      curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+                      sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
+                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+                      sudo apt-get update
+                      sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
+            - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/example_simple
 
-  linux-gcc:
-    machine:
-      image: ubuntu-1604:201903-01
-    environment:
-      CC: gcc-9
-      CXX: g++-9
-    steps:
-      - checkout
-      - run:
-          name: Install Software
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y software-properties-common apt-transport-https curl
-            curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-            sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
-            sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-            sudo apt-get update
-            sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
-      - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
-      - run: /bin/bash .ci/build-project.sh
-      - run: ./build/example_simple
+    linux-gcc:
+        machine:
+            image: ubuntu-1604:201903-01
+        environment:
+            CC: gcc-9
+            CXX: g++-9
+        steps:
+            - checkout
+            - run:
+                  name: Install Software
+                  command: |
+                      sudo apt-get update
+                      sudo apt-get install -y software-properties-common apt-transport-https curl
+                      curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+                      sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+                      sudo apt-get update
+                      sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
+            - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/example_simple
 
-
-  windows-msvc:
-    executor: win/default
-    steps:
-      - checkout
-      - run:
-          name: Download CMake
-          command: |
-            $ProgressPreference = "SilentlyContinue"
-            Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-win64-x64.zip -OutFile $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip
-            Expand-Archive $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip -DestinationPath "$Env:ProgramFiles"
-            Rename-Item "$Env:ProgramFiles\cmake-3.16.4-win64-x64" -NewName CMake
-      - run: .ci\install-vcpkg.ps1 "$Env:CIRCLE_WORKING_DIRECTORY"
-      - run: .ci\build-project.ps1
-      - run: .\build\Release\example_simple.exe
-
+    windows-msvc:
+        executor: win/default
+        steps:
+            - checkout
+            - run:
+                  name: Download CMake
+                  command: |
+                      $ProgressPreference = "SilentlyContinue"
+                      Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-win64-x64.zip -OutFile $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip
+                      Expand-Archive $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip -DestinationPath "$Env:ProgramFiles"
+                      Rename-Item "$Env:ProgramFiles\cmake-3.16.4-win64-x64" -NewName CMake
+            - run: .ci\install-vcpkg.ps1 "$Env:CIRCLE_WORKING_DIRECTORY"
+            - run: .ci\build-project.ps1
+            - run: .\build\Release\example_simple.exe
 
 workflows:
-  version: 2
-  run-all:
-    jobs:
-      - linux-clang
-      - linux-gcc
-      - windows-msvc
+    version: 2
+    run-all:
+        jobs:
+            - linux-clang
+            - linux-gcc
+            - windows-msvc

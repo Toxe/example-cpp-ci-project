@@ -1,69 +1,69 @@
 name: CI
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
 
 jobs:
-  osx-clang:
-    name: macOS Clang
-    runs-on: macos-latest
-    env:
-      CC: /usr/local/opt/llvm/bin/clang
-      CXX: /usr/local/opt/llvm/bin/clang++
-      CXXFLAGS: -stdlib=libc++
-    steps:
-      - uses: actions/checkout@v2
-      - run: brew install ninja
-      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
-      - run: /bin/bash .ci/build-project.sh
-      - run: ./build/example_simple
+    osx-clang:
+        name: macOS Clang
+        runs-on: macos-latest
+        env:
+            CC: /usr/local/opt/llvm/bin/clang
+            CXX: /usr/local/opt/llvm/bin/clang++
+            CXXFLAGS: -stdlib=libc++
+        steps:
+            - uses: actions/checkout@v2
+            - run: brew install ninja
+            - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/example_simple
 
-  osx-gcc:
-    name: macOS GCC
-    runs-on: macos-latest
-    env:
-      CC: gcc-9
-      CXX: g++-9
-    steps:
-      - uses: actions/checkout@v2
-      - run: brew install ninja
-      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
-      - run: /bin/bash .ci/build-project.sh
-      - run: ./build/example_simple
+    osx-gcc:
+        name: macOS GCC
+        runs-on: macos-latest
+        env:
+            CC: gcc-9
+            CXX: g++-9
+        steps:
+            - uses: actions/checkout@v2
+            - run: brew install ninja
+            - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/example_simple
 
-  linux-clang:
-    name: Linux Clang
-    runs-on: ubuntu-latest
-    env:
-      CC: clang-9
-      CXX: clang++-9
-      CXXFLAGS: -stdlib=libc++
-    steps:
-      - uses: actions/checkout@v2
-      - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
-      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
-      - run: /bin/bash .ci/build-project.sh
-      - run: ./build/example_simple
+    linux-clang:
+        name: Linux Clang
+        runs-on: ubuntu-latest
+        env:
+            CC: clang-9
+            CXX: clang++-9
+            CXXFLAGS: -stdlib=libc++
+        steps:
+            - uses: actions/checkout@v2
+            - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
+            - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/example_simple
 
-  linux-gcc:
-    name: Linux GCC
-    runs-on: ubuntu-latest
-    env:
-      CC: gcc-9
-      CXX: g++-9
-    steps:
-      - uses: actions/checkout@v2
-      - run: sudo apt-get install -y ninja-build
-      - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
-      - run: /bin/bash .ci/build-project.sh
-      - run: ./build/example_simple
+    linux-gcc:
+        name: Linux GCC
+        runs-on: ubuntu-latest
+        env:
+            CC: gcc-9
+            CXX: g++-9
+        steps:
+            - uses: actions/checkout@v2
+            - run: sudo apt-get install -y ninja-build
+            - run: /bin/bash .ci/install-vcpkg.sh "$GITHUB_WORKSPACE"
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/example_simple
 
-  windows-msvc:
-    name: Windows MSVC
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: .ci\install-vcpkg.ps1 "$Env:GITHUB_WORKSPACE"
-      - run: .ci\build-project.ps1
-      - run: .\build\Release\example_simple.exe
+    windows-msvc:
+        name: Windows MSVC
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v2
+            - run: .ci\install-vcpkg.ps1 "$Env:GITHUB_WORKSPACE"
+            - run: .ci\build-project.ps1
+            - run: .\build\Release\example_simple.exe
