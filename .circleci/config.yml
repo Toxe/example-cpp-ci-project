@@ -26,7 +26,9 @@ jobs:
                       sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/example_simple
+            - run: ./build/show_info
+            - run: ./build/example
+            - run: ./build/example_tests
 
     linux-gcc:
         machine:
@@ -48,7 +50,9 @@ jobs:
                       sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/example_simple
+            - run: ./build/show_info
+            - run: ./build/example
+            - run: ./build/example_tests
 
     windows-msvc:
         executor: win/default
@@ -63,7 +67,9 @@ jobs:
                       Rename-Item "$Env:ProgramFiles\cmake-3.16.4-win64-x64" -NewName CMake
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
-            - run: .\build\Release\example_simple.exe
+            - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
+            - run: .\build\src\example\RelWithDebInfo\example.exe
+            - run: .\build\src\example\RelWithDebInfo\example_tests.exe
 
 workflows:
     version: 2

@@ -14,7 +14,9 @@ jobs:
             - run: brew install ninja
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/example_simple
+            - run: ./build/show_info
+            - run: ./build/example
+            - run: ./build/example_tests
 
     osx-gcc:
         name: macOS GCC
@@ -27,7 +29,9 @@ jobs:
             - run: brew install ninja
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/example_simple
+            - run: ./build/show_info
+            - run: ./build/example
+            - run: ./build/example_tests
 
     linux-clang:
         name: Linux Clang
@@ -41,7 +45,9 @@ jobs:
             - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/example_simple
+            - run: ./build/show_info
+            - run: ./build/example
+            - run: ./build/example_tests
 
     linux-gcc:
         name: Linux GCC
@@ -54,7 +60,9 @@ jobs:
             - run: sudo apt-get install -y ninja-build
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/example_simple
+            - run: ./build/show_info
+            - run: ./build/example
+            - run: ./build/example_tests
 
     windows-msvc:
         name: Windows MSVC
@@ -63,4 +71,6 @@ jobs:
             - uses: actions/checkout@v2
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
-            - run: .\build\Release\example_simple.exe
+            - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
+            - run: .\build\src\example\RelWithDebInfo\example.exe
+            - run: .\build\src\example\RelWithDebInfo\example_tests.exe
