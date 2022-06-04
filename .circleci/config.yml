@@ -26,9 +26,9 @@ jobs:
                       sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/show_info
-            - run: ./build/example
-            - run: ./build/example_tests
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
 
     linux-gcc:
         machine:
@@ -50,9 +50,9 @@ jobs:
                       sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/show_info
-            - run: ./build/example
-            - run: ./build/example_tests
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
 
     windows-msvc:
         executor: win/default

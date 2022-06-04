@@ -56,14 +56,14 @@ build_script:
     # ---- Mac & Linux ----
     # build project with Clang
     - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG /bin/bash .ci/build-project.sh build-clang
-    - sh: ./build-clang/show_info
-    - sh: ./build-clang/example
-    - sh: ./build-clang/example_tests
+    - sh: ./build-clang/src/show_info/show_info
+    - sh: ./build-clang/src/example/example
+    - sh: ./build-clang/src/example/example_tests
     # build project with GCC
     - sh: CC=$CC_GCC CXX=$CXX_GCC /bin/bash .ci/build-project.sh build-gcc
-    - sh: ./build-gcc/show_info
-    - sh: ./build-gcc/example
-    - sh: ./build-gcc/example_tests
+    - sh: ./build-gcc/src/show_info/show_info
+    - sh: ./build-gcc/src/example/example
+    - sh: ./build-gcc/src/example/example_tests
 
     # ---- Windows ----
     # build project with MSVC

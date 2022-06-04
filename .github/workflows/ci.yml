@@ -14,9 +14,9 @@ jobs:
             - run: brew install ninja
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/show_info
-            - run: ./build/example
-            - run: ./build/example_tests
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
 
     osx-gcc:
         name: macOS GCC
@@ -29,9 +29,9 @@ jobs:
             - run: brew install ninja
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/show_info
-            - run: ./build/example
-            - run: ./build/example_tests
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
 
     linux-clang:
         name: Linux Clang
@@ -45,9 +45,9 @@ jobs:
             - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/show_info
-            - run: ./build/example
-            - run: ./build/example_tests
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
 
     linux-gcc:
         name: Linux GCC
@@ -60,9 +60,9 @@ jobs:
             - run: sudo apt-get install -y ninja-build
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
-            - run: ./build/show_info
-            - run: ./build/example
-            - run: ./build/example_tests
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
 
     windows-msvc:
         name: Windows MSVC
