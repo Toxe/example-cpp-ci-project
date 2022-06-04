@@ -14,7 +14,7 @@ if (-not(Get-Command git -ErrorAction SilentlyContinue))
 }
 
 Push-Location "$HOME"
-git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git
+git clone https://github.com/Microsoft/vcpkg.git
 Set-Location vcpkg
 .\bootstrap-vcpkg.bat -disableMetrics
 Pop-Location

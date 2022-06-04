@@ -11,7 +11,7 @@ echo "Vcpkg install directory: $HOME/vcpkg"
 echo "--------------------------"
 
 pushd "$HOME"
-git clone --quiet --depth 1 https://github.com/Microsoft/vcpkg.git
+git clone https://github.com/Microsoft/vcpkg.git
 cd vcpkg
 ./bootstrap-vcpkg.sh --disableMetrics
 popd
