@@ -2,8 +2,7 @@
 
 # Install Vcpkg in $HOME/vcpkg.
 #
-# Usage:
-#   $ sh .ci/install-vcpkg.sh
+# Usage: sh .ci/install-vcpkg.sh
 
 set -e
 

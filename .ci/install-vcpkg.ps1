@@ -1,7 +1,6 @@
 # Install Vcpkg in $HOME\vcpkg.
 #
-# Usage:
-#   .ci\install-vcpkg.ps1
+# Usage: .ci\install-vcpkg.ps1
 
 $ErrorActionPreference = "Stop"
 
