@@ -13,7 +13,7 @@
 set -e
 
 BUILD_DIR=${1:-build}
-VCPKG_DIR="$HOME\vcpkg"
+VCPKG_DIR="$HOME/vcpkg"
 
 # only pass toolchain file to CMake if Vcpkg is installed
 if [ -d "$VCPKG_DIR" ]; then TOOLCHAIN="$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake"; else TOOLCHAIN=False; fi
