@@ -24,7 +24,7 @@ jobs:
                       sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
                       sudo apt-get update
                       sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
-            - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
+            - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/example_simple
 
@@ -46,7 +46,7 @@ jobs:
                       sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
                       sudo apt-get update
                       sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
-            - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
+            - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/example_simple
 
@@ -61,7 +61,7 @@ jobs:
                       Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-win64-x64.zip -OutFile $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip
                       Expand-Archive $Env:HOMEPATH\cmake-3.16.4-win64-x64.zip -DestinationPath "$Env:ProgramFiles"
                       Rename-Item "$Env:ProgramFiles\cmake-3.16.4-win64-x64" -NewName CMake
-            - run: .ci\install-vcpkg.ps1 "$Env:CIRCLE_WORKING_DIRECTORY"
+            - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
             - run: .\build\Release\example_simple.exe
 

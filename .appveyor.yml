@@ -45,14 +45,12 @@ for:
 
 before_build:
     # ---- Mac & Linux ----
-    # build Vcpkg and install packages (from .vcpkg) with Clang
-    - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG /bin/bash .ci/install-vcpkg.sh "$APPVEYOR_BUILD_FOLDER" vcpkg-clang
-    # build Vcpkg and install packages (from .vcpkg) with GCC
-    - sh: CC=$CC_GCC CXX=$CXX_GCC /bin/bash .ci/install-vcpkg.sh "$APPVEYOR_BUILD_FOLDER" vcpkg-gcc
+    # install Vcpkg
+    - sh: /bin/bash .ci/install-vcpkg.sh
 
     # ---- Windows ----
-    # build Vcpkg and install packages (from .vcpkg) with MSVC
-    - ps: .ci\install-vcpkg.ps1 "$Env:APPVEYOR_BUILD_FOLDER" vcpkg-msvc
+    # install Vcpkg
+    - ps: .ci\install-vcpkg.ps1
 
 build_script:
     # ---- Mac & Linux ----
