@@ -22,8 +22,8 @@ jobs:
         name: macOS GCC
         runs-on: macos-latest
         env:
-            CC: gcc-9
-            CXX: g++-9
+            CC: gcc-11
+            CXX: g++-11
         steps:
             - uses: actions/checkout@v2
             - run: brew install ninja
@@ -37,12 +37,12 @@ jobs:
         name: Linux Clang
         runs-on: ubuntu-latest
         env:
-            CC: clang-9
-            CXX: clang++-9
+            CC: clang-12
+            CXX: clang++-12
             CXXFLAGS: -stdlib=libc++
         steps:
             - uses: actions/checkout@v2
-            - run: sudo apt-get install -y ninja-build libc++-9-dev libc++abi-9-dev
+            - run: sudo apt-get install -y ninja-build libc++-12-dev libc++abi-12-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -53,8 +53,8 @@ jobs:
         name: Linux GCC
         runs-on: ubuntu-latest
         env:
-            CC: gcc-9
-            CXX: g++-9
+            CC: gcc-10
+            CXX: g++-10
         steps:
             - uses: actions/checkout@v2
             - run: sudo apt-get install -y ninja-build
