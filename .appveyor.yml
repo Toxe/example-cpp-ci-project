@@ -29,15 +29,16 @@ for:
           CC_CLANG: clang-14
           CXX_CLANG: clang++-14
           CXXFLAGS_CLANG: -stdlib=libc++
-          CC_GCC: gcc-9
-          CXX_GCC: g++-9
+          CC_GCC: gcc-11
+          CXX_GCC: g++-11
       install:
           - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
           - sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
+          - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           - sudo apt-get update
           - sudo apt-get -y --allow-change-held-packages remove clang-14 mssql-server
           - sudo apt-get -y autoremove
-          - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev
+          - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev g++-11 libstdc++-11-dev
 
     - matrix:
           only:
