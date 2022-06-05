@@ -9,8 +9,8 @@ jobs:
         docker:
             - image: cimg/base:stable
         environment:
-            CC: clang-9
-            CXX: clang++-9
+            CC: clang-14
+            CXX: clang++-14
             CXXFLAGS: -stdlib=libc++
         steps:
             - checkout
@@ -21,10 +21,10 @@ jobs:
                       sudo apt-get install -y software-properties-common apt-transport-https
                       curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
                       curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-                      sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
-                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+                      sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
+                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
                       sudo apt-get update
-                      sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
+                      sudo apt-get install -y ninja-build git unzip cmake clang-14 libc++-14-dev libc++abi-14-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -35,8 +35,8 @@ jobs:
         docker:
             - image: cimg/base:stable
         environment:
-            CC: gcc-9
-            CXX: g++-9
+            CC: gcc-11
+            CXX: g++-11
         steps:
             - checkout
             - run:
@@ -45,10 +45,10 @@ jobs:
                       sudo apt-get update
                       sudo apt-get install -y software-properties-common apt-transport-https
                       curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
+                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
                       sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
                       sudo apt-get update
-                      sudo apt-get install -y ninja-build git unzip cmake g++-9 libstdc++-9-dev
+                      sudo apt-get install -y ninja-build git unzip cmake g++-11 libstdc++-11-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -59,11 +59,12 @@ jobs:
         macos:
             xcode: 13.4.0
         environment:
-            CC: clang-9
-            CXX: clang++-9
+            CC: /usr/local/opt/llvm/bin/clang
+            CXX: /usr/local/opt/llvm/bin/clang++
             CXXFLAGS: -stdlib=libc++
         steps:
             - checkout
+            - run: brew install cmake ninja llvm@13
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -74,10 +75,11 @@ jobs:
         macos:
             xcode: 13.4.0
         environment:
-            CC: gcc-9
-            CXX: g++-9
+            CC: gcc-12
+            CXX: g++-12
         steps:
             - checkout
+            - run: brew install cmake ninja gcc@12
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
