@@ -29,7 +29,10 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: mkdir -p test-results/junit
+            - run: ctest --output-junit test-results/junit/results.xml --test-dir build
+            - store_test_results:
+                  - path: test-results
 
     linux-gcc:
         docker:
@@ -53,7 +56,10 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: mkdir -p test-results/junit
+            - run: ctest --output-junit test-results/junit/results.xml --test-dir build
+            - store_test_results:
+                  - path: test-results
 
     osx-clang:
         macos:
@@ -69,7 +75,10 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: mkdir -p test-results/junit
+            - run: ctest --output-junit test-results/junit/results.xml --test-dir build
+            - store_test_results:
+                  - path: test-results
 
     osx-gcc:
         macos:
@@ -84,7 +93,10 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: mkdir -p test-results/junit
+            - run: ctest --output-junit test-results/junit/results.xml --test-dir build
+            - store_test_results:
+                  - path: test-results
 
     windows-msvc:
         executor: win/server-2022
@@ -102,6 +114,10 @@ jobs:
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
             - run: .\build\src\example\RelWithDebInfo\example.exe
             - run: .\build\src\example\RelWithDebInfo\example_tests.exe
+            - run: mkdir test-results\junit
+            - run: ctest --output-junit test-results\junit\results.xml --test-dir build
+            - store_test_results:
+                  - path: test-results
 
 workflows:
     version: 2
