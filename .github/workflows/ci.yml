@@ -10,7 +10,7 @@ jobs:
             CXX: /usr/local/opt/llvm/bin/clang++
             CXXFLAGS: -stdlib=libc++
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - run: brew install ninja llvm@13
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
@@ -25,7 +25,7 @@ jobs:
             CC: gcc-12
             CXX: g++-12
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - run: brew install ninja gcc@12
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
@@ -41,7 +41,7 @@ jobs:
             CXX: clang++-14
             CXXFLAGS: -stdlib=libc++
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - run: |
                   sudo apt-get update
                   sudo apt-get install -y software-properties-common apt-transport-https
@@ -62,7 +62,7 @@ jobs:
             CC: gcc-11
             CXX: g++-11
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - run: |
                   sudo apt-get update
                   sudo apt-get install -y software-properties-common apt-transport-https
@@ -79,7 +79,7 @@ jobs:
         name: Windows MSVC
         runs-on: windows-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
