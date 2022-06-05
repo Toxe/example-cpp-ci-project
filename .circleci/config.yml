@@ -64,7 +64,7 @@ jobs:
             CXXFLAGS: -stdlib=libc++
         steps:
             - checkout
-            - run: brew install cmake ninja llvm@13
+            - run: brew install cmake ninja pkg-config llvm@13
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -79,7 +79,7 @@ jobs:
             CXX: g++-12
         steps:
             - checkout
-            - run: brew install cmake ninja gcc@12
+            - run: brew install cmake ninja pkg-config gcc@12
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
