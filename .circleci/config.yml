@@ -32,7 +32,7 @@ jobs:
             - run: mkdir -p test-results/junit
             - run: ctest --output-junit test-results/junit/results.xml --test-dir build
             - store_test_results:
-                  - path: test-results
+                  path: test-results
 
     linux-gcc:
         docker:
@@ -59,7 +59,7 @@ jobs:
             - run: mkdir -p test-results/junit
             - run: ctest --output-junit test-results/junit/results.xml --test-dir build
             - store_test_results:
-                  - path: test-results
+                  path: test-results
 
     osx-clang:
         macos:
@@ -78,7 +78,7 @@ jobs:
             - run: mkdir -p test-results/junit
             - run: ctest --output-junit test-results/junit/results.xml --test-dir build
             - store_test_results:
-                  - path: test-results
+                  path: test-results
 
     osx-gcc:
         macos:
@@ -96,7 +96,7 @@ jobs:
             - run: mkdir -p test-results/junit
             - run: ctest --output-junit test-results/junit/results.xml --test-dir build
             - store_test_results:
-                  - path: test-results
+                  path: test-results
 
     windows-msvc:
         executor: win/server-2022
@@ -117,7 +117,7 @@ jobs:
             - run: mkdir test-results\junit
             - run: ctest --output-junit test-results\junit\results.xml --test-dir build
             - store_test_results:
-                  - path: test-results
+                  path: test-results
 
 workflows:
     version: 2
