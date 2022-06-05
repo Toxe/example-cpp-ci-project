@@ -11,7 +11,7 @@ jobs:
             CXXFLAGS: -stdlib=libc++
         steps:
             - uses: actions/checkout@v2
-            - run: brew install ninja
+            - run: brew install ninja llvm@13
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -22,11 +22,11 @@ jobs:
         name: macOS GCC
         runs-on: macos-latest
         env:
-            CC: gcc-11
-            CXX: g++-11
+            CC: gcc-12
+            CXX: g++-12
         steps:
             - uses: actions/checkout@v2
-            - run: brew install ninja
+            - run: brew install ninja gcc@12
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -37,12 +37,18 @@ jobs:
         name: Linux Clang
         runs-on: ubuntu-latest
         env:
-            CC: clang-12
-            CXX: clang++-12
+            CC: clang-14
+            CXX: clang++-14
             CXXFLAGS: -stdlib=libc++
         steps:
             - uses: actions/checkout@v2
-            - run: sudo apt-get install -y ninja-build libc++-12-dev libc++abi-12-dev
+            - run: |
+                  sudo apt-get update
+                  sudo apt-get install -y software-properties-common apt-transport-https
+                  curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+                  sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
+                  sudo apt-get update
+                  sudo apt-get install -y ninja-build clang-14 libc++-14-dev libc++abi-14-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -53,11 +59,16 @@ jobs:
         name: Linux GCC
         runs-on: ubuntu-latest
         env:
-            CC: gcc-10
-            CXX: g++-10
+            CC: gcc-11
+            CXX: g++-11
         steps:
             - uses: actions/checkout@v2
-            - run: sudo apt-get install -y ninja-build
+            - run: |
+                  sudo apt-get update
+                  sudo apt-get install -y software-properties-common apt-transport-https
+                  sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+                  sudo apt-get update
+                  sudo apt-get install -y ninja-build g++-11 libstdc++-11-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
