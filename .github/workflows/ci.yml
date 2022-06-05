@@ -16,7 +16,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: ctest --test-dir build
 
     osx-gcc:
         name: macOS GCC
@@ -31,7 +31,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: ctest --test-dir build
 
     linux-clang:
         name: Linux Clang
@@ -53,7 +53,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: ctest --test-dir build
 
     linux-gcc:
         name: Linux GCC
@@ -73,7 +73,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ./build/src/example/example_tests
+            - run: ctest --test-dir build
 
     windows-msvc:
         name: Windows MSVC
@@ -84,4 +84,4 @@ jobs:
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
             - run: .\build\src\example\RelWithDebInfo\example.exe
-            - run: .\build\src\example\RelWithDebInfo\example_tests.exe
+            - run: ctest --test-dir build
