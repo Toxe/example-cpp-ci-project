@@ -1,11 +1,11 @@
 # Example C++ CI Project and CI Services Comparison
 
 | Service | Status | OS and Compiler |
-| --- | --- | --- |
-| Travis | [![Build Status](https://travis-ci.com/Toxe/example-cpp-ci-project.svg?branch=master)](https://travis-ci.com/Toxe/example-cpp-ci-project) | macOS and Linux (Clang 9, GCC 9) |
-| AppVeyor | [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) | macOS and Linux (Clang 9, GCC 9), Windows (MSVC 2019) |
-| CircleCI | [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project) | Linux (Clang 9, GCC 9), Windows (MSVC 2019) |
-| GitHub Actions | [![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions) | macOS and Linux (Clang 9, GCC 9), Windows (MSVC 2019) |
+| ------- | ------ | --------------- |
+| AppVeyor | [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) | macOS (Clang 13, GCC 12), Linux (Clang 14, GCC 11) and Windows (MSVC 2022) |
+| CircleCI | [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master) | macOS (Clang 13, GCC 12), Linux (Clang 14, GCC 11) and Windows (MSVC 2022) |
+| GitHub Actions | [![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions) | macOS (Clang 13, GCC 12), Linux (Clang 14, GCC 11) and Windows (MSVC 2022) |
+| Travis |  | *no longer supported* |
 
 An example project to test different CI (Continuous Integration) services.
 
@@ -17,38 +17,17 @@ An example project to test different CI (Continuous Integration) services.
 The `.ci` directory contains a couple of scripts for installing Vcpkg and building the project.
 All CI services use these scripts to simplify their configurations.
 
-- `install-vcpkg.sh` / `install-vcpkg.ps1`: Download and build Vcpkg and install the dependency packages specified in the `.vcpkg` file.
+- `install-vcpkg.sh` / `install-vcpkg.ps1`: Download and install Vcpkg or update an already existing Vcpkg installation.
 - `build-project.sh` / `build-project.ps1`: Build the project itself.
-
-## TODO
-
-- ~~Combine duplicate code in re-usable shell scripts~~
-- ~~Move scripts to a new directory ("`.ci`" ?)~~
-- Move `example_simple` execution into its own separate test step
-- Add a new example program that uses a real test framework
-- Use Clang and GCC on Windows
-- ~~Look at Jenkins~~
-- Look at Azure DevOps
-- Look at Semaphore
-- ~~Don't install Vcpkg if `.vcpkg` file doesn't exist.~~
-- ~~Only pass toolchain file to CMake if Vcpkg is installed.~~
 
 ## Dependencies
 
 - CMake
-- [Google Benchmark](https://github.com/google/benchmark)
-- PCRE
-- PCRE2
+- Vcpkg
 
-### Vcpkg
+## Example program output
 
-Install Vcpkg dependencies with:
-
-    $ vcpkg install $(< .vcpkg)
-
-### Example program output
-
-#### example_simple.cpp
+### example_simple.cpp
 
 ```
 __cplusplus: 201703
@@ -56,7 +35,7 @@ __clang_version__: 9.0.1
 _LIBCPP_VERSION: 9000
 ```
 
-#### example_benchmark.cpp
+### example_benchmark.cpp
 
 ```
 2020-03-06 15:04:27
