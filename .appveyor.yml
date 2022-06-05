@@ -72,11 +72,11 @@ build_script:
 
 test_script:
     # ---- Mac & Linux ----
-    - sh: ctest --output-junit JUnit-clang.xml --test-dir build-clang
-    - sh: ctest --output-junit JUnit-gcc.xml --test-dir build-gcc
-    - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'JUnit*.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
+    - sh: ctest --output-junit test-results-clang.xml --test-dir build-clang
+    - sh: ctest --output-junit test-results-gcc.xml --test-dir build-gcc
+    - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results*.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
 
     # ---- Windows ----
-    - ps: ctest --output-junit JUnit.xml --test-dir build-msvc
+    - ps: ctest --output-junit test-results.xml --test-dir build-msvc
     - ps: $wc = New-Object 'System.Net.WebClient'
-    - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path .\JUnit.xml))
+    - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path .\build-msvc\test-results.xml))
