@@ -30,7 +30,7 @@ if ($UPDATE_VCPKG)
 {
     # update existing Vcpkg
     Push-Location "$VCPKG_DIR"
-    git pull
+    git --quiet pull
     .\bootstrap-vcpkg.bat -disableMetrics
     Pop-Location
 }

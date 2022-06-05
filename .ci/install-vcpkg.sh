@@ -19,7 +19,7 @@ echo "--------------------------"
 if [[ $UPDATE_VCPKG -eq 1 ]]; then
     # update existing Vcpkg
     pushd "$VCPKG_DIR"
-    git pull
+    git pull --quiet
     ./bootstrap-vcpkg.sh --disableMetrics
     popd
 else
