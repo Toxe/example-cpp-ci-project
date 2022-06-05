@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
     windows: circleci/windows@4.1.1
+    macos: circleci/macos@2.2.0
 
 jobs:
     linux-clang:
@@ -54,6 +55,31 @@ jobs:
             - run: ./build/src/example/example
             - run: ./build/src/example/example_tests
 
+    osx-clang:
+        environment:
+            CC: clang-9
+            CXX: clang++-9
+            CXXFLAGS: -stdlib=libc++
+        steps:
+            - checkout
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
+
+    osx-gcc:
+        environment:
+            CC: gcc-9
+            CXX: g++-9
+        steps:
+            - checkout
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ./build/src/example/example_tests
+
     windows-msvc:
         executor: win/default
         steps:
@@ -77,4 +103,6 @@ workflows:
         jobs:
             - linux-clang
             - linux-gcc
+            - osx-clang
+            - osx-gcc
             - windows-msvc
