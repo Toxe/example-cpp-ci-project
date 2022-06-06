@@ -160,6 +160,25 @@ jobs:
             - store_test_results:
                   path: build\test-results.xml
 
+    windows-clang-cl:
+        executor: win/server-2022
+        steps:
+            - checkout
+            - run:
+                  name: Download CMake
+                  command: |
+                      $ProgressPreference = "SilentlyContinue"
+                      Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.23.2/cmake-3.23.2-windows-x86_64.zip -OutFile $Env:HOMEPATH\cmake-3.23.2-windows-x86_64.zip
+                      Expand-Archive $Env:HOMEPATH\cmake-3.23.2-windows-x86_64.zip -DestinationPath "$Env:ProgramFiles"
+                      Rename-Item "$Env:ProgramFiles\cmake-3.23.2-windows-x86_64" -NewName CMake
+            - run: .ci\install-vcpkg.ps1
+            - run: .ci\build-project-with-clang-cl.ps1
+            - run: .\build\src\show_info\show_info.exe
+            - run: .\build\src\example\example.exe
+            - run: Invoke-Expression '& $Env:ProgramFiles\CMake\bin\ctest.exe --output-junit test-results.xml --test-dir build'
+            - store_test_results:
+                  path: build\test-results.xml
+
 workflows:
     version: 2
     run-all:
@@ -171,3 +190,4 @@ workflows:
             - mac-clang-libcpp
             - mac-clang-libstdcpp
             - windows-msvc
+            - windows-clang-cl

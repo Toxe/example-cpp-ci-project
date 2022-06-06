@@ -123,3 +123,14 @@ jobs:
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
             - run: .\build\src\example\RelWithDebInfo\example.exe
             - run: ctest --test-dir build
+
+    windows-clang-cl:
+        name: Windows Clang-cl
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v3
+            - run: .ci\install-vcpkg.ps1
+            - run: .ci\build-project-with-clang-cl.ps1
+            - run: .\build\src\show_info\show_info.exe
+            - run: .\build\src\example\example.exe
+            - run: ctest --test-dir build
