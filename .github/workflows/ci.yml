@@ -2,23 +2,7 @@ name: CI
 on: [push]
 
 jobs:
-    osx-clang:
-        name: macOS Clang
-        runs-on: macos-latest
-        env:
-            CC: /usr/local/opt/llvm/bin/clang
-            CXX: /usr/local/opt/llvm/bin/clang++
-            CXXFLAGS: -stdlib=libc++
-        steps:
-            - uses: actions/checkout@v3
-            - run: brew install ninja llvm@13
-            - run: /bin/bash .ci/install-vcpkg.sh
-            - run: /bin/bash .ci/build-project.sh
-            - run: ./build/src/show_info/show_info
-            - run: ./build/src/example/example
-            - run: ctest --test-dir build
-
-    osx-gcc:
+    mac-gcc:
         name: macOS GCC
         runs-on: macos-latest
         env:
@@ -33,22 +17,32 @@ jobs:
             - run: ./build/src/example/example
             - run: ctest --test-dir build
 
-    linux-clang:
-        name: Linux Clang
-        runs-on: ubuntu-latest
+    mac-clang-libcpp:
+        name: macOS Clang (libc++)
+        runs-on: macos-latest
         env:
-            CC: clang-14
-            CXX: clang++-14
+            CC: /usr/local/opt/llvm/bin/clang
+            CXX: /usr/local/opt/llvm/bin/clang++
             CXXFLAGS: -stdlib=libc++
         steps:
             - uses: actions/checkout@v3
-            - run: |
-                  sudo apt-get update
-                  sudo apt-get install -y software-properties-common apt-transport-https
-                  curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-                  sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
-                  sudo apt-get update
-                  sudo apt-get install -y ninja-build clang-14 libc++-14-dev libc++abi-14-dev
+            - run: brew install ninja llvm@13
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --test-dir build
+
+    mac-clang-libstdcpp:
+        name: macOS Clang (libstdc++)
+        runs-on: macos-latest
+        env:
+            CC: /usr/local/opt/llvm/bin/clang
+            CXX: /usr/local/opt/llvm/bin/clang++
+            CXXFLAGS: -stdlib=libstdc++
+        steps:
+            - uses: actions/checkout@v3
+            - run: brew install ninja llvm@13 gcc@12
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -69,6 +63,50 @@ jobs:
                   sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
                   sudo apt-get update
                   sudo apt-get install -y ninja-build g++-11 libstdc++-11-dev
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --test-dir build
+
+    linux-clang-libcpp:
+        name: Linux Clang (libc++)
+        runs-on: ubuntu-latest
+        env:
+            CC: clang-14
+            CXX: clang++-14
+            CXXFLAGS: -stdlib=libc++
+        steps:
+            - uses: actions/checkout@v3
+            - run: |
+                  sudo apt-get update
+                  sudo apt-get install -y software-properties-common apt-transport-https
+                  curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+                  sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
+                  sudo apt-get update
+                  sudo apt-get install -y ninja-build clang-14 libc++-14-dev libc++abi-14-dev
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --test-dir build
+
+    linux-clang-libstdcpp:
+        name: Linux Clang (libstdc++)
+        runs-on: ubuntu-latest
+        env:
+            CC: clang-14
+            CXX: clang++-14
+            CXXFLAGS: -stdlib=libstdc++
+        steps:
+            - uses: actions/checkout@v3
+            - run: |
+                  sudo apt-get update
+                  sudo apt-get install -y software-properties-common apt-transport-https
+                  curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+                  sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
+                  sudo apt-get update
+                  sudo apt-get install -y ninja-build clang-14 libc++-14-dev libc++abi-14-dev libstdc++-11-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info

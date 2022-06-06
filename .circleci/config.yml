@@ -5,7 +5,33 @@ orbs:
     macos: circleci/macos@2.2.0
 
 jobs:
-    linux-clang:
+    linux-gcc:
+        docker:
+            - image: cimg/base:stable
+        environment:
+            CC: gcc-11
+            CXX: g++-11
+        steps:
+            - checkout
+            - run:
+                  name: Install Software
+                  command: |
+                      sudo apt-get update
+                      sudo apt-get install -y software-properties-common apt-transport-https
+                      curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+                      sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
+                      sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+                      sudo apt-get update
+                      sudo apt-get install -y ninja-build git unzip cmake g++-11 libstdc++-11-dev
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --output-junit test-results.xml --test-dir build
+            - store_test_results:
+                  path: build/test-results.xml
+
+    linux-clang-libcpp:
         docker:
             - image: cimg/base:stable
         environment:
@@ -33,12 +59,13 @@ jobs:
             - store_test_results:
                   path: build/test-results.xml
 
-    linux-gcc:
+    linux-clang-libstdcpp:
         docker:
             - image: cimg/base:stable
         environment:
-            CC: gcc-11
-            CXX: g++-11
+            CC: clang-14
+            CXX: clang++-14
+            CXXFLAGS: -stdlib=libstdc++
         steps:
             - checkout
             - run:
@@ -46,11 +73,13 @@ jobs:
                   command: |
                       sudo apt-get update
                       sudo apt-get install -y software-properties-common apt-transport-https
+                      curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
                       curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
+                      sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
                       sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
                       sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
                       sudo apt-get update
-                      sudo apt-get install -y ninja-build git unzip cmake g++-11 libstdc++-11-dev
+                      sudo apt-get install -y ninja-build git unzip cmake clang-14 libc++-14-dev libc++abi-14-dev libstdc++-11-dev
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -59,7 +88,24 @@ jobs:
             - store_test_results:
                   path: build/test-results.xml
 
-    osx-clang:
+    mac-gcc:
+        macos:
+            xcode: 13.4.0
+        environment:
+            CC: gcc-12
+            CXX: g++-12
+        steps:
+            - checkout
+            - run: brew install cmake ninja pkg-config gcc@12
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --output-junit test-results.xml --test-dir build
+            - store_test_results:
+                  path: build/test-results.xml
+
+    mac-clang-libcpp:
         macos:
             xcode: 13.4.0
         environment:
@@ -77,15 +123,16 @@ jobs:
             - store_test_results:
                   path: build/test-results.xml
 
-    osx-gcc:
+    mac-clang-libstdcpp:
         macos:
             xcode: 13.4.0
         environment:
-            CC: gcc-12
-            CXX: g++-12
+            CC: /usr/local/opt/llvm/bin/clang
+            CXX: /usr/local/opt/llvm/bin/clang++
+            CXXFLAGS: -stdlib=libstdc++
         steps:
             - checkout
-            - run: brew install cmake ninja pkg-config gcc@12
+            - run: brew install cmake ninja pkg-config llvm@13 gcc@12
             - run: /bin/bash .ci/install-vcpkg.sh
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
@@ -117,8 +164,10 @@ workflows:
     version: 2
     run-all:
         jobs:
-            - linux-clang
             - linux-gcc
-            - osx-clang
-            - osx-gcc
+            - linux-clang-libcpp
+            - linux-clang-libstdcpp
+            - mac-gcc
+            - mac-clang-libcpp
+            - mac-clang-libstdcpp
             - windows-msvc
