@@ -109,7 +109,7 @@ jobs:
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
             - run: .\build\src\example\RelWithDebInfo\example.exe
-            - run: & $Env:ProgramFiles\CMake\bin\ctest.exe --output-junit test-results.xml --test-dir build
+            - run: Invoke-Expression '& $Env:ProgramFiles\CMake\bin\ctest.exe --output-junit test-results.xml --test-dir build'
             - store_test_results:
                   path: build\test-results.xml
 
