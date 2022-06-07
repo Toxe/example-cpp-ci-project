@@ -44,6 +44,8 @@ for:
           only:
               - image: Visual Studio 2022
       install:
+          - ps: [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          - ps: Install-Module -Name PowerShellGet -RequiredVersion 2.2.5 -Scope CurrentUser -Force
           - ps: Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
           - ps: Install-Module VSSetup -Scope CurrentUser -Force
 

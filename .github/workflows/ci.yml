@@ -119,6 +119,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - run: |
+                  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                  Install-Module -Name PowerShellGet -RequiredVersion 2.2.5 -Scope CurrentUser -Force
                   Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
                   Install-Module VSSetup -Scope CurrentUser -Force
             - run: .ci\install-vcpkg.ps1
@@ -133,6 +135,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - run: |
+                  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                  Install-Module -Name PowerShellGet -RequiredVersion 2.2.5 -Scope CurrentUser -Force
                   Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
                   Install-Module VSSetup -Scope CurrentUser -Force
             - run: .ci\install-vcpkg.ps1
