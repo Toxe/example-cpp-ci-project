@@ -148,8 +148,6 @@ jobs:
             - run:
                   name: Install Software
                   command: |
-                      Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
-                      Install-Module VSSetup -Scope CurrentUser -Force
                       choco install -y --no-progress cmake --installargs "ADD_CMAKE_TO_PATH=User"
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
@@ -166,8 +164,6 @@ jobs:
             - run:
                   name: Install Software
                   command: |
-                      Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
-                      Install-Module VSSetup -Scope CurrentUser -Force
                       choco install -y --no-progress cmake --installargs "ADD_CMAKE_TO_PATH=User"
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project-with-clang-cl.ps1

@@ -29,7 +29,7 @@ else
 }
 
 # Visual Studio installation directory
-$VS_DIR = Get-VSSetupInstance -All | Select-VSSetupInstance -Require "Microsoft.VisualStudio.Component.VC.Tools.x86.x64" -Latest | Select-Object -ExpandProperty InstallationPath
+$VS_DIR = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property installationPath
 
 # init development environment
 Push-Location .

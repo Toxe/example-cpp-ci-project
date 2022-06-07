@@ -118,11 +118,6 @@ jobs:
         runs-on: windows-latest
         steps:
             - uses: actions/checkout@v3
-            - run: |
-                  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-                  Install-Module -Name PowerShellGet -RequiredVersion 2.2.5 -Scope CurrentUser -Force
-                  Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
-                  Install-Module VSSetup -Scope CurrentUser -Force
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
@@ -134,11 +129,6 @@ jobs:
         runs-on: windows-latest
         steps:
             - uses: actions/checkout@v3
-            - run: |
-                  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-                  Install-Module -Name PowerShellGet -RequiredVersion 2.2.5 -Scope CurrentUser -Force
-                  Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
-                  Install-Module VSSetup -Scope CurrentUser -Force
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe
