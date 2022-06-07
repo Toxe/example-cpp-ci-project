@@ -44,8 +44,8 @@ for:
           only:
               - image: Visual Studio 2022
       install:
-          - Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
-          - Install-Module VSSetup -Scope CurrentUser -Force
+          - ps: Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
+          - ps: Install-Module VSSetup -Scope CurrentUser -Force
 
 before_build:
     # ---- Mac & Linux ----
