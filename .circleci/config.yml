@@ -7,7 +7,7 @@ orbs:
 jobs:
     linux-gcc:
         docker:
-            - image: cimg/base:stable
+            - image: cimg/base:current
         environment:
             CC: gcc-11
             CXX: g++-11
@@ -33,7 +33,7 @@ jobs:
 
     linux-clang-libcpp:
         docker:
-            - image: cimg/base:stable
+            - image: cimg/base:current
         environment:
             CC: clang-14
             CXX: clang++-14
@@ -61,7 +61,7 @@ jobs:
 
     linux-clang-libstdcpp:
         docker:
-            - image: cimg/base:stable
+            - image: cimg/base:current
         environment:
             CC: clang-14
             CXX: clang++-14
@@ -90,7 +90,7 @@ jobs:
 
     mac-gcc:
         macos:
-            xcode: 13.4.0
+            xcode: 13.4.1
         environment:
             CC: gcc-12
             CXX: g++-12
@@ -107,7 +107,7 @@ jobs:
 
     mac-clang-libcpp:
         macos:
-            xcode: 13.4.0
+            xcode: 13.4.1
         environment:
             CC: /usr/local/opt/llvm/bin/clang
             CXX: /usr/local/opt/llvm/bin/clang++
@@ -125,7 +125,7 @@ jobs:
 
     mac-clang-libstdcpp:
         macos:
-            xcode: 13.4.0
+            xcode: 13.4.1
         environment:
             CC: /usr/local/opt/llvm/bin/clang
             CXX: /usr/local/opt/llvm/bin/clang++
