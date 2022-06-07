@@ -28,9 +28,12 @@ else
     $TOOLCHAIN = "False"
 }
 
+# Visual Studio installation directory
+$VS_DIR = Get-VSSetupInstance -All | Select-VSSetupInstance -Require "Microsoft.VisualStudio.Component.VC.Tools.x86.x64" -Latest | Select-Object -ExpandProperty InstallationPath
+
 # init development environment
 Push-Location .
-& "$Env:ProgramFiles\Microsoft Visual Studio\2022\Community\Common7\Tools\Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64
+& "$VS_DIR\Common7\Tools\Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64
 Pop-Location
 
 # Clang-cl
@@ -39,6 +42,7 @@ $CLANG_CL = "$Env:VCINSTALLDIR/Tools/Llvm/x64/bin/clang-cl.exe".Replace("\" ,"/"
 Write-Host "---- build-project-with-clang-cl.ps1 ----"
 Write-Host "BUILD_DIR: $BUILD_DIR"
 Write-Host "VCPKG_DIR: $VCPKG_DIR"
+Write-Host "VS_DIR: $VS_DIR"
 Write-Host "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 Write-Host "CLANG_CL: $CLANG_CL"
 Write-Host "-----------------------------------------"
