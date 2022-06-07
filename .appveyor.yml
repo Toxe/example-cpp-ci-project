@@ -38,8 +38,6 @@ for:
           - sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
           - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           - sudo apt-get update
-          - sudo apt-get -y --allow-change-held-packages remove clang-14 mssql-server
-          - sudo apt-get -y autoremove
           - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev g++-11 libstdc++-11-dev
 
     - matrix:
