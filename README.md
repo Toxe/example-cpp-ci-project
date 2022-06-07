@@ -59,3 +59,11 @@ BM_AllLines_PCRE2           6123 ns         6058 ns       102703 length=24.4433M
 BM_AllLines_PCRE2_JIT       3524 ns         3517 ns       198269 length=47.188M
 BM_AllLines_PCRE_JIT        3599 ns         3586 ns       204542 length=48.681M
 ```
+
+## Pre-installed Software
+
+The CI VMs or Docker images come with already pre-installed software.
+
+- AppVeyor: [macOS](https://www.appveyor.com/docs/macos-images-software/), [Linux](https://www.appveyor.com/docs/linux-images-software/), [Windows](https://www.appveyor.com/docs/windows-images-software/)
+- CircleCI: [macOS](https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions), [Linux](https://circleci.com/docs/2.0/circleci-images/#pre-installed-tools) ([image](https://circleci.com/developer/images/image/cimg/base), [Dockerfile](https://github.com/CircleCI-Public/cimg-base/blob/main/20.04/Dockerfile)), [Windows](https://discuss.circleci.com/t/march-2022-beta-support-for-new-operating-system-for-windows-executors-windows-server-2022/43198)
+- GitHub: [macOS](https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md), [Linux](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md), [Windows](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2022-Readme.md)
