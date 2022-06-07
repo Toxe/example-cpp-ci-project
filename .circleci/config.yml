@@ -150,7 +150,7 @@ jobs:
                   command: |
                       Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
                       Install-Module VSSetup -Scope CurrentUser -Force
-                      choco install -y cmake
+                      choco install -y --no-progress cmake
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
@@ -168,7 +168,7 @@ jobs:
                   command: |
                       Install-PackageProvider -Name NuGet -Scope CurrentUser -Force
                       Install-Module VSSetup -Scope CurrentUser -Force
-                      choco install -y cmake
+                      choco install -y --no-progress cmake
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe
