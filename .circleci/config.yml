@@ -146,12 +146,9 @@ jobs:
         steps:
             - checkout
             - run:
-                  name: Download CMake
+                  name: Install Software
                   command: |
-                      $ProgressPreference = "SilentlyContinue"
-                      Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.23.2/cmake-3.23.2-windows-x86_64.zip -OutFile $Env:HOMEPATH\cmake-3.23.2-windows-x86_64.zip
-                      Expand-Archive $Env:HOMEPATH\cmake-3.23.2-windows-x86_64.zip -DestinationPath "$Env:ProgramFiles"
-                      Rename-Item "$Env:ProgramFiles\cmake-3.23.2-windows-x86_64" -NewName CMake
+                      choco install cmake
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
@@ -165,12 +162,9 @@ jobs:
         steps:
             - checkout
             - run:
-                  name: Download CMake
+                  name: Install Software
                   command: |
-                      $ProgressPreference = "SilentlyContinue"
-                      Invoke-WebRequest -URI https://github.com/Kitware/CMake/releases/download/v3.23.2/cmake-3.23.2-windows-x86_64.zip -OutFile $Env:HOMEPATH\cmake-3.23.2-windows-x86_64.zip
-                      Expand-Archive $Env:HOMEPATH\cmake-3.23.2-windows-x86_64.zip -DestinationPath "$Env:ProgramFiles"
-                      Rename-Item "$Env:ProgramFiles\cmake-3.23.2-windows-x86_64" -NewName CMake
+                      choco install cmake
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe

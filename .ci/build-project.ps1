@@ -34,11 +34,6 @@ Write-Host "VCPKG_DIR: $VCPKG_DIR"
 Write-Host "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 Write-Host "---------------------------"
 
-if (-not(Get-Command cmake -ErrorAction SilentlyContinue))
-{
-    New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
-}
-
 New-Item -Name "$BUILD_DIR" -ItemType Directory
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" -B "$BUILD_DIR"
 cmake --build "$BUILD_DIR" -j 4 --config RelWithDebInfo

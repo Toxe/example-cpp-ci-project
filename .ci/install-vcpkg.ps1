@@ -21,11 +21,6 @@ Write-Host "Vcpkg install directory: $VCPKG_DIR"
 Write-Host "Update existing Vcpkg? $UPDATE_VCPKG"
 Write-Host "---------------------------"
 
-if (-not(Get-Command git -ErrorAction SilentlyContinue))
-{
-    New-Alias -Name git -Value "$Env:ProgramFiles\Git\bin\git.exe"
-}
-
 if ($UPDATE_VCPKG)
 {
     # update existing Vcpkg
