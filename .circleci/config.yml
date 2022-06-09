@@ -129,8 +129,8 @@ jobs:
         environment:
             CC: /usr/local/opt/llvm/bin/clang
             CXX: /usr/local/opt/llvm/bin/clang++
-            CXXFLAGS: -stdlib=libstdc++ -I/usr/local/opt/gcc\@12/include/c++/12 -I/usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin21
-            LDFLAGS: -L/usr/local/opt/gcc\@12/lib/gcc/12 -Wl,-rpath,/usr/local/opt/gcc\@12/lib/gcc/12
+            CXXFLAGS: -stdlib=libstdc++ -I/usr/local/opt/gcc@12/include/c++/12 -I/usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin21
+            LDFLAGS: -L/usr/local/opt/gcc@12/lib/gcc/12 -Wl,-rpath,/usr/local/opt/gcc@12/lib/gcc/12
         steps:
             - checkout
             - run: brew install cmake ninja pkg-config llvm@13 gcc@12
