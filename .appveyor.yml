@@ -12,19 +12,6 @@ environment:
 for:
     - matrix:
           only:
-              - image: macos-monterey
-      environment:
-          CC_CLANG: /usr/local/opt/llvm/bin/clang
-          CXX_CLANG: /usr/local/opt/llvm/bin/clang++
-          CXXFLAGS_CLANG_LIBCPP: -stdlib=libc++
-          CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
-          CC_GCC: gcc-12
-          CXX_GCC: g++-12
-      install:
-          - brew install ninja llvm@13 gcc@12
-
-    - matrix:
-          only:
               - image: Ubuntu2004
       environment:
           CC_CLANG: clang-14
@@ -39,6 +26,19 @@ for:
           - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           - sudo apt-get update
           - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev g++-11 libstdc++-11-dev
+
+    - matrix:
+          only:
+              - image: macos-monterey
+      environment:
+          CC_CLANG: /usr/local/opt/llvm/bin/clang
+          CXX_CLANG: /usr/local/opt/llvm/bin/clang++
+          CXXFLAGS_CLANG_LIBCPP: -stdlib=libc++
+          CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
+          CC_GCC: gcc-12
+          CXX_GCC: g++-12
+      install:
+          - brew install ninja llvm@13 gcc@12
 
     - matrix:
           only:
