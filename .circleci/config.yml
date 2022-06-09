@@ -149,6 +149,7 @@ jobs:
                   name: Install Software
                   command: |
                       choco install -y --no-progress cmake --installargs "ADD_CMAKE_TO_PATH=User"
+                      RefreshEnv
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
@@ -165,6 +166,7 @@ jobs:
                   name: Install Software
                   command: |
                       choco install -y --no-progress cmake --installargs "ADD_CMAKE_TO_PATH=User"
+                      RefreshEnv
             - run: .ci\install-vcpkg.ps1
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe
