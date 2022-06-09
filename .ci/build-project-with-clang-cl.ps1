@@ -28,6 +28,12 @@ else
     $TOOLCHAIN = "False"
 }
 
+# if CMake is not in PATH then we assume that it is located in its normal install directory
+if (-not(Get-Command cmake -ErrorAction SilentlyContinue))
+{
+    New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
+}
+
 # Visual Studio installation directory
 $VS_DIR = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property installationPath
 
@@ -43,8 +49,8 @@ Write-Host "---- build-project-with-clang-cl.ps1 ----"
 Write-Host "BUILD_DIR: $BUILD_DIR"
 Write-Host "VCPKG_DIR: $VCPKG_DIR"
 Write-Host "VS_DIR: $VS_DIR"
-Write-Host "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 Write-Host "CLANG_CL: $CLANG_CL"
+Write-Host "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 Write-Host "-----------------------------------------"
 
 New-Item -Name "$BUILD_DIR" -ItemType Directory

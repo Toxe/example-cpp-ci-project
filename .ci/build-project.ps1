@@ -28,6 +28,12 @@ else
     $TOOLCHAIN = "False"
 }
 
+# if CMake is not in PATH then we assume that it is located in its normal install directory
+if (-not(Get-Command cmake -ErrorAction SilentlyContinue))
+{
+    New-Alias -Name cmake -Value "$Env:ProgramFiles\CMake\bin\cmake.exe"
+}
+
 Write-Host "---- build-project.ps1 ----"
 Write-Host "BUILD_DIR: $BUILD_DIR"
 Write-Host "VCPKG_DIR: $VCPKG_DIR"
