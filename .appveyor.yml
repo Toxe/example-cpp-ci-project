@@ -20,6 +20,8 @@ for:
           CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
           CC_GCC: gcc-11
           CXX_GCC: g++-11
+      init:
+          - curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
       install:
           - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
           - sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
@@ -37,6 +39,8 @@ for:
           CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
           CC_GCC: gcc-12
           CXX_GCC: g++-12
+      init:
+          - curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
       install:
           - brew install ninja llvm@13 gcc@12
 
