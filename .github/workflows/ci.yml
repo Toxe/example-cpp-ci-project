@@ -103,7 +103,7 @@ jobs:
         env:
             CC: /usr/local/opt/llvm/bin/clang
             CXX: /usr/local/opt/llvm/bin/clang++
-            CXXFLAGS: -stdlib=libstdc++ -I/usr/local/opt/gcc@12/include/c++/12 -I/usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin20
+            CXXFLAGS: -stdlib=libstdc++ -isystem /usr/local/opt/gcc@12/include/c++/12 -isystem /usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin20 -Wno-stdlibcxx-not-found
             LDFLAGS: -L/usr/local/opt/gcc@12/lib/gcc/12 -Wl,-rpath,/usr/local/opt/gcc@12/lib/gcc/12
         steps:
             - uses: actions/checkout@v3
