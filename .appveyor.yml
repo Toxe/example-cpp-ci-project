@@ -18,6 +18,7 @@ for:
           CXX_CLANG: clang++-14
           CXXFLAGS_CLANG_LIBCPP: -stdlib=libc++
           CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
+          LDFLAGS_CLANG_LIBSTDCPP:
           CC_GCC: gcc-11
           CXX_GCC: g++-11
       install:
@@ -25,6 +26,7 @@ for:
           - sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
           - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           - sudo apt-get update
+          - sudo apt-get -y --allow-change-held-packages remove mssql-server
           - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev g++-11 libstdc++-11-dev
       on_finish:
           - sh: export APPVEYOR_SSH_BLOCK=true
@@ -37,7 +39,8 @@ for:
           CC_CLANG: /usr/local/opt/llvm/bin/clang
           CXX_CLANG: /usr/local/opt/llvm/bin/clang++
           CXXFLAGS_CLANG_LIBCPP: -stdlib=libc++
-          CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
+          CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++ -isystem /usr/local/opt/gcc@12/include/c++/12 -isystem /usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin21 -Wno-stdlibcxx-not-found
+          LDFLAGS_CLANG_LIBSTDCPP: -L/usr/local/opt/gcc@12/lib/gcc/12 -Wl,-rpath,/usr/local/opt/gcc@12/lib/gcc/12
           CC_GCC: gcc-12
           CXX_GCC: g++-12
       install:
@@ -65,7 +68,7 @@ build_script:
     - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG_LIBCPP /bin/bash .ci/build-project.sh build-clang-libcpp
     - sh: ./build-clang-libcpp/src/show_info/show_info
     - sh: ./build-clang-libcpp/src/example/example
-    - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG_LIBSTDCPP /bin/bash .ci/build-project.sh build-clang-libstdcpp
+    - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG_LIBSTDCPP LDFLAGS=$LDFLAGS_CLANG_LIBSTDCPP /bin/bash .ci/build-project.sh build-clang-libstdcpp
     - sh: ./build-clang-libstdcpp/src/show_info/show_info
     - sh: ./build-clang-libstdcpp/src/example/example
     # build project with GCC
