@@ -1,8 +1,3 @@
-image:
-    - macos-monterey
-    - Ubuntu2004
-    - Visual Studio 2022
-
 platform:
     - x64
 
@@ -10,92 +5,146 @@ environment:
     APPVEYOR_YML_DISABLE_PS_LINUX: true
 
 for:
+    # Linux GCC
     - matrix:
           only:
               - image: Ubuntu2004
       environment:
-          CC_CLANG: clang-14
-          CXX_CLANG: clang++-14
-          CXXFLAGS_CLANG_LIBCPP: -stdlib=libc++
-          CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++
-          LDFLAGS_CLANG_LIBSTDCPP:
-          CC_GCC: gcc-11
-          CXX_GCC: g++-11
+          CC: gcc-11
+          CXX: g++-11
+      install:
+          - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+          - sudo apt-get update
+          - sudo apt-get -y install g++-11 libstdc++-11-dev
+      build_script:
+          - sh: /bin/bash .ci/install-vcpkg.sh
+          - sh: /bin/bash .ci/build-project.sh
+          - sh: ./build/src/show_info/show_info
+          - sh: ./build/src/example/example
+          - sh: ctest --output-junit test-results.xml --test-dir build
+          - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
+
+    # Linux Clang (libc++)
+    - matrix:
+          only:
+              - image: Ubuntu2004
+      environment:
+          CC: clang-14
+          CXX: clang++-14
+          CXXFLAGS: -stdlib=libc++
+      install:
+          - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          - sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
+          - sudo apt-get update
+          - sudo apt-get -y --allow-change-held-packages remove mssql-server
+          - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev
+      build_script:
+          - sh: /bin/bash .ci/install-vcpkg.sh
+          - sh: /bin/bash .ci/build-project.sh
+          - sh: ./build/src/show_info/show_info
+          - sh: ./build/src/example/example
+          - sh: ctest --output-junit test-results.xml --test-dir build
+          - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
+
+    # Linux Clang (libstdc++)
+    - matrix:
+          only:
+              - image: Ubuntu2004
+      environment:
+          CC: clang-14
+          CXX: clang++-14
+          CXXFLAGS: -stdlib=libstdc++
       install:
           - curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
           - sudo apt-add-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main'
           - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
           - sudo apt-get update
           - sudo apt-get -y --allow-change-held-packages remove mssql-server
-          - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev g++-11 libstdc++-11-dev
-    #   on_finish:
-    #       - sh: export APPVEYOR_SSH_BLOCK=true
-    #       - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+          - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev libstdc++-11-dev
+      build_script:
+          - sh: /bin/bash .ci/install-vcpkg.sh
+          - sh: /bin/bash .ci/build-project.sh
+          - sh: ./build/src/show_info/show_info
+          - sh: ./build/src/example/example
+          - sh: ctest --output-junit test-results.xml --test-dir build
+          - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
 
+    # macOS GCC
     - matrix:
           only:
               - image: macos-monterey
       environment:
-          CC_CLANG: /usr/local/opt/llvm/bin/clang
-          CXX_CLANG: /usr/local/opt/llvm/bin/clang++
-          CXXFLAGS_CLANG_LIBCPP: -stdlib=libc++
-          CXXFLAGS_CLANG_LIBSTDCPP: -stdlib=libstdc++ -isystem /usr/local/opt/gcc@12/include/c++/12 -isystem /usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin21 -Wno-stdlibcxx-not-found
-          LDFLAGS_CLANG_LIBSTDCPP: -L/usr/local/opt/gcc@12/lib/gcc/12 -Wl,-rpath,/usr/local/opt/gcc@12/lib/gcc/12
-          CC_GCC: gcc-12
-          CXX_GCC: g++-12
+          CC: gcc-12
+          CXX: g++-12
+      install:
+          - brew install ninja gcc@12
+      build_script:
+          - sh: /bin/bash .ci/install-vcpkg.sh
+          - sh: /bin/bash .ci/build-project.sh
+          - sh: ./build/src/show_info/show_info
+          - sh: ./build/src/example/example
+          - sh: ctest --output-junit test-results.xml --test-dir build
+          - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
+
+    # macOS Clang (libc++)
+    - matrix:
+          only:
+              - image: macos-monterey
+      environment:
+          CC: /usr/local/opt/llvm/bin/clang
+          CXX: /usr/local/opt/llvm/bin/clang++
+          CXXFLAGS: -stdlib=libc++
+      install:
+          - brew install ninja llvm@13
+      build_script:
+          - sh: /bin/bash .ci/install-vcpkg.sh
+          - sh: /bin/bash .ci/build-project.sh
+          - sh: ./build/src/show_info/show_info
+          - sh: ./build/src/example/example
+          - sh: ctest --output-junit test-results.xml --test-dir build
+          - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
+
+    # macOS Clang (libstdc++)
+    - matrix:
+          only:
+              - image: macos-monterey
+      environment:
+          CC: /usr/local/opt/llvm/bin/clang
+          CXX: /usr/local/opt/llvm/bin/clang++
+          CXXFLAGS: -stdlib=libstdc++ -isystem /usr/local/opt/gcc@12/include/c++/12 -isystem /usr/local/opt/gcc@12/include/c++/12/x86_64-apple-darwin21 -Wno-stdlibcxx-not-found
       install:
           - brew install ninja llvm@13 gcc@12
-    #   on_finish:
-    #       - sh: export APPVEYOR_SSH_BLOCK=true
-    #       - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+      build_script:
+          - sh: /bin/bash .ci/install-vcpkg.sh
+          - sh: /bin/bash .ci/build-project.sh
+          - sh: ./build/src/show_info/show_info
+          - sh: ./build/src/example/example
+          - sh: ctest --output-junit test-results.xml --test-dir build
+          - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
 
+    # Windows MSVC
     - matrix:
           only:
               - image: Visual Studio 2022
+      build_script:
+          - ps: .ci\install-vcpkg.ps1
+          - ps: .ci\build-project.ps1
+          - ps: .\build\src\show_info\RelWithDebInfo\show_info.exe
+          - ps: .\build\src\example\RelWithDebInfo\example.exe
+          - ps: ctest --output-junit test-results.xml --test-dir build
+          - ps: $wc = New-Object 'System.Net.WebClient'
+          - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path .\build-msvc\test-results.xml))
 
-before_build:
-    # ---- Mac & Linux ----
-    # install Vcpkg
-    - sh: /bin/bash .ci/install-vcpkg.sh
-
-    # ---- Windows ----
-    # install Vcpkg
-    - ps: .ci\install-vcpkg.ps1
-
-build_script:
-    # ---- Mac & Linux ----
-    # build project with Clang (libc++ and libstdc++)
-    - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG_LIBCPP /bin/bash .ci/build-project.sh build-clang-libcpp
-    - sh: ./build-clang-libcpp/src/show_info/show_info
-    - sh: ./build-clang-libcpp/src/example/example
-    - sh: CC=$CC_CLANG CXX=$CXX_CLANG CXXFLAGS=$CXXFLAGS_CLANG_LIBSTDCPP LDFLAGS=$LDFLAGS_CLANG_LIBSTDCPP /bin/bash .ci/build-project.sh build-clang-libstdcpp
-    - sh: ./build-clang-libstdcpp/src/show_info/show_info
-    - sh: ./build-clang-libstdcpp/src/example/example
-    # build project with GCC
-    - sh: CC=$CC_GCC CXX=$CXX_GCC /bin/bash .ci/build-project.sh build-gcc
-    - sh: ./build-gcc/src/show_info/show_info
-    - sh: ./build-gcc/src/example/example
-
-    # ---- Windows ----
-    # build project with MSVC
-    - ps: .ci\build-project.ps1 build-msvc
-    - ps: .\build-msvc\src\show_info\RelWithDebInfo\show_info.exe
-    - ps: .\build-msvc\src\example\RelWithDebInfo\example.exe
-    # build project with Clang-cl
-    - ps: .ci\build-project-with-clang-cl.ps1 build-clang-cl
-    - ps: .\build-clang-cl\src\show_info\show_info.exe
-    - ps: .\build-clang-cl\src\example\example.exe
-
-test_script:
-    # ---- Mac & Linux ----
-    - sh: ctest --output-junit test-results-clang-libcpp.xml --test-dir build-clang-libcpp
-    - sh: ctest --output-junit test-results-clang-libstdcpp.xml --test-dir build-clang-libstdcpp
-    - sh: ctest --output-junit test-results-gcc.xml --test-dir build-gcc
-    - sh: find "$APPVEYOR_BUILD_FOLDER" -type f -name 'test-results*.xml' -print0 | xargs -0 -I '{}' curl -F 'file=@{}' "https://ci.appveyor.com/api/testresults/junit/$APPVEYOR_JOB_ID"
-
-    # ---- Windows ----
-    - ps: ctest --output-junit test-results-msvc.xml --test-dir build-msvc
-    - ps: ctest --output-junit test-results-clang-cl.xml --test-dir build-clang-cl
-    - ps: $wc = New-Object 'System.Net.WebClient'
-    - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path .\build-msvc\test-results-msvc.xml))
-    - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path .\build-msvc\test-results-clang-cl.xml))
+    # Windows Clang-cl
+    - matrix:
+          only:
+              - image: Visual Studio 2022
+      build_script:
+          - ps: .ci\install-vcpkg.ps1
+          - ps: .ci\build-project-with-clang-cl.ps1
+          - ps: .\build\src\show_info\show_info.exe
+          - ps: .\build\src\example\example.exe
+          - ps: ctest --output-junit test-results.xml --test-dir build
+          - ps: $wc = New-Object 'System.Net.WebClient'
+          - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path .\build-msvc\test-results.xml))
