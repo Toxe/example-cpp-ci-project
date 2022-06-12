@@ -28,9 +28,9 @@ for:
           - sudo apt-get update
           - sudo apt-get -y --allow-change-held-packages remove mssql-server
           - sudo apt-get -y install clang-14 libc++-14-dev libc++abi-14-dev g++-11 libstdc++-11-dev
-      on_finish:
-          - sh: export APPVEYOR_SSH_BLOCK=true
-          - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+    #   on_finish:
+    #       - sh: export APPVEYOR_SSH_BLOCK=true
+    #       - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
 
     - matrix:
           only:
@@ -45,9 +45,9 @@ for:
           CXX_GCC: g++-12
       install:
           - brew install ninja llvm@13 gcc@12
-      on_finish:
-          - sh: export APPVEYOR_SSH_BLOCK=true
-          - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+    #   on_finish:
+    #       - sh: export APPVEYOR_SSH_BLOCK=true
+    #       - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
 
     - matrix:
           only:
