@@ -28,5 +28,5 @@ echo "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 echo "--------------------------"
 
 mkdir "$BUILD_DIR"
-cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" -B "$BUILD_DIR"
+cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" -DUSE_SANITIZER=address -B "$BUILD_DIR"
 cmake --build "$BUILD_DIR" -j 4
