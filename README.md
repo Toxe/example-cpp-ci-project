@@ -1,16 +1,68 @@
 # Example C++ CI Project and CI Services Comparison
 
-| Service | Status | OS and Compiler |
-| ------- | ------ | --------------- |
-| AppVeyor | [![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project) | macOS (Clang 13, GCC 12), Linux (Clang 14, GCC 11) and Windows (MSVC 2022) |
-| CircleCI | [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master) | macOS (Clang 13, GCC 12), Linux (Clang 14, GCC 11) and Windows (MSVC 2022) |
-| GitHub Actions | [![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions) | macOS (Clang 13, GCC 12), Linux (Clang 14, GCC 11) and Windows (MSVC 2022) |
-| Travis |  | *no longer supported* |
+[![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project)
+[![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master)
+[![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions)
 
 An example project to test different CI (Continuous Integration) services.
 
-- `example_simple.cpp` is a simple program that has no further dependencies and just outputs a couple of strings describing the compiler and C++ standard library that it was built with.
-- `example_benchmark.cpp` needs Vcpkg and uses PCRE, PCRE2 and Google Benchmark to perform a small regular expression benchmark.
+### Supported CI services, platforms and Compilers
+
+#### AppVeyor
+
+[![Build status](https://ci.appveyor.com/api/projects/status/smmr71cjma919r28?svg=true)](https://ci.appveyor.com/project/Toxe/example-cpp-ci-project)
+
+- Linux:
+  - Clang 14 + libc++
+  - GCC 11 + libstdc++
+- macOS:
+  - Clang 13 + libc++
+  - GCC 12 + libstdc++
+- Windows:
+  - MSVC 2022
+
+#### CircleCI
+
+[![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master)
+
+- Linux:
+  - Clang 14 + libc++
+  - Clang 14 + libstdc++
+  - GCC 11 + libstdc++
+- macOS:
+  - Clang 13 + libc++
+  - Clang 13 + libstdc++
+  - GCC 12 + libstdc++
+- Windows:
+  - MSVC 2022
+  - Clang-cl
+
+#### GitHub Actions
+
+[![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions)
+
+- Linux:
+  - Clang 14 + libc++
+  - Clang 14 + libstdc++
+  - GCC 11 + libstdc++
+- macOS:
+  - Clang 13 + libc++
+  - Clang 13 + libstdc++
+  - GCC 12 + libstdc++
+- Windows:
+  - MSVC 2022
+  - Clang-cl
+
+#### Travis
+
+*No longer supported, since they dropped their free Open Source support.*
+
+## Example Programs
+
+Note: This project contains example programs that serve no other purpose than being examples. The programs themselves don't make much sense on their own.
+
+- `src/show_info`: Outputs a couple of strings describing the compiler and C++ standard library that were used to build the program.
+- `src/example`: Builds `example` (just shows some simple output) and `example_tests` (an example for running tests).
 
 ## Build and Installation Scripts
 
@@ -19,45 +71,74 @@ All CI services use these scripts to simplify their configurations.
 
 - `install-vcpkg.sh` / `install-vcpkg.ps1`: Download and install Vcpkg or update an already existing Vcpkg installation.
 - `build-project.sh` / `build-project.ps1`: Build the project itself.
+- `build-project-with-clang-cl.ps1`: Used on Windows to build the project with Clang-cl.
 
 ## Dependencies
 
 - CMake
-- Vcpkg
+- Vcpkg to install dependencies.
+
+## Sanitizers
+
+Where possible all programs are build using Address Sanitizer.
 
 ## Example program output
 
-### example_simple.cpp
+### `show_info`
+
+Output depends on compiler and C++ standard library.
+
+GCC and libstdc++:
 
 ```
-__cplusplus: 201703
-__clang_version__: 9.0.1
-_LIBCPP_VERSION: 9000
+__cplusplus: 202002
+__GNUC__: 11
+_GLIBCXX_RELEASE: 11
 ```
 
-### example_benchmark.cpp
+Clang and libc++:
 
 ```
-2020-03-06 15:04:27
-Running ./build/example_benchmark
-Run on (4 X 3300 MHz CPU s)
-CPU Caches:
-  L1 Data 32K (x4)
-  L1 Instruction 32K (x4)
-  L2 Unified 262K (x4)
-  L3 Unified 6291K (x1)
-Load Average: 1.98, 1.96, 1.91
---------------------------------------------------------------------------------
-Benchmark                      Time             CPU   Iterations UserCounters...
---------------------------------------------------------------------------------
-BM_OneLine_PCRE              386 ns          385 ns      1786325 length=82.1709M
-BM_OneLine_PCRE2             371 ns          368 ns      1836489 length=84.4785M
-BM_OneLine_PCRE2_JIT         135 ns          135 ns      4972403 length=228.731M
-BM_OneLine_PCRE_JIT          132 ns          131 ns      5265731 length=242.224M
-BM_AllLines_PCRE            6094 ns         6082 ns       107888 length=25.6773M
-BM_AllLines_PCRE2           6123 ns         6058 ns       102703 length=24.4433M
-BM_AllLines_PCRE2_JIT       3524 ns         3517 ns       198269 length=47.188M
-BM_AllLines_PCRE_JIT        3599 ns         3586 ns       204542 length=48.681M
+__cplusplus: 202002
+__clang_version__: 14.0.5 
+_LIBCPP_VERSION: 14000
+```
+
+Clang and libstdc++:
+
+```
+__cplusplus: 202002
+__clang_version__: 14.0.5 
+_GLIBCXX_RELEASE: 11
+```
+
+MSVC:
+
+```
+__cplusplus: 199711
+_MSC_VER: 1932
+```
+
+Clang-cl:
+
+```
+__cplusplus: 202002
+_MSC_VER: 1932
+__clang_version__: 13.0.1 
+```
+
+### `example`
+
+```
+Everything seems to be working.
+```
+
+### `example_tests`
+
+```
+Randomness seeded to: 1486164745
+===============================================================================
+All tests passed (16 assertions in 3 test cases)
 ```
 
 ## Pre-installed Software
