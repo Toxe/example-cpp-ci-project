@@ -4,7 +4,7 @@
 [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master)
 [![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions)
 
-An example project to test different CI (Continuous Integration) services.
+An example project to test and compare different CI (Continuous Integration) services building a C++ project on Linux, Mac, Windows with GCC, Clang (libc++ and libstdc++), MSVC and Clang-cl.
 
 ### Supported CI services, platforms and Compilers
 
