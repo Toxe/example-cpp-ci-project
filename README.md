@@ -6,6 +6,8 @@
 
 An example project to test and compare different CI (Continuous Integration) services building a C++ project on Linux, Mac, Windows with GCC, Clang (libc++ and libstdc++), MSVC and Clang-cl.
 
+Note: This tries to be a simple and robust CI setup that is open for improvements. It does not use more advanced configurations like build matrices and instead tries to be a bit more specific (even if that means repetition).
+
 ### Supported CI services, platforms and Compilers
 
 #### AppVeyor
@@ -146,5 +148,5 @@ All tests passed (16 assertions in 3 test cases)
 The CI VMs or Docker images come with already pre-installed software.
 
 - AppVeyor: [macOS](https://www.appveyor.com/docs/macos-images-software/), [Linux](https://www.appveyor.com/docs/linux-images-software/), [Windows](https://www.appveyor.com/docs/windows-images-software/)
-- CircleCI: [macOS](https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions), [Linux](https://circleci.com/docs/2.0/circleci-images/#pre-installed-tools) ([image](https://circleci.com/developer/images/image/cimg/base), [Dockerfile](https://github.com/CircleCI-Public/cimg-base/blob/main/20.04/Dockerfile)), [Windows](https://discuss.circleci.com/t/march-2022-beta-support-for-new-operating-system-for-windows-executors-windows-server-2022/43198)
+- CircleCI: [macOS](https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions), [Linux](https://circleci.com/docs/2.0/circleci-images/#pre-installed-tools) ([image](https://circleci.com/developer/images/image/cimg/base), [Docker file](https://github.com/CircleCI-Public/cimg-base/blob/main/20.04/Dockerfile)), [Windows](https://discuss.circleci.com/t/march-2022-beta-support-for-new-operating-system-for-windows-executors-windows-server-2022/43198)
 - GitHub: [macOS](https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md), [Linux](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md), [Windows](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2022-Readme.md)
