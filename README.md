@@ -4,9 +4,9 @@
 [![CircleCI](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master.svg?style=svg)](https://circleci.com/gh/Toxe/example-cpp-ci-project/tree/master)
 [![CI](https://github.com/Toxe/example-cpp-ci-project/workflows/CI/badge.svg)](https://github.com/Toxe/example-cpp-ci-project/actions)
 
-An example project to test and compare different CI (Continuous Integration) services building a C++ project on Linux, Mac, Windows with GCC, Clang (libc++ and libstdc++), MSVC and Clang-cl.
+An example project to test and compare different CI (Continuous Integration) services building a C++ project on Linux, Mac, Windows with GCC, Clang (libc++ and libstdc++), MSVC and Clang-cl. It uses Vcpkg for installing dependencies.
 
-Note: This tries to be a simple and robust CI setup that is open for improvements. It does not use more advanced configurations like build matrices and instead tries to be a bit more specific (even if that means repetition).
+Note: This tries to be a simple and robust CI setup that is a comprehensive introduction and is open for improvements. It does not use more advanced configurations like build matrices and instead tries to be a bit more specific (even if that means repetition).
 
 ### Supported CI services, platforms and Compilers
 
@@ -78,7 +78,9 @@ All CI services use these scripts to simplify their configurations.
 ## Dependencies
 
 - CMake
-- Vcpkg to install dependencies.
+- Vcpkg to install dependencies:
+  - fmtlib
+  - Catch2 + FakeIt
 
 ## Sanitizers
 
