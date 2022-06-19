@@ -20,7 +20,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     linux-clang-libcpp:
         name: Linux Clang (libc++)
@@ -42,7 +42,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     linux-clang-libstdcpp:
         name: Linux Clang (libstdc++)
@@ -64,7 +64,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     mac-gcc:
         name: macOS GCC
@@ -79,7 +79,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     mac-clang-libcpp:
         name: macOS Clang (libc++)
@@ -95,7 +95,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     mac-clang-libstdcpp:
         name: macOS Clang (libstdc++)
@@ -112,7 +112,7 @@ jobs:
             - run: /bin/bash .ci/build-project.sh
             - run: ./build/src/show_info/show_info
             - run: ./build/src/example/example
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     windows-msvc:
         name: Windows MSVC
@@ -123,7 +123,7 @@ jobs:
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\RelWithDebInfo\show_info.exe
             - run: .\build\src\example\RelWithDebInfo\example.exe
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
 
     windows-clang-cl:
         name: Windows Clang-cl
@@ -134,4 +134,4 @@ jobs:
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe
             - run: .\build\src\example\example.exe
-            - run: ctest --test-dir build
+            - run: ctest --output-on-failure --test-dir build
