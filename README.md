@@ -46,7 +46,7 @@ Note: This tries to be a simple and robust CI setup that is a comprehensive intr
 - Linux:
   - Clang 14 + libc++
   - Clang 14 + libstdc++
-  - GCC 11 + libstdc++
+  - GCC 12 + libstdc++
 - macOS:
   - Clang 13 + libc++
   - Clang 13 + libstdc++
@@ -151,4 +151,4 @@ The CI VMs or Docker images come with already pre-installed software.
 
 - AppVeyor: [macOS](https://www.appveyor.com/docs/macos-images-software/), [Linux](https://www.appveyor.com/docs/linux-images-software/), [Windows](https://www.appveyor.com/docs/windows-images-software/)
 - CircleCI: [macOS](https://circleci.com/docs/2.0/testing-ios/#supported-xcode-versions), [Linux](https://circleci.com/docs/2.0/circleci-images/#pre-installed-tools) ([image](https://circleci.com/developer/images/image/cimg/base), [Docker file](https://github.com/CircleCI-Public/cimg-base/blob/main/20.04/Dockerfile)), [Windows](https://discuss.circleci.com/t/march-2022-beta-support-for-new-operating-system-for-windows-executors-windows-server-2022/43198)
-- GitHub: [macOS](https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md), [Linux](https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md), [Windows](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2022-Readme.md)
+- GitHub: [macOS](https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md), [Linux](https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md), [Windows](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2022-Readme.md)
