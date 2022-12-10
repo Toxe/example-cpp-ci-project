@@ -3,12 +3,14 @@
 ---
 Language: Cpp
 BasedOnStyle: WebKit
+AllowShortCaseLabelsOnASingleLine: true
 BreakConstructorInitializers: BeforeColon
 BreakInheritanceList: AfterColon
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 Cpp11BracedListStyle: true
 EmptyLineBeforeAccessModifier: Always
 FixNamespaceComments: true
+IndentCaseLabels: true
 IndentWidth: 4
 KeepEmptyLinesAtTheStartOfBlocks: false
 SpaceAfterCStyleCast: true
