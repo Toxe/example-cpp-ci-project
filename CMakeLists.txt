@@ -10,7 +10,8 @@ include(cmake/Testing.cmake)
 include(cmake/OverrideCMakeDefaults.cmake)
 
 # default compiler options and warnings
-include(cmake/DefaultCompilerOptionsAndWarnings.cmake)
+include(cmake/DefaultCompilerOptions.cmake)
+include(cmake/DefaultCompilerWarnings.cmake)
 
 # static analyzers
 include(cmake/StaticAnalyzers.cmake)

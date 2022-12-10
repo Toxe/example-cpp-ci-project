@@ -11,8 +11,9 @@ add_executable(
 
 set_target_properties(example PROPERTIES CXX_EXTENSIONS OFF)
 target_compile_features(example PUBLIC cxx_std_20)
-target_compile_options(example PRIVATE ${SANITIZER_FLAGS} ${DEFAULT_COMPILER_OPTIONS_AND_WARNINGS})
-target_link_libraries(example PRIVATE ${SANITIZER_FLAGS} fmt::fmt)
+target_compile_options(example PRIVATE ${SANITIZER_COMPILE_OPTIONS} ${DEFAULT_COMPILER_OPTIONS} ${DEFAULT_COMPILER_WARNINGS})
+target_link_options(example PRIVATE ${SANITIZER_LINK_OPTIONS})
+target_link_libraries(example PRIVATE ${SANITIZER_LINK_LIBRARIES} fmt::fmt)
 
 # Tests
 if (BUILD_TESTING)
@@ -31,9 +32,10 @@ if (BUILD_TESTING)
 
     set_target_properties(example_tests PROPERTIES CXX_EXTENSIONS OFF)
     target_compile_features(example_tests PUBLIC cxx_std_20)
-    target_compile_options(example_tests PRIVATE ${SANITIZER_FLAGS} ${DEFAULT_COMPILER_OPTIONS_AND_WARNINGS})
+    target_compile_options(example_tests PRIVATE ${SANITIZER_COMPILE_OPTIONS} ${DEFAULT_COMPILER_OPTIONS} ${DEFAULT_COMPILER_WARNINGS})
+    target_link_options(example_tests PRIVATE ${SANITIZER_LINK_OPTIONS})
+    target_link_libraries(example_tests PRIVATE ${SANITIZER_LINK_LIBRARIES} fmt::fmt Catch2::Catch2WithMain)
     target_include_directories(example_tests PRIVATE ${FAKEIT_INCLUDE_DIRS})
-    target_link_libraries(example_tests PRIVATE ${SANITIZER_FLAGS} fmt::fmt Catch2::Catch2WithMain)
 
     catch_discover_tests(example_tests)
 endif ()

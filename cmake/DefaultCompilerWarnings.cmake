@@ -1,4 +1,4 @@
-# Define default compiler options and warnings for Clang, GCC and MSVC.
+# Define default compiler warnings for Clang, GCC and MSVC.
 
 #https://clang.llvm.org/docs/DiagnosticsReference.html
 #https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
@@ -20,7 +20,8 @@ set(SHARED_CLANG_AND_CLANG_CL_AND_GCC_OPTIONS
         -Woverloaded-virtual
         -Wshadow
         -Wsign-conversion
-        -Wunused)
+        -Wunused
+)
 
 # Clang specific options
 set(DEFAULT_CLANG_OPTIONS
@@ -28,7 +29,7 @@ set(DEFAULT_CLANG_OPTIONS
         -Wall
         -Wmost
         -Wpedantic
-        -fcolor-diagnostics)
+)
 
 # GCC specific options
 set(DEFAULT_GCC_OPTIONS
@@ -39,12 +40,11 @@ set(DEFAULT_GCC_OPTIONS
         -Wlogical-op
         -Wpedantic
         -Wuseless-cast
-        -fdiagnostics-color)
+)
 
 # MSVC specific options
 set(DEFAULT_MSVC_OPTIONS
         /W4
-        /permissive-
         /w14242  # C4242: 'identifier': conversion from 'type1' to 'type2', possible loss of data
         /w14254  # C4254: 'operator': conversion from 'type1' to 'type2', possible loss of data
         /w14263  # C4263: 'function': member function does not override any base class virtual member function
@@ -66,24 +66,27 @@ set(DEFAULT_MSVC_OPTIONS
         /w14928  # C4928: illegal copy-initialization; more than one user-defined conversion has been implicitly applied
 )
 
-# Clang-cl specific options (Clang + MSVC)
+# Clang-cl specific options
 set(DEFAULT_CLANG_CL_OPTIONS
         ${SHARED_CLANG_AND_CLANG_CL_AND_GCC_OPTIONS}
         ${DEFAULT_MSVC_OPTIONS}
-        /EHsc  # enable exception handling
 )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
     # Clang
-    set(DEFAULT_COMPILER_OPTIONS_AND_WARNINGS ${DEFAULT_CLANG_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS ${DEFAULT_CLANG_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS_DISABLED "-w")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
     # Clang-cl
-    set(DEFAULT_COMPILER_OPTIONS_AND_WARNINGS ${DEFAULT_CLANG_CL_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS ${DEFAULT_CLANG_CL_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS_DISABLED "/w")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # GCC
-    set(DEFAULT_COMPILER_OPTIONS_AND_WARNINGS ${DEFAULT_GCC_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS ${DEFAULT_GCC_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS_DISABLED "-w")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     # MSVC
     string(REGEX REPLACE " /W[0-4]" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    set(DEFAULT_COMPILER_OPTIONS_AND_WARNINGS ${DEFAULT_MSVC_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS ${DEFAULT_MSVC_OPTIONS})
+    set(DEFAULT_COMPILER_WARNINGS_DISABLED "/w")
 endif ()
