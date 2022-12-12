@@ -112,7 +112,7 @@ jobs:
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\Debug\show_info.exe
             - run: .\build\src\example\Debug\example.exe
-            - run: ctest --output-on-failure --test-dir build
+            - run: ctest --output-on-failure --test-dir build -C Debug
 
     windows-clang-cl:
         name: Windows Clang-cl
@@ -123,4 +123,4 @@ jobs:
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe
             - run: .\build\src\example\example.exe
-            - run: ctest --output-on-failure --test-dir build
+            - run: ctest --output-on-failure --test-dir build -C Debug

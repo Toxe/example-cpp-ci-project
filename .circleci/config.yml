@@ -137,7 +137,7 @@ jobs:
             - run: .ci\build-project.ps1
             - run: .\build\src\show_info\Debug\show_info.exe
             - run: .\build\src\example\Debug\example.exe
-            - run: Invoke-Expression '& $Env:ProgramFiles\CMake\bin\ctest.exe --output-on-failure --output-junit test-results.xml --test-dir build'
+            - run: Invoke-Expression '& $Env:ProgramFiles\CMake\bin\ctest.exe --output-on-failure --output-junit test-results.xml --test-dir build -C Debug'
             - store_test_results:
                   path: build\test-results.xml
 
@@ -154,7 +154,7 @@ jobs:
             - run: .ci\build-project-with-clang-cl.ps1
             - run: .\build\src\show_info\show_info.exe
             - run: .\build\src\example\example.exe
-            - run: Invoke-Expression '& $Env:ProgramFiles\CMake\bin\ctest.exe --output-on-failure --output-junit test-results.xml --test-dir build'
+            - run: Invoke-Expression '& $Env:ProgramFiles\CMake\bin\ctest.exe --output-on-failure --output-junit test-results.xml --test-dir build -C Debug'
             - store_test_results:
                   path: build\test-results.xml
 
