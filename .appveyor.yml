@@ -72,8 +72,8 @@ build_script:
     # ---- Windows ----
     # build project with MSVC
     - ps: .ci\build-project.ps1 build-msvc
-    - ps: .\build-msvc\src\show_info\RelWithDebInfo\show_info.exe
-    - ps: .\build-msvc\src\example\RelWithDebInfo\example.exe
+    - ps: .\build-msvc\src\show_info\Debug\show_info.exe
+    - ps: .\build-msvc\src\example\Debug\example.exe
 
 test_script:
     # ---- Mac & Linux ----
