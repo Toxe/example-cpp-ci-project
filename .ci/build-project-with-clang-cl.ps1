@@ -53,7 +53,6 @@ Write-Host "CLANG_CL: $CLANG_CL"
 Write-Host "CMAKE_TOOLCHAIN_FILE: $TOOLCHAIN"
 Write-Host "-----------------------------------------"
 
-# Clang-cl does not support using ASIN in Debug builds. Use RelWithDebInfo instead.
 New-Item -Name "$BUILD_DIR" -ItemType Directory
-cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" -DCMAKE_C_COMPILER="$CLANG_CL" -DCMAKE_CXX_COMPILER="$CLANG_CL" -DUSE_SANITIZER=address -B "$BUILD_DIR"
-cmake --build "$BUILD_DIR" -j --config RelWithDebInfo
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" -DCMAKE_C_COMPILER="$CLANG_CL" -DCMAKE_CXX_COMPILER="$CLANG_CL" -B "$BUILD_DIR"
+cmake --build "$BUILD_DIR" -j --config Debug
