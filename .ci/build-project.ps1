@@ -42,4 +42,4 @@ Write-Host "---------------------------"
 
 New-Item -Name "$BUILD_DIR" -ItemType Directory
 cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" -B "$BUILD_DIR"
-cmake --build "$BUILD_DIR" -j 4 --config RelWithDebInfo
+cmake --build "$BUILD_DIR" -j --config RelWithDebInfo
