@@ -86,6 +86,8 @@ All CI services use these scripts to simplify their configurations.
 
 Where possible all programs are build using Address Sanitizer.
 
+Note: Clang-cl does not support Address Sanitizer in `Debug` mode. Build with `RelWithDebInfo` instead.
+
 ## Example program output
 
 ### `show_info`
