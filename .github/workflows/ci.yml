@@ -55,6 +55,18 @@ jobs:
             - run: ./build/src/example/example
             - run: ctest --output-on-failure --test-dir build
 
+    mac-apple-clang:
+        name: macOS AppleClang
+        runs-on: macos-latest
+        steps:
+            - uses: actions/checkout@v3
+            - run: brew install ninja
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --output-on-failure --test-dir build
+
     mac-gcc:
         name: macOS GCC
         runs-on: macos-latest
