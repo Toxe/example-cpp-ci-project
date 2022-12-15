@@ -87,6 +87,20 @@ jobs:
             - store_test_results:
                   path: build/test-results.xml
 
+    mac-apple-clang:
+        macos:
+            xcode: 13.4.1
+        steps:
+            - checkout
+            - run: brew install cmake ninja
+            - run: /bin/bash .ci/install-vcpkg.sh
+            - run: /bin/bash .ci/build-project.sh
+            - run: ./build/src/show_info/show_info
+            - run: ./build/src/example/example
+            - run: ctest --output-on-failure --output-junit test-results.xml --test-dir build
+            - store_test_results:
+                  path: build/test-results.xml
+
     mac-clang-libcpp:
         macos:
             xcode: 13.4.1
